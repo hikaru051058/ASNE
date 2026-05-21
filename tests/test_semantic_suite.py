@@ -44,8 +44,10 @@ def test_report_generation_with_fake_summaries(tmp_path: Path) -> None:
     module = _load_script("scripts/generate_asne_contrast_report.py", "contrast_report")
     static = tmp_path / "static" / "fake_contrast" / "20260101T000000Z_summary.json"
     temporal = tmp_path / "temporal" / "fake_contrast" / "20260101T000000Z_temporal_summary.json"
+    roi = tmp_path / "roi" / "fake_contrast" / "roi_report.md"
     static.parent.mkdir(parents=True)
     temporal.parent.mkdir(parents=True)
+    roi.parent.mkdir(parents=True)
     static.write_text(
         json.dumps(
             {
@@ -73,16 +75,88 @@ def test_report_generation_with_fake_summaries(tmp_path: Path) -> None:
         ),
         encoding="utf-8",
     )
+    roi.write_text(
+        "\n".join(
+            [
+                "# ASNE ROI / Parcel Contrast Report",
+                "",
+                "## Top Parcels By Absolute Contrast Delta",
+                "",
+                "| rank | parcel_id | parcel_name | delta | abs_delta |",
+                "|---:|---|---|---:|---:|",
+                "| 1 | `p1` | Parcel 1 | 0.300000 | 0.300000 |",
+                "| 2 | `p2` | Parcel 2 | -0.200000 | 0.200000 |",
+                "",
+                "## Top Parcels By Late Minus Early",
+                "",
+                "| rank | parcel_id | parcel_name | delta | abs_delta |",
+                "|---:|---|---|---:|---:|",
+                "| 1 | `p3` | Parcel 3 | 0.400000 | 0.400000 |",
+            ]
+        ),
+        encoding="utf-8",
+    )
 
     report = module.build_report(
         contrasts=["fake_contrast"],
         static_root=tmp_path / "static",
         temporal_root=tmp_path / "temporal",
+        roi_root=tmp_path / "roi",
     )
 
     assert "ASNE Semantic Contrast Report v0" in report
     assert "fake_contrast" in report
+    assert "ROI / Parcel-Level Predicted Response Summary" in report
+    assert "p1" in report
+    assert "p3" in report
+    assert "Add ROI or parcel-level aggregation for interpretability" not in report
     assert "predicted stimulus-response similarity" in report
+
+
+def test_roi_report_discovery_finds_canonical_and_timestamped_names(tmp_path: Path) -> None:
+    module = _load_script("scripts/generate_asne_contrast_report.py", "contrast_report_roi_discovery")
+    canonical = tmp_path / "roi" / "fake_contrast" / "roi_report.md"
+    timestamped = tmp_path / "roi" / "fake_contrast" / "20260101T000000Z_roi_report.md"
+    canonical.parent.mkdir(parents=True)
+    canonical.write_text("# canonical", encoding="utf-8")
+    timestamped.write_text("# timestamped", encoding="utf-8")
+
+    paths = module.find_roi_reports("fake_contrast", tmp_path / "roi")
+
+    assert str(canonical) in paths
+    assert str(timestamped) in paths
+
+
+def test_extract_top_roi_parcels_from_named_section(tmp_path: Path) -> None:
+    module = _load_script("scripts/generate_asne_contrast_report.py", "contrast_report_roi_parse")
+    report = tmp_path / "roi_report.md"
+    report.write_text(
+        "\n".join(
+            [
+                "## Top Parcels By Absolute Contrast Delta",
+                "",
+                "| rank | parcel_id | parcel_name | delta | abs_delta |",
+                "|---:|---|---|---:|---:|",
+                "| 1 | `p1` | Parcel 1 | -0.500000 | 0.500000 |",
+                "| 2 | `p2` | Parcel 2 | 0.300000 | 0.300000 |",
+                "",
+                "## Top Parcels By Late Minus Early",
+                "",
+                "| rank | parcel_id | parcel_name | delta | abs_delta |",
+                "|---:|---|---|---:|---:|",
+                "| 1 | `p3` | Parcel 3 | 0.700000 | 0.700000 |",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    contrast_rows = module.extract_top_roi_parcels(report, top_k=1)
+    late_rows = module.extract_top_roi_parcels(report, top_k=1, section="Top Parcels By Late Minus Early")
+
+    assert contrast_rows == [
+        {"rank": "1", "parcel_id": "p1", "parcel_name": "Parcel 1", "delta": "-0.500000", "abs_delta": "0.500000"}
+    ]
+    assert late_rows[0]["parcel_id"] == "p3"
 
 
 def test_suite_dry_run_without_tribe(monkeypatch, capsys) -> None:

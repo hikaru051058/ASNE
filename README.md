@@ -169,6 +169,12 @@ The current report is written to:
 outputs/asne_reports/semantic_contrast_report_v0.md
 ```
 
+## ASNE v0.1 Direction: ROI / Parcel Signatures
+
+ASNE v0.1 adds ROI/parcel-level aggregation as an interpretability layer over predicted cortical response vectors. The raw `20,484`-dimension scoring pipeline remains the benchmark layer for now; parcel aggregation is for analysis and reporting first.
+
+ROI analysis is intended to answer which parcels shift most for a contrast and which parcels show the strongest temporal movement. It requires a parcellation file mapping each cortical response dimension to a parcel label. Tests currently use a small mock parcellation; a real TRIBE/fsaverage5-compatible parcellation should be added only after verifying output-space compatibility and atlas licensing.
+
 ## TTS Backends
 
 For `.txt` stimuli, ASNE can preserve the upstream TRIBE v2 `gTTS` text path or pre-render text to cached audio with local macOS `say`, local Higgs Audio, or OpenAI TTS before calling TRIBE v2 audio mode. This makes it possible to compare preprocessing sensitivity across text-to-audio systems.

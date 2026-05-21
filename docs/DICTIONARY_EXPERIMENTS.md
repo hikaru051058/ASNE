@@ -68,6 +68,50 @@ Report path:
 outputs/asne_reports/semantic_contrast_report_v0.md
 ```
 
+## ASNE v0.1 ROI / Parcel Aggregation
+
+ASNE v0.1 adds ROI/parcel-level aggregation to make predicted response signatures easier to inspect. This layer groups raw cortical dimensions into parcel labels and reports parcel-level contrast deltas and temporal movement.
+
+The raw `20,484`-dimension scoring layer remains the frozen v0 benchmark. ROI/parcel aggregation is an additional reporting and interpretability layer, not a replacement for validated scoring.
+
+Example ROI report command:
+
+```bash
+python scripts/analyze_asne_roi_contrast.py \
+  --dictionary outputs/asne_dictionaries/<contrast>_tts_macos_say_samantha_180/dictionary_index.json \
+  --parcellation data/parcellations/<parcellation>.csv \
+  --output outputs/asne_roi_reports/<contrast>/<timestamp>_roi_report.md
+```
+
+Current status: ROI tests use mock parcellations. A real TRIBE/fsaverage5-compatible parcellation should be added after checking model output-space compatibility and atlas redistribution terms.
+
+TRIBE v2 outputs are documented locally as fsaverage5 with `10,242` vertices per hemisphere, left hemisphere followed by right hemisphere. ASNE includes a source-aware generator:
+
+```bash
+python scripts/create_fsaverage5_parcellation.py --dry-run
+```
+
+HCP-MMP can be generated through TRIBE/MNE if external atlas fetching is explicitly allowed. Schaefer fsaverage5 labels are not generated unless a verified source is available; ASNE should not fake scientific parcel labels.
+
+## HCP-MMP ROI Reports
+
+The current real ROI/parcellation layer uses:
+
+```text
+data/parcellations/fsaverage5_hcp_mmp.csv
+```
+
+This file maps TRIBE's `20,484` fsaverage5 cortical vertices to `362` HCP-MMP parcels.
+
+Current ROI report paths:
+
+- `outputs/asne_roi_reports/contradiction_vs_consistency_paired/roi_report.md`
+- `outputs/asne_roi_reports/expected_vs_unexpected_paired/roi_report.md`
+- `outputs/asne_roi_reports/approach_vs_static_paired/roi_report.md`
+- `outputs/asne_roi_reports/cause_effect_valid_vs_invalid_paired/roi_report.md`
+
+These ROI reports summarize predicted TRIBE response signatures. They are not measured brain activity, diagnosis, or measurement of a person's mental state. In the text/TTS pipeline, temporal movement summaries can be dominated by auditory parcels, so contrast-delta parcels are currently the more useful ROI view for semantic interpretation.
+
 ## Binary Contrast Scoring
 
 Binary contrast experiments use two concrete stimulus categories, such as a baseline category and a contrast category. In this setting, `delta_from_neutral` or `delta_from_baseline` can make the baseline category compete as a zero vector, which is not ideal for a two-way contrast.
