@@ -1,0 +1,38 @@
+{
+  "name": "missing_vs_present_eval",
+  "contrast_name": "missing_vs_present",
+  "output_group": "contrasts",
+  "description": "Held-out binary ASNE contrast for an expected item being found versus not found.",
+  "items": [
+    {
+      "id": "eval_object_present_01",
+      "expected_category": "object_present",
+      "text": "A person checks the desk and sees the signed form under the blue folder."
+    },
+    {
+      "id": "eval_object_present_02",
+      "expected_category": "object_present",
+      "text": "Someone opens the mailbox and sees the parcel resting behind the small door."
+    },
+    {
+      "id": "eval_object_present_03",
+      "expected_category": "object_present",
+      "text": "A person looks inside the backpack and sees the camera card in the side pocket."
+    },
+    {
+      "id": "eval_object_missing_01",
+      "expected_category": "object_missing",
+      "text": "A person checks the desk and sees only the blue folder without the signed form."
+    },
+    {
+      "id": "eval_object_missing_02",
+      "expected_category": "object_missing",
+      "text": "Someone opens the mailbox and sees the small compartment without the parcel."
+    },
+    {
+      "id": "eval_object_missing_03",
+      "expected_category": "object_missing",
+      "text": "A person looks inside the backpack and sees the side pocket without the camera card."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "approach_vs_static_eval",
+  "contrast_name": "approach_vs_static",
+  "output_group": "contrasts",
+  "description": "Held-out binary ASNE contrast for unchanged observation versus another agent or object moving closer.",
+  "items": [
+    {
+      "id": "eval_static_scene_01",
+      "expected_category": "static_scene",
+      "text": "A person waits near a loading dock while a runner stands beside the alley entrance."
+    },
+    {
+      "id": "eval_static_scene_02",
+      "expected_category": "static_scene",
+      "text": "Someone watches a service cart resting near the elevators at the end of the hall."
+    },
+    {
+      "id": "eval_static_scene_03",
+      "expected_category": "static_scene",
+      "text": "A person looks toward the stairs where another tenant remains by the railing."
+    },
+    {
+      "id": "eval_approaching_agent_01",
+      "expected_category": "approaching_agent",
+      "text": "A person waits near a loading dock as a runner enters from the alley entrance."
+    },
+    {
+      "id": "eval_approaching_agent_02",
+      "expected_category": "approaching_agent",
+      "text": "Someone watches a service cart roll from the elevators at the end of the hall."
+    },
+    {
+      "id": "eval_approaching_agent_03",
+      "expected_category": "approaching_agent",
+      "text": "A person looks toward the stairs as another tenant comes down beside the railing."
+    }
+  ]
+}

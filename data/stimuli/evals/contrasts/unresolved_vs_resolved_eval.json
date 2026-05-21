@@ -1,0 +1,38 @@
+{
+  "name": "unresolved_vs_resolved_eval",
+  "contrast_name": "unresolved_vs_resolved",
+  "output_group": "contrasts",
+  "description": "Held-out binary ASNE contrast for an open issue versus the same issue being clarified or handled.",
+  "items": [
+    {
+      "id": "eval_problem_unresolved_01",
+      "expected_category": "problem_unresolved",
+      "text": "A person reloads the page and still sees no reservation in the list."
+    },
+    {
+      "id": "eval_problem_unresolved_02",
+      "expected_category": "problem_unresolved",
+      "text": "Someone returns to the lobby and sees the elevator doors closed after another delay."
+    },
+    {
+      "id": "eval_problem_unresolved_03",
+      "expected_category": "problem_unresolved",
+      "text": "A person checks the counter again and sees no badge beside the folded jacket."
+    },
+    {
+      "id": "eval_problem_resolved_01",
+      "expected_category": "problem_resolved",
+      "text": "A person reloads the page and sees the reservation appear in the list."
+    },
+    {
+      "id": "eval_problem_resolved_02",
+      "expected_category": "problem_resolved",
+      "text": "Someone returns to the lobby and sees the elevator doors open after the repair crew leaves."
+    },
+    {
+      "id": "eval_problem_resolved_03",
+      "expected_category": "problem_resolved",
+      "text": "A person checks the counter again and sees the badge beside the folded jacket."
+    }
+  ]
+}

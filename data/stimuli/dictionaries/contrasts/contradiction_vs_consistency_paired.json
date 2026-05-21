@@ -1,0 +1,44 @@
+{
+  "name": "contradiction_vs_consistency_paired",
+  "contrast_name": "contradiction_vs_consistency_paired",
+  "baseline_category": "consistent_information",
+  "description": "Paired ASNE contrast with matched wording for matching versus differing scene information.",
+  "categories": {
+    "consistent_information": [
+      {
+        "id": "paired_consistent_information_01",
+        "text": "A person reads that the meeting is in Room 204. The door label also says Room 204."
+      },
+      {
+        "id": "paired_consistent_information_02",
+        "text": "Someone reads that the package belongs in Bin A12. The scanner screen also says Bin A12."
+      },
+      {
+        "id": "paired_consistent_information_03",
+        "text": "A person reads that the train leaves from Platform 5. The station board also says Platform 5."
+      },
+      {
+        "id": "paired_consistent_information_04",
+        "text": "Someone reads that the appointment is Tuesday at 3. The desk card also says Tuesday at 3."
+      }
+    ],
+    "contradictory_information": [
+      {
+        "id": "paired_contradictory_information_01",
+        "text": "A person reads that the meeting is in Room 204. The door label says Room 317."
+      },
+      {
+        "id": "paired_contradictory_information_02",
+        "text": "Someone reads that the package belongs in Bin A12. The scanner screen says Bin B44."
+      },
+      {
+        "id": "paired_contradictory_information_03",
+        "text": "A person reads that the train leaves from Platform 5. The station board says Platform 9."
+      },
+      {
+        "id": "paired_contradictory_information_04",
+        "text": "Someone reads that the appointment is Tuesday at 3. The desk card says Friday at 10."
+      }
+    ]
+  }
+}

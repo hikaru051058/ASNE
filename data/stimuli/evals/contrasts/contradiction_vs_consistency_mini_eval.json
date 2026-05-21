@@ -1,0 +1,28 @@
+{
+  "name": "contradiction_vs_consistency_mini_eval",
+  "contrast_name": "contradiction_vs_consistency_mini",
+  "output_group": "contrasts",
+  "description": "Held-out balanced mini ASNE contrast for matching versus differing scene information.",
+  "items": [
+    {
+      "id": "eval_mini_consistent_information_01",
+      "expected_category": "consistent_information",
+      "text": "A person reads a gate number on a ticket and sees that number shown on the overhead display."
+    },
+    {
+      "id": "eval_mini_consistent_information_02",
+      "expected_category": "consistent_information",
+      "text": "Someone checks a shelf tag and sees the item code match the code on the package."
+    },
+    {
+      "id": "eval_mini_contradictory_information_01",
+      "expected_category": "contradictory_information",
+      "text": "A person reads a gate number on a ticket while the overhead display shows another number."
+    },
+    {
+      "id": "eval_mini_contradictory_information_02",
+      "expected_category": "contradictory_information",
+      "text": "Someone checks a shelf tag and sees the item code differ from the code on the package."
+    }
+  ]
+}

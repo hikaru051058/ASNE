@@ -1,0 +1,81 @@
+{
+  "name": "stimulus_structure_eval_v2_lite",
+  "description": "Held-out controlled text stimuli for ASNE v2-lite event-structure evaluation. Labels are expected stimulus-response structure categories only.",
+  "items": [
+    {
+      "id": "eval_ordinary_observation_lite_01",
+      "expected_category": "ordinary_observation",
+      "text": "A person watches a clerk arrange newspapers beside the front counter before the shop opens."
+    },
+    {
+      "id": "eval_ordinary_observation_lite_02",
+      "expected_category": "ordinary_observation",
+      "text": "Someone stands near a museum bench and looks at sunlight crossing the tile floor."
+    },
+    {
+      "id": "eval_ordinary_observation_lite_03",
+      "expected_category": "ordinary_observation",
+      "text": "A person reads the posted hours on a glass door and places a note in a folder."
+    },
+    {
+      "id": "eval_approaching_agent_lite_01",
+      "expected_category": "approaching_agent",
+      "text": "A person turns when a maintenance cart comes closer from the far end of the corridor."
+    },
+    {
+      "id": "eval_approaching_agent_lite_02",
+      "expected_category": "approaching_agent",
+      "text": "Someone sees a runner enter the alley and move toward the loading dock."
+    },
+    {
+      "id": "eval_approaching_agent_lite_03",
+      "expected_category": "approaching_agent",
+      "text": "A person hears footsteps on the stairwell and sees another tenant come into view."
+    },
+    {
+      "id": "eval_loss_or_absence_lite_01",
+      "expected_category": "loss_or_absence",
+      "text": "A person opens the case and finds the camera lens is not inside the foam slot."
+    },
+    {
+      "id": "eval_loss_or_absence_lite_02",
+      "expected_category": "loss_or_absence",
+      "text": "Someone checks the mailbox and sees the expected parcel has not arrived."
+    },
+    {
+      "id": "eval_loss_or_absence_lite_03",
+      "expected_category": "loss_or_absence",
+      "text": "A person reaches the rehearsal room and finds the violin stand empty."
+    },
+    {
+      "id": "eval_contradictory_information_lite_01",
+      "expected_category": "contradictory_information",
+      "text": "A person reads the invitation address while the building directory shows a different floor."
+    },
+    {
+      "id": "eval_contradictory_information_lite_02",
+      "expected_category": "contradictory_information",
+      "text": "Someone scans a barcode and sees a name that does not match the package tag."
+    },
+    {
+      "id": "eval_contradictory_information_lite_03",
+      "expected_category": "contradictory_information",
+      "text": "A person checks two clocks in the hallway and sees each one showing a different hour."
+    },
+    {
+      "id": "eval_problem_resolved_lite_01",
+      "expected_category": "problem_resolved",
+      "text": "A person searches the desk again and finds the signed form under a stack of folders."
+    },
+    {
+      "id": "eval_problem_resolved_lite_02",
+      "expected_category": "problem_resolved",
+      "text": "Someone reloads the page and sees the missing reservation appear in the list."
+    },
+    {
+      "id": "eval_problem_resolved_lite_03",
+      "expected_category": "problem_resolved",
+      "text": "A person returns to the lobby and sees the elevator doors opening after the repair crew leaves."
+    }
+  ]
+}

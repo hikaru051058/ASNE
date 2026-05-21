@@ -1,0 +1,56 @@
+{
+  "name": "emotion_context_v0",
+  "description": "Small controlled stimulus-response dictionary for ASNE v0 predicted response similarity experiments. Categories are stimulus labels only and are not diagnoses or measurements of mental state.",
+  "categories": {
+    "neutral": [
+      {
+        "id": "neutral_01",
+        "text": "A person walks down a quiet street and notices a light turning on in a nearby window."
+      },
+      {
+        "id": "neutral_02",
+        "text": "Someone places a notebook on a table and waits for the meeting to begin."
+      }
+    ],
+    "threat": [
+      {
+        "id": "threat_01",
+        "text": "A person hears hurried footsteps behind them while crossing a dim parking lot."
+      },
+      {
+        "id": "threat_02",
+        "text": "Someone sees a locked door shaking as an unknown person tries to open it from the other side."
+      }
+    ],
+    "sadness": [
+      {
+        "id": "sadness_01",
+        "text": "A person rereads an old message and sits quietly after remembering a difficult goodbye."
+      },
+      {
+        "id": "sadness_02",
+        "text": "Someone packs away a familiar object after realizing a long chapter of life has ended."
+      }
+    ],
+    "confusion": [
+      {
+        "id": "confusion_01",
+        "text": "A person receives conflicting instructions and pauses while trying to decide what to do next."
+      },
+      {
+        "id": "confusion_02",
+        "text": "Someone studies a map with missing labels and cannot tell which route leads forward."
+      }
+    ],
+    "relief": [
+      {
+        "id": "relief_01",
+        "text": "A person finds the lost keys just before leaving and exhales after a long search."
+      },
+      {
+        "id": "relief_02",
+        "text": "Someone learns that the delayed message arrived safely and their shoulders relax."
+      }
+    ]
+  }
+}

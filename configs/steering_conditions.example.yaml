@@ -1,0 +1,42 @@
+steering_conditions:
+  - id: neutral
+    name: Neutral
+    description: Reference condition intended to preserve a plain, minimally framed interpretation of the stimulus.
+    prompt_prefix: "Analyze the stimulus in a neutral descriptive context."
+    intended_analysis: Baseline or control condition for comparison against other steering conditions.
+    safety_note: Do not claim this represents an emotionally neutral human state.
+
+  - id: threat
+    name: Threat
+    description: Condition that frames the stimulus in terms of possible risk, danger, or uncertainty.
+    prompt_prefix: "Analyze the stimulus while attending to possible threat, risk, or signs of danger."
+    intended_analysis: Test whether risk-oriented framing changes predicted cortical-response patterns.
+    safety_note: Do not claim the model detected fear, anxiety, danger perception, or a real threat response.
+
+  - id: nostalgia
+    name: Nostalgia
+    description: Condition that frames the stimulus through memory, familiarity, and past-oriented associations.
+    prompt_prefix: "Analyze the stimulus while emphasizing memory, familiarity, and past-oriented associations."
+    intended_analysis: Test whether memory-oriented framing changes predicted cortical-response patterns.
+    safety_note: Do not claim the model detected nostalgia or autobiographical memory.
+
+  - id: social_judgment
+    name: Social Judgment
+    description: Condition that frames the stimulus around social evaluation, reputation, group norms, or interpersonal interpretation.
+    prompt_prefix: "Analyze the stimulus while attending to social evaluation, reputation, and interpersonal judgment."
+    intended_analysis: Test whether socially framed context shifts predicted cortical responses.
+    safety_note: Do not claim the model inferred social beliefs, moral judgment, or social anxiety.
+
+  - id: curiosity
+    name: Curiosity
+    description: Condition that frames the stimulus around novelty, exploration, uncertainty, and information seeking.
+    prompt_prefix: "Analyze the stimulus while emphasizing novelty, open questions, and information seeking."
+    intended_analysis: Test whether exploration-oriented framing produces distinguishable response deltas.
+    safety_note: Do not claim the model detected real curiosity or motivation.
+
+  - id: cognitive_load
+    name: Cognitive Load
+    description: Condition that frames the stimulus as requiring focused attention, working memory, or complex reasoning.
+    prompt_prefix: "Analyze the stimulus while emphasizing focused attention, working memory, and task difficulty."
+    intended_analysis: Test whether task-demand framing changes predicted cortical-response patterns.
+    safety_note: Do not claim the model measured actual cognitive load or mental effort.

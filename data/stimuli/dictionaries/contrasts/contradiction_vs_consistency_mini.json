@@ -1,0 +1,28 @@
+{
+  "name": "contradiction_vs_consistency_mini",
+  "contrast_name": "contradiction_vs_consistency_mini",
+  "baseline_category": "consistent_information",
+  "description": "Balanced mini ASNE contrast for matching versus differing scene information.",
+  "categories": {
+    "consistent_information": [
+      {
+        "id": "mini_consistent_information_01",
+        "text": "A person checks a room number in a message and sees the same number printed beside the door."
+      },
+      {
+        "id": "mini_consistent_information_02",
+        "text": "Someone scans a package slip and sees the printed name match the name on the box."
+      }
+    ],
+    "contradictory_information": [
+      {
+        "id": "mini_contradictory_information_01",
+        "text": "A person checks a room number in a message while the door beside them shows another number."
+      },
+      {
+        "id": "mini_contradictory_information_02",
+        "text": "Someone scans a package slip and sees the printed name differ from the name on the box."
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "missing_vs_present",
+  "contrast_name": "missing_vs_present",
+  "baseline_category": "object_present",
+  "description": "Binary ASNE contrast for an expected item being found versus not found.",
+  "categories": {
+    "object_present": [
+      {
+        "id": "object_present_01",
+        "text": "A person opens the cabinet and sees the labeled folder inside the top drawer."
+      },
+      {
+        "id": "object_present_02",
+        "text": "Someone checks the hook by the door and sees the spare key hanging there."
+      },
+      {
+        "id": "object_present_03",
+        "text": "A person returns to the table and sees the sealed envelope beside the lamp."
+      },
+      {
+        "id": "object_present_04",
+        "text": "Someone opens the case and sees the camera lens resting in the foam slot."
+      },
+      {
+        "id": "object_present_05",
+        "text": "A person enters the studio and sees the violin stand beside the chair."
+      }
+    ],
+    "object_missing": [
+      {
+        "id": "object_missing_01",
+        "text": "A person opens the cabinet and sees the top drawer without the labeled folder."
+      },
+      {
+        "id": "object_missing_02",
+        "text": "Someone checks the hook by the door and sees no spare key hanging there."
+      },
+      {
+        "id": "object_missing_03",
+        "text": "A person returns to the table and sees no sealed envelope beside the lamp."
+      },
+      {
+        "id": "object_missing_04",
+        "text": "Someone opens the case and sees the foam slot without the camera lens."
+      },
+      {
+        "id": "object_missing_05",
+        "text": "A person enters the studio and sees the chair beside an empty violin stand."
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "unresolved_vs_resolved",
+  "contrast_name": "unresolved_vs_resolved",
+  "baseline_category": "problem_unresolved",
+  "description": "Binary ASNE contrast for an open issue versus the same issue being clarified or handled.",
+  "categories": {
+    "problem_unresolved": [
+      {
+        "id": "problem_unresolved_01",
+        "text": "A person refreshes the form and still sees a blank space where the confirmation number should be."
+      },
+      {
+        "id": "problem_unresolved_02",
+        "text": "Someone checks the hallway and sees the broken panel still hanging beside the elevator."
+      },
+      {
+        "id": "problem_unresolved_03",
+        "text": "A person opens the storage drawer and sees no cable for the projector."
+      },
+      {
+        "id": "problem_unresolved_04",
+        "text": "Someone reads the updated message and still sees no room listed for the meeting."
+      },
+      {
+        "id": "problem_unresolved_05",
+        "text": "A person searches the desk again and sees no signed form under the folders."
+      }
+    ],
+    "problem_resolved": [
+      {
+        "id": "problem_resolved_01",
+        "text": "A person refreshes the form and sees the confirmation number appear in the blank space."
+      },
+      {
+        "id": "problem_resolved_02",
+        "text": "Someone checks the hallway and sees a technician replacing the broken panel beside the elevator."
+      },
+      {
+        "id": "problem_resolved_03",
+        "text": "A person opens the storage drawer and sees the cable for the projector."
+      },
+      {
+        "id": "problem_resolved_04",
+        "text": "Someone reads the updated message and sees a room listed for the meeting."
+      },
+      {
+        "id": "problem_resolved_05",
+        "text": "A person searches the desk again and sees the signed form under the folders."
+      }
+    ]
+  }
+}

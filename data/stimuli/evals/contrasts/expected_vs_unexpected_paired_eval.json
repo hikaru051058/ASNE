@@ -1,0 +1,44 @@
+{
+  "name": "expected_vs_unexpected_paired_eval",
+  "contrast_name": "expected_vs_unexpected_paired",
+  "output_group": "contrasts",
+  "description": "Held-out paired ASNE contrast with matched wording for routine scene continuations versus unlikely scene continuations.",
+  "items": [
+    {
+      "id": "eval_paired_expected_outcome_01",
+      "expected_category": "expected_outcome",
+      "pair_id": "eval_pair_01",
+      "text": "A person puts a notebook on a desk. A moment later, the notebook remains on the desk."
+    },
+    {
+      "id": "eval_paired_expected_outcome_02",
+      "expected_category": "expected_outcome",
+      "pair_id": "eval_pair_02",
+      "text": "Someone places a mug beside the sink. A moment later, the mug is still beside the sink."
+    },
+    {
+      "id": "eval_paired_expected_outcome_03",
+      "expected_category": "expected_outcome",
+      "pair_id": "eval_pair_03",
+      "text": "A person leaves a bag on a bench. A moment later, the bag is still on the bench."
+    },
+    {
+      "id": "eval_paired_unexpected_outcome_01",
+      "expected_category": "unexpected_outcome",
+      "pair_id": "eval_pair_01",
+      "text": "A person puts a notebook on a desk. A moment later, the notebook is inside the freezer."
+    },
+    {
+      "id": "eval_paired_unexpected_outcome_02",
+      "expected_category": "unexpected_outcome",
+      "pair_id": "eval_pair_02",
+      "text": "Someone places a mug beside the sink. A moment later, the mug is hanging from a lamp."
+    },
+    {
+      "id": "eval_paired_unexpected_outcome_03",
+      "expected_category": "unexpected_outcome",
+      "pair_id": "eval_pair_03",
+      "text": "A person leaves a bag on a bench. A moment later, the bag is balanced on a ceiling fan."
+    }
+  ]
+}

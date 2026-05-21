@@ -1,0 +1,55 @@
+mock_roi_map:
+  response_size: 128
+  description: >
+    Placeholder ROI labels for mock ASNE experiments. These labels group synthetic
+    response indices for workflow testing only and are not a real cortical
+    parcellation or empirical neuroscience annotation.
+  rois:
+    - id: visual_primary
+      name: Visual Primary Placeholder
+      index_start: 0
+      index_end: 10
+    - id: visual_association
+      name: Visual Association Placeholder
+      index_start: 11
+      index_end: 21
+    - id: auditory_language
+      name: Auditory/Language Placeholder
+      index_start: 22
+      index_end: 32
+    - id: temporal_semantic
+      name: Temporal Semantic Placeholder
+      index_start: 33
+      index_end: 43
+    - id: salience_attention
+      name: Salience/Attention Placeholder
+      index_start: 44
+      index_end: 54
+    - id: executive_control
+      name: Executive Control Placeholder
+      index_start: 55
+      index_end: 65
+    - id: default_mode
+      name: Default Mode Placeholder
+      index_start: 66
+      index_end: 76
+    - id: social_cognition
+      name: Social Cognition Placeholder
+      index_start: 77
+      index_end: 87
+    - id: memory_context
+      name: Memory Context Placeholder
+      index_start: 88
+      index_end: 97
+    - id: sensorimotor
+      name: Sensorimotor Placeholder
+      index_start: 98
+      index_end: 107
+    - id: affective_valence_proxy
+      name: Affective Valence Proxy Placeholder
+      index_start: 108
+      index_end: 117
+    - id: uncertainty_monitoring_proxy
+      name: Uncertainty Monitoring Proxy Placeholder
+      index_start: 118
+      index_end: 127

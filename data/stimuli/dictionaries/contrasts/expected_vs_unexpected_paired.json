@@ -1,0 +1,52 @@
+{
+  "name": "expected_vs_unexpected_paired",
+  "contrast_name": "expected_vs_unexpected_paired",
+  "baseline_category": "expected_outcome",
+  "description": "Paired ASNE contrast with matched wording for routine scene continuations versus unlikely scene continuations.",
+  "categories": {
+    "expected_outcome": [
+      {
+        "id": "paired_expected_outcome_01",
+        "pair_id": "pair_01",
+        "text": "A person places a glass on the table. A moment later, the glass remains on the table."
+      },
+      {
+        "id": "paired_expected_outcome_02",
+        "pair_id": "pair_02",
+        "text": "Someone hangs a coat on a hook. A moment later, the coat is still on the hook."
+      },
+      {
+        "id": "paired_expected_outcome_03",
+        "pair_id": "pair_03",
+        "text": "A person sets a book on a shelf. A moment later, the book is still on the shelf."
+      },
+      {
+        "id": "paired_expected_outcome_04",
+        "pair_id": "pair_04",
+        "text": "Someone leaves a key in a small bowl. A moment later, the key is still in the bowl."
+      }
+    ],
+    "unexpected_outcome": [
+      {
+        "id": "paired_unexpected_outcome_01",
+        "pair_id": "pair_01",
+        "text": "A person places a glass on the table. A moment later, the glass is inside a closed drawer."
+      },
+      {
+        "id": "paired_unexpected_outcome_02",
+        "pair_id": "pair_02",
+        "text": "Someone hangs a coat on a hook. A moment later, the coat is folded inside a basket."
+      },
+      {
+        "id": "paired_unexpected_outcome_03",
+        "pair_id": "pair_03",
+        "text": "A person sets a book on a shelf. A moment later, the book is under a rug."
+      },
+      {
+        "id": "paired_unexpected_outcome_04",
+        "pair_id": "pair_04",
+        "text": "Someone leaves a key in a small bowl. A moment later, the key is taped to the ceiling."
+      }
+    ]
+  }
+}

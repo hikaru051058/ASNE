@@ -1,0 +1,52 @@
+{
+  "name": "approach_vs_static",
+  "contrast_name": "approach_vs_static",
+  "baseline_category": "static_scene",
+  "description": "Binary ASNE contrast for unchanged observation versus another agent or object moving closer.",
+  "categories": {
+    "static_scene": [
+      {
+        "id": "static_scene_01",
+        "text": "A person stands near a corridor window and watches a cart parked beside the far wall."
+      },
+      {
+        "id": "static_scene_02",
+        "text": "Someone looks across a plaza where a cyclist waits beside a rack of signs."
+      },
+      {
+        "id": "static_scene_03",
+        "text": "A person pauses in the hallway while a figure remains beside the stairwell door."
+      },
+      {
+        "id": "static_scene_04",
+        "text": "Someone listens in the courtyard while a small vehicle sits near the closed gate."
+      },
+      {
+        "id": "static_scene_05",
+        "text": "A person looks across the lobby where a dog rests beside a bench."
+      }
+    ],
+    "approaching_agent": [
+      {
+        "id": "approaching_agent_01",
+        "text": "A person stands near a corridor window as a cart rolls nearer from the far wall."
+      },
+      {
+        "id": "approaching_agent_02",
+        "text": "Someone looks across a plaza as a cyclist rides closer from the row of signs."
+      },
+      {
+        "id": "approaching_agent_03",
+        "text": "A person pauses in the hallway as a figure steps out from the stairwell door."
+      },
+      {
+        "id": "approaching_agent_04",
+        "text": "Someone listens in the courtyard as a small vehicle comes nearer through the gate."
+      },
+      {
+        "id": "approaching_agent_05",
+        "text": "A person looks across the lobby as a dog trots closer from beside a bench."
+      }
+    ]
+  }
+}

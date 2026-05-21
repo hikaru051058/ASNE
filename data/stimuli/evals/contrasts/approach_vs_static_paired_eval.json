@@ -1,0 +1,38 @@
+{
+  "name": "approach_vs_static_paired_eval",
+  "contrast_name": "approach_vs_static_paired",
+  "output_group": "contrasts",
+  "description": "Held-out paired ASNE contrast with matched wording for unchanged scenes versus another agent or object entering the observed area.",
+  "items": [
+    {
+      "id": "eval_paired_static_scene_01",
+      "expected_category": "static_scene",
+      "text": "A person waits beside a loading dock. A runner stands at the alley entrance."
+    },
+    {
+      "id": "eval_paired_static_scene_02",
+      "expected_category": "static_scene",
+      "text": "Someone watches the end of a long hall. A service cart rests near the elevator doors."
+    },
+    {
+      "id": "eval_paired_static_scene_03",
+      "expected_category": "static_scene",
+      "text": "A person looks toward a stair landing. Another tenant remains by the railing."
+    },
+    {
+      "id": "eval_paired_approaching_agent_01",
+      "expected_category": "approaching_agent",
+      "text": "A person waits beside a loading dock. A runner enters from the alley entrance."
+    },
+    {
+      "id": "eval_paired_approaching_agent_02",
+      "expected_category": "approaching_agent",
+      "text": "Someone watches the end of a long hall. A service cart rolls out from the elevator doors."
+    },
+    {
+      "id": "eval_paired_approaching_agent_03",
+      "expected_category": "approaching_agent",
+      "text": "A person looks toward a stair landing. Another tenant walks down by the railing."
+    }
+  ]
+}

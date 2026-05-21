@@ -1,0 +1,81 @@
+{
+  "name": "emotion_context_eval_v1_lite",
+  "description": "Held-out controlled text stimuli for ASNE v1-lite dictionary evaluation. Labels are expected stimulus-response categories only.",
+  "items": [
+    {
+      "id": "eval_neutral_lite_01",
+      "expected_category": "neutral",
+      "text": "A person unlocks a meeting room, places markers near the board, and turns on the lights."
+    },
+    {
+      "id": "eval_neutral_lite_02",
+      "expected_category": "neutral",
+      "text": "Someone carries two library books across the courtyard and drops them into the return slot."
+    },
+    {
+      "id": "eval_neutral_lite_03",
+      "expected_category": "neutral",
+      "text": "A person wipes a counter, stacks several trays, and checks that the back door is closed."
+    },
+    {
+      "id": "eval_threat_lite_01",
+      "expected_category": "threat",
+      "text": "A person stops when the basement light cuts out and a heavy object falls nearby."
+    },
+    {
+      "id": "eval_threat_lite_02",
+      "expected_category": "threat",
+      "text": "Someone sees a figure waiting beside their car after the parking lot has emptied."
+    },
+    {
+      "id": "eval_threat_lite_03",
+      "expected_category": "threat",
+      "text": "A person hears the front lock scrape while they are alone in the apartment."
+    },
+    {
+      "id": "eval_sadness_lite_01",
+      "expected_category": "sadness",
+      "text": "A person takes one framed photo from the wall and wraps it before leaving the room."
+    },
+    {
+      "id": "eval_sadness_lite_02",
+      "expected_category": "sadness",
+      "text": "Someone reads the last page of a letter and sits quietly while the kettle cools."
+    },
+    {
+      "id": "eval_sadness_lite_03",
+      "expected_category": "sadness",
+      "text": "A person returns a borrowed key and walks home past a window that is no longer lit."
+    },
+    {
+      "id": "eval_confusion_lite_01",
+      "expected_category": "confusion",
+      "text": "A person studies a receipt with three totals and cannot match any of them to the order."
+    },
+    {
+      "id": "eval_confusion_lite_02",
+      "expected_category": "confusion",
+      "text": "Someone reaches a hallway intersection where every sign points toward the same room."
+    },
+    {
+      "id": "eval_confusion_lite_03",
+      "expected_category": "confusion",
+      "text": "A person opens a package of parts and finds labels that do not match the instructions."
+    },
+    {
+      "id": "eval_relief_lite_01",
+      "expected_category": "relief",
+      "text": "A person finds the dropped ring under the sofa after searching each room twice."
+    },
+    {
+      "id": "eval_relief_lite_02",
+      "expected_category": "relief",
+      "text": "Someone sees the delayed bus turn the corner just before the last connection leaves."
+    },
+    {
+      "id": "eval_relief_lite_03",
+      "expected_category": "relief",
+      "text": "A person checks the file again and sees that the missing page was saved after all."
+    }
+  ]
+}

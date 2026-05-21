@@ -1,0 +1,52 @@
+{
+  "name": "cause_effect_valid_vs_invalid_paired",
+  "contrast_name": "cause_effect_valid_vs_invalid_paired",
+  "baseline_category": "valid_cause_effect",
+  "description": "Paired ASNE contrast with matched wording for ordinary outcomes versus outcomes that do not follow normal physical or practical sequence.",
+  "categories": {
+    "valid_cause_effect": [
+      {
+        "id": "paired_valid_cause_effect_01",
+        "pair_id": "pair_01",
+        "text": "A person knocks over a cup. Water spreads across the table."
+      },
+      {
+        "id": "paired_valid_cause_effect_02",
+        "pair_id": "pair_02",
+        "text": "Someone cuts a sheet of paper with scissors. Two smaller pieces rest on the desk."
+      },
+      {
+        "id": "paired_valid_cause_effect_03",
+        "pair_id": "pair_03",
+        "text": "A person opens a window during a rainstorm. Drops land on the windowsill."
+      },
+      {
+        "id": "paired_valid_cause_effect_04",
+        "pair_id": "pair_04",
+        "text": "Someone drops a ceramic plate onto the floor. Several pieces scatter near the chair."
+      }
+    ],
+    "invalid_cause_effect": [
+      {
+        "id": "paired_invalid_cause_effect_01",
+        "pair_id": "pair_01",
+        "text": "A person knocks over a cup. The table becomes completely dry."
+      },
+      {
+        "id": "paired_invalid_cause_effect_02",
+        "pair_id": "pair_02",
+        "text": "Someone cuts a sheet of paper with scissors. The paper becomes one smooth sheet again."
+      },
+      {
+        "id": "paired_invalid_cause_effect_03",
+        "pair_id": "pair_03",
+        "text": "A person opens a window during a rainstorm. The windowsill becomes covered in dust."
+      },
+      {
+        "id": "paired_invalid_cause_effect_04",
+        "pair_id": "pair_04",
+        "text": "Someone drops a ceramic plate onto the floor. The plate sits unbroken on the shelf."
+      }
+    ]
+  }
+}

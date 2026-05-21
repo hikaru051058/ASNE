@@ -1,0 +1,44 @@
+{
+  "name": "approach_vs_static_paired",
+  "contrast_name": "approach_vs_static_paired",
+  "baseline_category": "static_scene",
+  "description": "Paired ASNE contrast with matched wording for unchanged scenes versus another agent or object entering the observed area.",
+  "categories": {
+    "static_scene": [
+      {
+        "id": "paired_static_scene_01",
+        "text": "A person watches the far end of a hallway. A delivery cart remains beside the storage door."
+      },
+      {
+        "id": "paired_static_scene_02",
+        "text": "Someone looks across a quiet plaza. A cyclist waits beside the row of signs."
+      },
+      {
+        "id": "paired_static_scene_03",
+        "text": "A person pauses near the lobby desk. A visitor stands by the glass entrance."
+      },
+      {
+        "id": "paired_static_scene_04",
+        "text": "Someone watches the edge of a courtyard. A small service vehicle stays near the closed gate."
+      }
+    ],
+    "approaching_agent": [
+      {
+        "id": "paired_approaching_agent_01",
+        "text": "A person watches the far end of a hallway. A delivery cart rolls out from the storage door."
+      },
+      {
+        "id": "paired_approaching_agent_02",
+        "text": "Someone looks across a quiet plaza. A cyclist rides in from the row of signs."
+      },
+      {
+        "id": "paired_approaching_agent_03",
+        "text": "A person pauses near the lobby desk. A visitor walks in through the glass entrance."
+      },
+      {
+        "id": "paired_approaching_agent_04",
+        "text": "Someone watches the edge of a courtyard. A small service vehicle drives through the closed gate area."
+      }
+    ]
+  }
+}

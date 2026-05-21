@@ -1,0 +1,38 @@
+{
+  "name": "contradiction_vs_consistency_eval",
+  "contrast_name": "contradiction_vs_consistency",
+  "output_group": "contrasts",
+  "description": "Held-out binary ASNE contrast for matching versus conflicting scene information.",
+  "items": [
+    {
+      "id": "eval_consistent_information_01",
+      "expected_category": "consistent_information",
+      "text": "A person checks a room number in an email and sees the same number printed beside the door."
+    },
+    {
+      "id": "eval_consistent_information_02",
+      "expected_category": "consistent_information",
+      "text": "Someone scans a receipt and sees the item code match the code on the box."
+    },
+    {
+      "id": "eval_consistent_information_03",
+      "expected_category": "consistent_information",
+      "text": "A person reads the platform board and sees the route number shown on the paper ticket."
+    },
+    {
+      "id": "eval_contradictory_information_01",
+      "expected_category": "contradictory_information",
+      "text": "A person checks a room number in an email while the door beside them shows another number."
+    },
+    {
+      "id": "eval_contradictory_information_02",
+      "expected_category": "contradictory_information",
+      "text": "Someone scans a receipt and sees an item code that differs from the code on the box."
+    },
+    {
+      "id": "eval_contradictory_information_03",
+      "expected_category": "contradictory_information",
+      "text": "A person reads the platform board while the paper ticket shows another route number."
+    }
+  ]
+}

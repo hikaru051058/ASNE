@@ -1,0 +1,116 @@
+{
+  "name": "emotion_context_v1_lite",
+  "description": "Larger controlled stimulus-response dictionary for ASNE v1-lite. Labels are stimulus categories for predicted response similarity only, not diagnoses or measurements of mental state.",
+  "categories": {
+    "neutral": [
+      {
+        "id": "neutral_lite_01",
+        "text": "A person walks beside a row of closed shops while a delivery truck turns at the corner."
+      },
+      {
+        "id": "neutral_lite_02",
+        "text": "Someone places a folded jacket on a chair and checks the time before the next appointment."
+      },
+      {
+        "id": "neutral_lite_03",
+        "text": "A person rinses a cup in the sink and sets it beside a stack of clean plates."
+      },
+      {
+        "id": "neutral_lite_04",
+        "text": "Someone reads a posted schedule, writes down a room number, and walks toward the elevator."
+      },
+      {
+        "id": "neutral_lite_05",
+        "text": "A person carries a paper bag through a quiet lobby as rain taps against the windows."
+      }
+    ],
+    "threat": [
+      {
+        "id": "threat_lite_01",
+        "text": "A person hears rapid steps close behind them as the stairwell door swings open."
+      },
+      {
+        "id": "threat_lite_02",
+        "text": "Someone notices a shadow moving across the kitchen floor after a window latch clicks."
+      },
+      {
+        "id": "threat_lite_03",
+        "text": "A person sees a car roll slowly beside them twice while the street ahead stays empty."
+      },
+      {
+        "id": "threat_lite_04",
+        "text": "Someone reaches for a phone when a locked gate rattles hard in the alley."
+      },
+      {
+        "id": "threat_lite_05",
+        "text": "A person steps back as a stranger blocks the hallway and keeps one hand inside a coat."
+      }
+    ],
+    "sadness": [
+      {
+        "id": "sadness_lite_01",
+        "text": "A person folds an old scarf and leaves it in a box after reading a final note."
+      },
+      {
+        "id": "sadness_lite_02",
+        "text": "Someone sits at a kitchen table after a farewell call and watches the screen go dark."
+      },
+      {
+        "id": "sadness_lite_03",
+        "text": "A person closes the door to an empty bedroom and carries the last bag to the car."
+      },
+      {
+        "id": "sadness_lite_04",
+        "text": "Someone removes a name card from a desk and places it carefully inside a drawer."
+      },
+      {
+        "id": "sadness_lite_05",
+        "text": "A person stands by a train platform long after the departing lights have disappeared."
+      }
+    ],
+    "confusion": [
+      {
+        "id": "confusion_lite_01",
+        "text": "A person compares two tickets with different gates and turns back toward the information board."
+      },
+      {
+        "id": "confusion_lite_02",
+        "text": "Someone follows arrows down one corridor, then finds the same arrows pointing back the other way."
+      },
+      {
+        "id": "confusion_lite_03",
+        "text": "A person tries to assemble a shelf, but the diagram skips the part already in their hand."
+      },
+      {
+        "id": "confusion_lite_04",
+        "text": "Someone reads a message with missing words and pauses before replying to the group."
+      },
+      {
+        "id": "confusion_lite_05",
+        "text": "A person enters a building number from the note, but the directory lists a different company."
+      }
+    ],
+    "relief": [
+      {
+        "id": "relief_lite_01",
+        "text": "A person finds the missing passport inside a side pocket just before leaving for the station."
+      },
+      {
+        "id": "relief_lite_02",
+        "text": "Someone sees the repair crew arrive after water has been spreading across the hallway floor."
+      },
+      {
+        "id": "relief_lite_03",
+        "text": "A person receives the overdue confirmation and lowers their shoulders while closing the laptop."
+      },
+      {
+        "id": "relief_lite_04",
+        "text": "Someone reaches the curb as the driver waves and keeps the car waiting."
+      },
+      {
+        "id": "relief_lite_05",
+        "text": "A person opens the envelope and sees that the missing payment was recorded on time."
+      }
+    ]
+  }
+}

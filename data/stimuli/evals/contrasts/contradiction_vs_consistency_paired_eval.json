@@ -1,0 +1,38 @@
+{
+  "name": "contradiction_vs_consistency_paired_eval",
+  "contrast_name": "contradiction_vs_consistency_paired",
+  "output_group": "contrasts",
+  "description": "Held-out paired ASNE contrast with matched wording for matching versus differing scene information.",
+  "items": [
+    {
+      "id": "eval_paired_consistent_information_01",
+      "expected_category": "consistent_information",
+      "text": "A person reads that the workshop is in Room 118. The hallway label also says Room 118."
+    },
+    {
+      "id": "eval_paired_consistent_information_02",
+      "expected_category": "consistent_information",
+      "text": "Someone reads that the parcel goes on Shelf C7. The inventory screen also says Shelf C7."
+    },
+    {
+      "id": "eval_paired_consistent_information_03",
+      "expected_category": "consistent_information",
+      "text": "A person reads that the bus uses Bay 6. The terminal board also says Bay 6."
+    },
+    {
+      "id": "eval_paired_contradictory_information_01",
+      "expected_category": "contradictory_information",
+      "text": "A person reads that the workshop is in Room 118. The hallway label says Room 240."
+    },
+    {
+      "id": "eval_paired_contradictory_information_02",
+      "expected_category": "contradictory_information",
+      "text": "Someone reads that the parcel goes on Shelf C7. The inventory screen says Shelf D3."
+    },
+    {
+      "id": "eval_paired_contradictory_information_03",
+      "expected_category": "contradictory_information",
+      "text": "A person reads that the bus uses Bay 6. The terminal board says Bay 2."
+    }
+  ]
+}

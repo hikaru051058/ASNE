@@ -1,0 +1,128 @@
+# ASNE Dictionary Experiments
+
+ASNE dictionary experiments compare new text inputs against a controlled stimulus-response dictionary using predicted cortical response similarity. These comparisons are not emotion detection, diagnosis, or measurement of an individual person's mental state.
+
+## Current Default
+
+For `emotion_context_v0`, the default comparison setting is:
+
+```bash
+--signature delta_from_neutral --aggregation centroid --scoring full
+```
+
+This compares the full neutral-subtracted predicted response vector against category centroids. On the small `emotion_context_v0` evaluation set, this setting outperformed the experimental category-sensitive dimension modes:
+
+```text
+full scoring: 7/10 top-1 = 0.70
+topk 500: 5/10 top-1 = 0.50
+topk 1000: 6/10 top-1 = 0.60
+weighted: 6/10 top-1 = 0.60
+```
+
+Experiment note: On `emotion_context_v0`, full neutral-subtracted centroid scoring outperformed top-k and weighted category-sensitive scoring. Top-k and weighted modes may require larger dictionaries or ROI-level aggregation before they become useful. They remain available as experimental modes only.
+
+## Experimental Modes
+
+The following modes are available for analysis but are not current defaults:
+
+- `--scoring topk`: selects the dimensions with the largest absolute category delta from neutral for each category.
+- `--scoring weighted`: weights dimensions by the absolute category delta from neutral.
+- `--scoring binary_axis`: uses a signed projection along the raw centroid axis for a two-category contrast.
+- `--scoring centroid_raw`: compares raw mean-response category centroids directly.
+
+Use these modes for ablation studies, not as the primary reported setting until they improve on a held-out evaluation set.
+
+## Frozen v0 Semantic Contrast Suite
+
+Feature growth is paused for the current v0 semantic contrast benchmark. The frozen suite contains:
+
+- `contradiction_vs_consistency_paired`
+- `expected_vs_unexpected_paired`
+- `approach_vs_static_paired`
+- `cause_effect_valid_vs_invalid_paired`
+
+Recommended static scoring for binary text/TTS contrasts:
+
+```bash
+--signature mean_response --aggregation centroid --scoring centroid_raw
+```
+
+Temporal evaluation uses saved raw segment predictions and an existing static eval summary:
+
+```bash
+python scripts/evaluate_asne_temporal_contrast.py \
+  --dictionary outputs/asne_dictionaries/<contrast>_tts_macos_say_samantha_180/dictionary_index.json \
+  --eval data/stimuli/evals/contrasts/<contrast>_eval.json \
+  --eval-summary outputs/asne_evals/contrasts/<contrast>/<timestamp>_summary.json
+```
+
+Verify or regenerate the full frozen suite report:
+
+```bash
+python scripts/run_asne_semantic_contrast_suite.py --skip-build
+```
+
+Report path:
+
+```text
+outputs/asne_reports/semantic_contrast_report_v0.md
+```
+
+## Binary Contrast Scoring
+
+Binary contrast experiments use two concrete stimulus categories, such as a baseline category and a contrast category. In this setting, `delta_from_neutral` or `delta_from_baseline` can make the baseline category compete as a zero vector, which is not ideal for a two-way contrast.
+
+For `contradiction_vs_consistency_paired`, the current paired macOS TTS evaluation produced:
+
+```text
+full/delta:   4/6 top-1, consistent_information 1/3, contradictory_information 3/3
+binary_axis:  4/6 top-1, consistent_information 1/3, contradictory_information 3/3
+centroid_raw: 5/6 top-1, consistent_information 2/3, contradictory_information 3/3
+```
+
+Current recommendation: use `centroid_raw` for binary contrast experiments until more evidence suggests a better default:
+
+```bash
+--signature mean_response --aggregation centroid --scoring centroid_raw
+```
+
+`binary_axis` remains useful as a diagnostic because it removes the zero-vector baseline issue and reports a signed contrast score. However, it did not improve this paired contradiction contrast. The observed margins are small, so this should be treated as prototype predicted response-similarity signal, not a stable classifier.
+
+## Temporal Segment-Level Evaluation
+
+ASNE now supports temporal segment-level diagnostics over saved raw TRIBE segment predictions. These diagnostics compare each segment against category centroids and report early, late, final-segment, and majority segment winners. This can expose predicted response shifts that are hidden by whole-stimulus mean response pooling.
+
+Current paired contrast temporal results using existing macOS TTS outputs:
+
+| contrast | mean_response_acc | early_acc | late_acc | final_segment_acc | majority_segment_acc | avg_switch_count | recovered_mean_failures |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `contradiction_vs_consistency_paired` | 0.83 | 0.50 | 0.83 | 0.83 | 0.83 | 1.33 | 1 |
+| `approach_vs_static_paired` | 0.50 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0 |
+| `expected_vs_unexpected_paired` | 0.83 | 0.50 | 0.83 | 1.00 | 0.83 | 0.50 | 1 |
+| `cause_effect_valid_vs_invalid_paired` | 0.83 | 0.50 | 0.83 | 0.67 | 0.67 | 1.00 | 1 |
+
+Experiment note: On `expected_vs_unexpected_paired`, final-segment scoring reached `6/6`, recovering one mean-response failure. This suggests temporal analysis is useful for inspecting within-stimulus predicted response shifts. The effect did not generalize to `approach_vs_static_paired`, which remains weak in the current text/TTS pipeline and may require video stimuli or a different stimulus design.
+
+Run temporal evaluation from an existing dictionary evaluation summary:
+
+```bash
+python scripts/evaluate_asne_temporal_contrast.py \
+  --dictionary outputs/asne_dictionaries/expected_vs_unexpected_paired_tts_macos_say_samantha_180/dictionary_index.json \
+  --eval data/stimuli/evals/contrasts/expected_vs_unexpected_paired_eval.json \
+  --eval-summary outputs/asne_evals/contrasts/expected_vs_unexpected_paired/<timestamp>_summary.json
+```
+
+## v1 Dictionary Expansion Plan
+
+The next dictionary version should expand coverage while keeping labels as stimulus categories, not clinical or diagnostic claims.
+
+Targets:
+
+- `10` dictionary examples per category.
+- `5` held-out evaluation examples per category.
+- A stimulus validator that checks schema, category counts, duplicate text, and prohibited wording.
+- Stimuli should avoid direct category words, such as using the literal category label inside the text.
+- Stimuli should avoid clinical, diagnostic, surveillance, hiring, education scoring, law enforcement, or medical decision-making wording.
+- Evaluation examples should not duplicate dictionary examples.
+
+TODO: Add `emotion_context_v1.json`, `emotion_context_eval_v1.json`, and a validation command before running larger TRIBE batches.

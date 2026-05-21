@@ -1,0 +1,56 @@
+{
+  "name": "emotion_context_eval_v0",
+  "description": "Held-out controlled text stimuli for ASNE Dictionary Experiment v0. Labels are expected dictionary categories for evaluating predicted response similarity, not diagnoses or measurements of mental state.",
+  "items": [
+    {
+      "id": "eval_neutral_01",
+      "expected_category": "neutral",
+      "text": "A person waits near a bus stop while cars pass slowly through the evening traffic."
+    },
+    {
+      "id": "eval_neutral_02",
+      "expected_category": "neutral",
+      "text": "Someone opens a calendar, checks the date, and writes a short reminder for tomorrow."
+    },
+    {
+      "id": "eval_threat_01",
+      "expected_category": "threat",
+      "text": "A person notices a stranger standing too close as the hallway lights begin to flicker."
+    },
+    {
+      "id": "eval_threat_02",
+      "expected_category": "threat",
+      "text": "Someone hears glass break downstairs and freezes before deciding whether to call for help."
+    },
+    {
+      "id": "eval_sadness_01",
+      "expected_category": "sadness",
+      "text": "A person sits beside an empty chair and quietly remembers a friend who moved away."
+    },
+    {
+      "id": "eval_sadness_02",
+      "expected_category": "sadness",
+      "text": "Someone folds a letter slowly after reading that a familiar place will soon close."
+    },
+    {
+      "id": "eval_confusion_01",
+      "expected_category": "confusion",
+      "text": "A person receives two different addresses for the same appointment and cannot tell which one is correct."
+    },
+    {
+      "id": "eval_confusion_02",
+      "expected_category": "confusion",
+      "text": "Someone follows a set of instructions that skip a step and ends up unsure how to continue."
+    },
+    {
+      "id": "eval_relief_01",
+      "expected_category": "relief",
+      "text": "A person finds out the medical test was routine and lets out a long breath."
+    },
+    {
+      "id": "eval_relief_02",
+      "expected_category": "relief",
+      "text": "Someone reaches the platform just as the delayed train arrives and smiles with the pressure gone."
+    }
+  ]
+}

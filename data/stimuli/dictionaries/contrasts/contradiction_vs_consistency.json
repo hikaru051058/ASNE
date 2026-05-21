@@ -1,0 +1,52 @@
+{
+  "name": "contradiction_vs_consistency",
+  "contrast_name": "contradiction_vs_consistency",
+  "baseline_category": "consistent_information",
+  "description": "Binary ASNE contrast for matching versus conflicting scene information.",
+  "categories": {
+    "consistent_information": [
+      {
+        "id": "consistent_information_01",
+        "text": "A person reads a gate number on a ticket and sees the matching gate number on the display."
+      },
+      {
+        "id": "consistent_information_02",
+        "text": "Someone checks a package tag and finds the printed name matches the delivery slip."
+      },
+      {
+        "id": "consistent_information_03",
+        "text": "A person follows the map to room 204 and sees that the door sign names the expected office."
+      },
+      {
+        "id": "consistent_information_04",
+        "text": "Someone reads the notice by the entrance and sees people using the door named on the sign."
+      },
+      {
+        "id": "consistent_information_05",
+        "text": "A person checks the schedule and sees the speaker listed in the room printed on the badge."
+      }
+    ],
+    "contradictory_information": [
+      {
+        "id": "contradictory_information_01",
+        "text": "A person reads a gate number on a ticket while the display shows another gate number."
+      },
+      {
+        "id": "contradictory_information_02",
+        "text": "Someone checks a package tag and finds the printed name differs from the delivery slip."
+      },
+      {
+        "id": "contradictory_information_03",
+        "text": "A person follows the map to room 204, but the door sign names another office."
+      },
+      {
+        "id": "contradictory_information_04",
+        "text": "Someone reads the notice by the entrance while people use a door the sign says is closed."
+      },
+      {
+        "id": "contradictory_information_05",
+        "text": "A person checks the schedule and sees the speaker listed in two rooms for the same hour."
+      }
+    ]
+  }
+}

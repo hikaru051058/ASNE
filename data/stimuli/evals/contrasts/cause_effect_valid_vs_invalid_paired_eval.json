@@ -1,0 +1,44 @@
+{
+  "name": "cause_effect_valid_vs_invalid_paired_eval",
+  "contrast_name": "cause_effect_valid_vs_invalid_paired",
+  "output_group": "contrasts",
+  "description": "Held-out paired ASNE contrast with matched wording for ordinary outcomes versus outcomes that do not follow normal physical or practical sequence.",
+  "items": [
+    {
+      "id": "eval_paired_valid_cause_effect_01",
+      "expected_category": "valid_cause_effect",
+      "pair_id": "eval_pair_01",
+      "text": "A person tips a bottle onto its side. Juice runs across the counter."
+    },
+    {
+      "id": "eval_paired_valid_cause_effect_02",
+      "expected_category": "valid_cause_effect",
+      "pair_id": "eval_pair_02",
+      "text": "Someone turns a key in a locked door. The door opens into the hallway."
+    },
+    {
+      "id": "eval_paired_valid_cause_effect_03",
+      "expected_category": "valid_cause_effect",
+      "pair_id": "eval_pair_03",
+      "text": "A person tears a thin envelope in half. Two torn pieces fall onto the table."
+    },
+    {
+      "id": "eval_paired_invalid_cause_effect_01",
+      "expected_category": "invalid_cause_effect",
+      "pair_id": "eval_pair_01",
+      "text": "A person tips a bottle onto its side. The counter becomes clean and dry."
+    },
+    {
+      "id": "eval_paired_invalid_cause_effect_02",
+      "expected_category": "invalid_cause_effect",
+      "pair_id": "eval_pair_02",
+      "text": "Someone turns a key in a locked door. The door changes into a stack of books."
+    },
+    {
+      "id": "eval_paired_invalid_cause_effect_03",
+      "expected_category": "invalid_cause_effect",
+      "pair_id": "eval_pair_03",
+      "text": "A person tears a thin envelope in half. The envelope becomes sealed and flat."
+    }
+  ]
+}

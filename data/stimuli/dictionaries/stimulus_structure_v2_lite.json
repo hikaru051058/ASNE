@@ -1,0 +1,116 @@
+{
+  "name": "stimulus_structure_v2_lite",
+  "description": "Controlled stimulus-response dictionary using concrete event-structure labels for ASNE v2-lite. Labels describe stimulus structure for predicted response similarity only.",
+  "categories": {
+    "ordinary_observation": [
+      {
+        "id": "ordinary_observation_lite_01",
+        "text": "A person stands by a window and watches rain collect along the edge of the sidewalk."
+      },
+      {
+        "id": "ordinary_observation_lite_02",
+        "text": "Someone waits beside a vending machine while a custodian rolls a cart across the lobby."
+      },
+      {
+        "id": "ordinary_observation_lite_03",
+        "text": "A person looks over a shelf of labeled boxes and writes two numbers on a clipboard."
+      },
+      {
+        "id": "ordinary_observation_lite_04",
+        "text": "Someone sits near the station clock and watches passengers line up at the ticket counter."
+      },
+      {
+        "id": "ordinary_observation_lite_05",
+        "text": "A person pauses near a courtyard fountain while leaves move across the stone path."
+      }
+    ],
+    "approaching_agent": [
+      {
+        "id": "approaching_agent_lite_01",
+        "text": "A person notices a cyclist drawing nearer from the end of the narrow lane."
+      },
+      {
+        "id": "approaching_agent_lite_02",
+        "text": "Someone turns as a delivery cart rolls closer from behind the stacked shelves."
+      },
+      {
+        "id": "approaching_agent_lite_03",
+        "text": "A person sees a figure step out from the stairwell and move toward the hallway."
+      },
+      {
+        "id": "approaching_agent_lite_04",
+        "text": "Someone hears wheels on the gravel as a small vehicle comes nearer through the gate."
+      },
+      {
+        "id": "approaching_agent_lite_05",
+        "text": "A person looks up when a dog on a long leash trots closer across the plaza."
+      }
+    ],
+    "loss_or_absence": [
+      {
+        "id": "loss_or_absence_lite_01",
+        "text": "A person opens the cabinet and finds the labeled folder is no longer inside."
+      },
+      {
+        "id": "loss_or_absence_lite_02",
+        "text": "Someone reaches the platform and sees that the last train has already left."
+      },
+      {
+        "id": "loss_or_absence_lite_03",
+        "text": "A person checks the hook by the door and finds the spare key is gone."
+      },
+      {
+        "id": "loss_or_absence_lite_04",
+        "text": "Someone returns to the table and sees the sealed envelope is not there."
+      },
+      {
+        "id": "loss_or_absence_lite_05",
+        "text": "A person enters the studio and finds the chair beside the piano empty."
+      }
+    ],
+    "contradictory_information": [
+      {
+        "id": "contradictory_information_lite_01",
+        "text": "A person reads a ticket showing gate seven while the board lists gate twelve."
+      },
+      {
+        "id": "contradictory_information_lite_02",
+        "text": "Someone compares the printed receipt with the box label and sees different item numbers."
+      },
+      {
+        "id": "contradictory_information_lite_03",
+        "text": "A person follows a map to room 204, but the door sign shows another department."
+      },
+      {
+        "id": "contradictory_information_lite_04",
+        "text": "Someone reads a notice saying the entrance is closed while people are walking through it."
+      },
+      {
+        "id": "contradictory_information_lite_05",
+        "text": "A person checks the schedule and sees the same speaker listed in two rooms at once."
+      }
+    ],
+    "problem_resolved": [
+      {
+        "id": "problem_resolved_lite_01",
+        "text": "A person finds the misplaced badge tucked inside the folded jacket pocket."
+      },
+      {
+        "id": "problem_resolved_lite_02",
+        "text": "Someone refreshes the form and sees the confirmation number appear at the top."
+      },
+      {
+        "id": "problem_resolved_lite_03",
+        "text": "A person checks the hallway again and sees the technician replacing the broken panel."
+      },
+      {
+        "id": "problem_resolved_lite_04",
+        "text": "Someone opens the storage drawer and finds the cable needed for the projector."
+      },
+      {
+        "id": "problem_resolved_lite_05",
+        "text": "A person reads the updated message and sees that the meeting room has been assigned."
+      }
+    ]
+  }
+}
