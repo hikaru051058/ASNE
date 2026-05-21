@@ -13,6 +13,7 @@ import numpy as np
 
 from asne.dictionary import (
     COMPARISON_DISCLAIMER,
+    TEMPORAL_SIGNATURES,
     aggregate_categories,
     build_signature_records,
     classify_binary_contrast_axis,
@@ -31,6 +32,7 @@ from asne.dictionary import (
     top_abs_indices,
     vector_norm,
 )
+from asne.roi import aggregate_vertices_to_parcels, load_parcellation, validate_parcellation
 from asne.tribe_adapter import TribeV2Adapter
 
 
@@ -70,6 +72,54 @@ def _predict_text(
         temp_path.unlink(missing_ok=True)
 
 
+def _load_feature_space(args: argparse.Namespace) -> dict[str, Any]:
+    feature_space = getattr(args, "feature_space", "vertex")
+    if feature_space == "vertex":
+        return {
+            "feature_space": "vertex",
+            "parcellation": None,
+            "parcellation_path": None,
+            "parcel_ids": None,
+            "parcel_count": None,
+        }
+    if feature_space != "parcel":
+        raise ValueError(f"Unsupported feature space: {feature_space}")
+    parcellation_path = getattr(args, "parcellation", None)
+    if not parcellation_path:
+        raise ValueError("--parcellation is required when --feature-space parcel.")
+    parcellation = load_parcellation(parcellation_path)
+    validate_parcellation(parcellation, expected_vertices=int(getattr(args, "expected_vertices", 20484)))
+    return {
+        "feature_space": "parcel",
+        "parcellation": parcellation,
+        "parcellation_path": str(parcellation_path),
+        "parcel_ids": list(parcellation["by_parcel"]),
+        "parcel_count": int(parcellation["parcel_count"]),
+    }
+
+
+def _to_feature_vector(vector: Any, feature_info: dict[str, Any]) -> np.ndarray:
+    array = np.asarray(vector, dtype=float)
+    if feature_info["feature_space"] == "vertex":
+        return array
+    parcellation = feature_info["parcellation"]
+    parcel_values = aggregate_vertices_to_parcels(array, parcellation)
+    return np.asarray([parcel_values[parcel_id] for parcel_id in feature_info["parcel_ids"]], dtype=float)
+
+
+def _records_to_feature_space(records: list[dict[str, Any]], feature_info: dict[str, Any]) -> list[dict[str, Any]]:
+    if feature_info["feature_space"] == "vertex":
+        return records
+    transformed = []
+    for record in records:
+        updated = dict(record)
+        updated["mean_response"] = _to_feature_vector(record["mean_response"], feature_info)
+        updated["source_response_shape"] = record.get("response_shape")
+        updated["feature_space"] = "parcel"
+        transformed.append(updated)
+    return transformed
+
+
 def compare_text_with_adapter(
     args: argparse.Namespace,
     adapter: TribeV2Adapter,
@@ -78,17 +128,21 @@ def compare_text_with_adapter(
     neutral_baseline_source_count: int | None = None,
 ) -> dict[str, Any]:
     records = records if records is not None else load_dictionary_records(args.dictionary)
+    feature_info = _load_feature_space(args)
+    if feature_info["feature_space"] == "parcel" and args.signature in TEMPORAL_SIGNATURES:
+        raise ValueError("Parcel feature-space scoring currently supports static mean_response/delta signatures only.")
+    feature_records = _records_to_feature_space(records, feature_info)
     neutral_category = neutral_category_from_dictionary_index(
         args.dictionary,
         getattr(args, "neutral_category", None),
     )
     neutral_baseline = (
-        neutral_baseline
+        _to_feature_vector(neutral_baseline, feature_info)
         if neutral_baseline is not None
-        else compute_neutral_baseline(records, neutral_category=neutral_category)
+        else compute_neutral_baseline(feature_records, neutral_category=neutral_category)
     )
     if neutral_baseline_source_count is None:
-        neutral_baseline_source_count = count_neutral_records(records, neutral_category=neutral_category)
+        neutral_baseline_source_count = count_neutral_records(feature_records, neutral_category=neutral_category)
 
     timestamp = datetime.now(timezone.utc)
     output_dir = Path(args.output_root) / "asne_comparisons"
@@ -97,11 +151,11 @@ def compare_text_with_adapter(
     query_raw_path = output_dir / "query_raw_segments" / f"{output_path.stem}.npy"
 
     prediction = _predict_text(adapter, args.text, raw_prediction_path=query_raw_path)
+    query_response = _to_feature_vector(prediction["response"], feature_info)
     query_record = {
-        "mean_response": prediction["response"],
+        "mean_response": query_response,
         "raw_segment_prediction_path": str(query_raw_path) if query_raw_path.exists() else None,
     }
-    query_response = np.asarray(prediction["response"], dtype=float)
     query_vector = signature_vector(
         query_record,
         signature=args.signature,
@@ -109,7 +163,7 @@ def compare_text_with_adapter(
     )
     sort_metric = "cosine" if args.metric in {"cosine", "both"} else "pearson"
     signature_records = build_signature_records(
-        records,
+        feature_records,
         signature=args.signature,
         neutral_baseline=neutral_baseline,
     )
@@ -123,7 +177,7 @@ def compare_text_with_adapter(
     category_scoring_diagnostics: dict[str, Any] = {}
     scoring_warning = None
     if scoring == "binary_axis":
-        raw_signature_records = build_signature_records(records, signature="mean_response")
+        raw_signature_records = build_signature_records(feature_records, signature="mean_response")
         raw_centroids = compute_category_centroids(raw_signature_records)
         if len(raw_centroids) != 2:
             raise ValueError("binary_axis scoring requires a dictionary with exactly 2 categories.")
@@ -168,8 +222,8 @@ def compare_text_with_adapter(
                 f"requested signature {args.signature!r} is retained only for non-axis diagnostics."
             )
     elif scoring == "paired_vote":
-        category_scores, paired_vote_diagnostics = score_paired_vote(query_response, records)
-        raw_signature_records = build_signature_records(records, signature="mean_response")
+        category_scores, paired_vote_diagnostics = score_paired_vote(query_response, feature_records)
+        raw_signature_records = build_signature_records(feature_records, signature="mean_response")
         raw_ranked_signatures = rank_signature_vectors(
             query_response,
             raw_signature_records,
@@ -194,7 +248,7 @@ def compare_text_with_adapter(
             )
     elif scoring == "centroid_raw":
         raw_signature_records = build_signature_records(
-            records,
+            feature_records,
             signature=args.signature,
             neutral_baseline=neutral_baseline,
         )
@@ -229,7 +283,7 @@ def compare_text_with_adapter(
             sort_metric=sort_metric,
         )
     else:
-        category_deltas = compute_category_deltas(records, neutral_baseline)
+        category_deltas = compute_category_deltas(feature_records, neutral_baseline)
         category_scores, category_scoring_diagnostics = score_category_deltas(
             query_vector,
             category_deltas,
@@ -288,6 +342,9 @@ def compare_text_with_adapter(
         "metric_mode": args.metric,
         "aggregation_mode": args.aggregation,
         "scoring_mode": scoring,
+        "feature_space": feature_info["feature_space"],
+        "parcellation_path": feature_info["parcellation_path"],
+        "parcel_count": feature_info["parcel_count"],
         "top_k": top_k,
         "scoring_warning": scoring_warning,
         "expected_category": expected_category,
@@ -425,6 +482,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="Number of category-sensitive dimensions to use when --scoring topk. Experimental.",
     )
     parser.add_argument(
+        "--feature-space",
+        choices=["vertex", "parcel"],
+        default="vertex",
+        help="Feature space for comparison. 'vertex' preserves the raw 20,484-dim benchmark; 'parcel' aggregates to ROI parcels.",
+    )
+    parser.add_argument(
+        "--parcellation",
+        default=None,
+        help="CSV/JSON parcellation required when --feature-space parcel.",
+    )
+    parser.add_argument("--expected-vertices", type=int, default=20484, help=argparse.SUPPRESS)
+    parser.add_argument(
         "--expected-category",
         default=None,
         help="Optional expected category for diagnostics only.",
@@ -449,6 +518,7 @@ def main() -> int:
     print(f"Metric: {args.metric}")
     print(f"Aggregation: {args.aggregation}")
     print(f"Scoring: {args.scoring}")
+    print(f"Feature space: {args.feature_space}")
     for index, item in enumerate(result["category_scores"], start=1):
         if args.metric == "cosine":
             score = item.get("score", item.get("centroid_cosine_similarity", item.get("best_cosine_similarity", item.get("mean_cosine_similarity", 0.0))))

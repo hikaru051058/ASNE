@@ -29,6 +29,10 @@ def _write_json(path: Path, payload: dict[str, Any]) -> None:
 
 
 def evaluate_dictionary(args: argparse.Namespace) -> dict[str, Any]:
+    args.feature_space = getattr(args, "feature_space", "vertex")
+    args.parcellation = getattr(args, "parcellation", None)
+    if args.feature_space == "parcel" and not args.parcellation:
+        raise ValueError("--parcellation is required when --feature-space parcel.")
     eval_payload = load_eval_set(args.eval)
     eval_name = slugify(str(eval_payload.get("name") or Path(args.eval).stem))
     output_group = eval_payload.get("output_group")
@@ -105,6 +109,9 @@ def evaluate_dictionary(args: argparse.Namespace) -> dict[str, Any]:
             aggregation=args.aggregation,
             scoring=args.scoring,
             top_k=args.top_k,
+            feature_space=args.feature_space,
+            parcellation=args.parcellation,
+            expected_vertices=getattr(args, "expected_vertices", 20484),
             expected_category=expected,
             neutral_category=neutral_category,
         )
@@ -137,6 +144,9 @@ def evaluate_dictionary(args: argparse.Namespace) -> dict[str, Any]:
                 "query_movement_diagnostics": comparison_payload.get("query_movement_diagnostics", {}),
                 "binary_axis": comparison_payload.get("binary_axis"),
                 "paired_vote": comparison_payload.get("paired_vote"),
+                "feature_space": comparison_payload.get("feature_space"),
+                "parcellation_path": comparison_payload.get("parcellation_path"),
+                "parcel_count": comparison_payload.get("parcel_count"),
                 "per_category_centroid_norm": comparison_payload.get("per_category_centroid_norm", {}),
                 "category_delta_norm": comparison_payload.get("category_delta_norm", {}),
                 "selected_dim_count": comparison_payload.get("selected_dim_count", {}),
@@ -179,6 +189,12 @@ def evaluate_dictionary(args: argparse.Namespace) -> dict[str, Any]:
     if output_group:
         summary["output_group"] = output_group
     summary["neutral_baseline_category"] = neutral_category
+    summary["feature_space"] = args.feature_space
+    summary["parcellation_path"] = args.parcellation
+    summary["parcel_count"] = next(
+        (result.get("parcel_count") for result in results if result.get("parcel_count") is not None),
+        None,
+    )
     summary["results"] = results
 
     summary_path = eval_output_dir / f"{run_id}_summary.json"
@@ -269,6 +285,18 @@ def build_parser() -> argparse.ArgumentParser:
         default=500,
         help="Number of category-sensitive dimensions to use when --scoring topk. Experimental.",
     )
+    parser.add_argument(
+        "--feature-space",
+        choices=["vertex", "parcel"],
+        default="vertex",
+        help="Feature space for comparison. 'vertex' preserves current scoring; 'parcel' aggregates through --parcellation.",
+    )
+    parser.add_argument(
+        "--parcellation",
+        default=None,
+        help="CSV/JSON parcellation required when --feature-space parcel.",
+    )
+    parser.add_argument("--expected-vertices", type=int, default=20484, help=argparse.SUPPRESS)
     parser.add_argument("--debug-traceback", action="store_true")
     return parser
 

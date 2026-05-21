@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 from argparse import Namespace
 from pathlib import Path
 
@@ -66,6 +67,21 @@ def test_compare_cli_accepts_signature_and_metric() -> None:
     )
     assert vote_args.scoring == "paired_vote"
 
+    parcel_args = parser.parse_args(
+        [
+            "--dictionary",
+            "outputs/asne_dictionaries/expected_vs_unexpected_paired/dictionary_index.json",
+            "--text",
+            "sample",
+            "--feature-space",
+            "parcel",
+            "--parcellation",
+            "data/parcellations/fsaverage5_hcp_mmp.csv",
+        ]
+    )
+    assert parcel_args.feature_space == "parcel"
+    assert parcel_args.parcellation == "data/parcellations/fsaverage5_hcp_mmp.csv"
+
 
 def test_compare_cli_accepts_higgs_tts_backend() -> None:
     module = _load_compare_module()
@@ -86,6 +102,32 @@ def test_compare_cli_accepts_higgs_tts_backend() -> None:
 
     assert args.tts_backend == "higgs_audio"
     assert args.higgs_device == "mps"
+
+
+def test_evaluate_cli_accepts_feature_space_and_parcellation() -> None:
+    sys.path.insert(0, str(Path("scripts").resolve()))
+    path = Path("scripts/evaluate_asne_dictionary.py")
+    spec = importlib.util.spec_from_file_location("evaluate_asne_dictionary", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    parser = module.build_parser()
+
+    args = parser.parse_args(
+        [
+            "--dictionary",
+            "dictionary_index.json",
+            "--eval",
+            "eval.json",
+            "--feature-space",
+            "parcel",
+            "--parcellation",
+            "data/parcellations/fsaverage5_hcp_mmp.csv",
+        ]
+    )
+
+    assert args.feature_space == "parcel"
+    assert args.parcellation == "data/parcellations/fsaverage5_hcp_mmp.csv"
 
 
 def test_compare_json_includes_disclaimer(tmp_path: Path, monkeypatch) -> None:
@@ -337,6 +379,96 @@ def test_paired_vote_comparison_json_contains_vote_diagnostics(tmp_path: Path, m
     assert payload["scoring_mode"] == "paired_vote"
     assert payload["paired_vote"]["vote_counts"]["b"] == 2
     assert len(payload["paired_vote"]["votes"]) == 2
+    assert payload["per_category_ranking"][0]["category"] == "b"
+    assert payload["rank_of_expected"] == 1
+
+
+def test_parcel_feature_space_requires_parcellation(tmp_path: Path, monkeypatch) -> None:
+    module = _load_compare_module()
+    index_path = tmp_path / "dictionary_index.json"
+    index_path.write_text(json.dumps({"dictionary_name": "fake", "stimuli": []}), encoding="utf-8")
+    monkeypatch.setattr(module, "_predict_text", lambda adapter, text, raw_prediction_path=None: {"response": [1.0], "metadata": {}})
+
+    args = Namespace(
+        dictionary=str(index_path),
+        text="query",
+        output_root=str(tmp_path),
+        signature="mean_response",
+        metric="both",
+        aggregation="centroid",
+        scoring="centroid_raw",
+        top_k=2,
+        feature_space="parcel",
+        parcellation=None,
+        expected_category=None,
+        neutral_category="a",
+    )
+
+    try:
+        module.compare_text_with_adapter(args, object(), records=[])
+    except ValueError as exc:
+        assert "--parcellation is required" in str(exc)
+    else:
+        raise AssertionError("parcel feature space should require --parcellation")
+
+
+def test_parcel_feature_space_aggregates_vectors_for_scoring(tmp_path: Path, monkeypatch) -> None:
+    module = _load_compare_module()
+    parcellation = tmp_path / "parcellation.csv"
+    parcellation.write_text(
+        "\n".join(
+            [
+                "vertex_index,parcel_id,parcel_name",
+                "0,p0,Parcel 0",
+                "1,p0,Parcel 0",
+                "2,p1,Parcel 1",
+                "3,p1,Parcel 1",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    records = [
+        {"dictionary_name": "fake", "category": "a", "stimulus_id": "a1", "mean_response": [1.0, 1.0, 0.0, 0.0]},
+        {"dictionary_name": "fake", "category": "b", "stimulus_id": "b1", "mean_response": [0.0, 0.0, 2.0, 2.0]},
+    ]
+    stimuli = []
+    for record in records:
+        path = tmp_path / f"{record['stimulus_id']}.json"
+        path.write_text(json.dumps(record), encoding="utf-8")
+        stimuli.append({"category": record["category"], "stimulus_id": record["stimulus_id"], "output_path": str(path)})
+    index_path = tmp_path / "dictionary_index.json"
+    index_path.write_text(
+        json.dumps({"dictionary_name": "fake", "neutral_baseline_category": "a", "stimuli": stimuli}),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        module,
+        "_predict_text",
+        lambda adapter, text, raw_prediction_path=None: {"response": [0.0, 0.0, 3.0, 3.0], "metadata": {}},
+    )
+
+    args = Namespace(
+        dictionary=str(index_path),
+        text="query",
+        output_root=str(tmp_path),
+        signature="mean_response",
+        metric="both",
+        aggregation="centroid",
+        scoring="centroid_raw",
+        top_k=2,
+        feature_space="parcel",
+        parcellation=str(parcellation),
+        expected_vertices=4,
+        expected_category="b",
+        neutral_category="a",
+    )
+    result = module.compare_text_with_adapter(args, object())
+    payload = json.loads(Path(result["output_path"]).read_text(encoding="utf-8"))
+
+    assert payload["feature_space"] == "parcel"
+    assert payload["parcel_count"] == 2
+    assert payload["parcellation_path"] == str(parcellation)
+    assert payload["selected_dim_count"]["b"] == 2
     assert payload["per_category_ranking"][0]["category"] == "b"
     assert payload["rank_of_expected"] == 1
 
