@@ -45,6 +45,7 @@ def test_report_generation_with_fake_summaries(tmp_path: Path) -> None:
     static = tmp_path / "static" / "fake_contrast" / "20260101T000000Z_summary.json"
     temporal = tmp_path / "temporal" / "fake_contrast" / "20260101T000000Z_temporal_summary.json"
     roi = tmp_path / "roi" / "fake_contrast" / "roi_report.md"
+    vertex_vs_parcel = Path("outputs/asne_reports/vertex_vs_parcel_scoring_v0.md")
     static.parent.mkdir(parents=True)
     temporal.parent.mkdir(parents=True)
     roi.parent.mkdir(parents=True)
@@ -111,6 +112,8 @@ def test_report_generation_with_fake_summaries(tmp_path: Path) -> None:
     assert "p3" in report
     assert "Add ROI or parcel-level aggregation for interpretability" not in report
     assert "predicted stimulus-response similarity" in report
+    if vertex_vs_parcel.exists():
+        assert "Vertex vs Parcel Scoring" in report
 
 
 def test_roi_report_discovery_finds_canonical_and_timestamped_names(tmp_path: Path) -> None:
@@ -157,6 +160,37 @@ def test_extract_top_roi_parcels_from_named_section(tmp_path: Path) -> None:
         {"rank": "1", "parcel_id": "p1", "parcel_name": "Parcel 1", "delta": "-0.500000", "abs_delta": "0.500000"}
     ]
     assert late_rows[0]["parcel_id"] == "p3"
+
+
+def test_extract_vertex_vs_parcel_rows(tmp_path: Path) -> None:
+    module = _load_script("scripts/generate_asne_contrast_report.py", "contrast_report_vertex_parcel")
+    report = tmp_path / "vertex_vs_parcel.md"
+    report.write_text(
+        "\n".join(
+            [
+                "| contrast | vertex_top1 | parcel_top1 | vertex_top2 | parcel_top2 | vertex_mean_rank | parcel_mean_rank | difference | recommendation |",
+                "|---|---:|---:|---:|---:|---:|---:|---:|---|",
+                "| `contrast_a` | 0.83 | 0.83 | 1.00 | 1.00 | 1.17 | 1.17 | 0.00 | parcel viable |",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    rows = module.extract_vertex_vs_parcel_rows(report)
+
+    assert rows == [
+        {
+            "contrast": "contrast_a",
+            "vertex_top1": "0.83",
+            "parcel_top1": "0.83",
+            "vertex_top2": "1.00",
+            "parcel_top2": "1.00",
+            "vertex_mean_rank": "1.17",
+            "parcel_mean_rank": "1.17",
+            "difference": "0.00",
+            "recommendation": "parcel viable",
+        }
+    ]
 
 
 def test_suite_dry_run_without_tribe(monkeypatch, capsys) -> None:

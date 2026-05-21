@@ -105,6 +105,38 @@ def _format_roi_rows(rows: list[dict[str, str]]) -> str:
     )
 
 
+def find_vertex_vs_parcel_report(path: str | Path = "outputs/asne_reports/vertex_vs_parcel_scoring_v0.md") -> str | None:
+    report_path = Path(path)
+    return str(report_path) if report_path.exists() else None
+
+
+def extract_vertex_vs_parcel_rows(report_path: str | Path) -> list[dict[str, str]]:
+    path = Path(report_path)
+    if not path.exists():
+        return []
+    rows = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("| `"):
+            continue
+        parts = [part.strip().strip("`") for part in line.strip("|").split("|")]
+        if len(parts) < 9:
+            continue
+        rows.append(
+            {
+                "contrast": parts[0],
+                "vertex_top1": parts[1],
+                "parcel_top1": parts[2],
+                "vertex_top2": parts[3],
+                "parcel_top2": parts[4],
+                "vertex_mean_rank": parts[5],
+                "parcel_mean_rank": parts[6],
+                "difference": parts[7],
+                "recommendation": parts[8],
+            }
+        )
+    return rows
+
+
 def per_category_accuracy_text(summary: dict[str, Any] | None) -> str:
     if not summary:
         return "n/a"
@@ -124,6 +156,12 @@ def build_report(
     static = {contrast: find_static_summary(contrast, static_root) for contrast in contrasts}
     temporal = {contrast: find_temporal_summary(contrast, temporal_root) for contrast in contrasts}
     roi_reports = {contrast: find_roi_reports(contrast, roi_root) for contrast in contrasts}
+    vertex_vs_parcel_report = find_vertex_vs_parcel_report()
+    vertex_vs_parcel_rows = (
+        extract_vertex_vs_parcel_rows(vertex_vs_parcel_report)
+        if vertex_vs_parcel_report
+        else []
+    )
     lines = [
         "# ASNE Semantic Contrast Report v0",
         "",
@@ -210,6 +248,27 @@ def build_report(
                 late_parcels = "n/a"
             lines.append(f"| `{contrast}` | {links} | {parcels} | {late_parcels} |")
 
+    if vertex_vs_parcel_rows:
+        lines.extend(
+            [
+                "",
+                "## Vertex vs Parcel Scoring",
+                "",
+                "ASNE v0.2 adds HCP-MMP parcel-level scoring as an interpretable feature-space option. "
+                "The frozen semantic suite shows that parcel-level centroid scoring preserves the vertex-level benchmark accuracy on the current four contrasts.",
+                "",
+                f"Full comparison report: `{vertex_vs_parcel_report}`",
+                "",
+                "| contrast | vertex_top1 | parcel_top1 | vertex_top2 | parcel_top2 | difference | recommendation |",
+                "|---|---:|---:|---:|---:|---:|---|",
+            ]
+        )
+        for row in vertex_vs_parcel_rows:
+            lines.append(
+                f"| `{row['contrast']}` | {row['vertex_top1']} | {row['parcel_top1']} | "
+                f"{row['vertex_top2']} | {row['parcel_top2']} | {row['difference']} | {row['recommendation']} |"
+            )
+
     lines.extend(
         [
             "",
@@ -218,7 +277,8 @@ def build_report(
             "Semantic and logical text contrasts separate better than narrated motion-style contrasts in the current text/TTS ASNE pipeline. "
             "`expected_vs_unexpected_paired` showed the strongest temporal result, with final-segment accuracy reaching `1.00`. "
             "`approach_vs_static_paired` stayed weak across static and temporal views, suggesting it may require video-native stimuli or a different stimulus design. "
-            "HCP-MMP ROI reports now summarize which parcels contribute most to predicted contrast deltas; temporal movement parcels should be interpreted cautiously because they can reflect TTS/audio processing dynamics.",
+            "HCP-MMP ROI reports now summarize which parcels contribute most to predicted contrast deltas; temporal movement parcels should be interpreted cautiously because they can reflect TTS/audio processing dynamics. "
+            "Parcel-level centroid scoring preserved the current vertex-level benchmark accuracy, making it a viable interpretable scoring option for further experiments.",
             "",
             "## Limitations",
             "",
@@ -234,6 +294,7 @@ def build_report(
             "- Test video-native contrasts separately from narrated text/TTS contrasts.",
             "- Refine ROI interpretation and separate semantic contrast deltas from TTS/audio-driven temporal movement.",
             "- Consider ROI-level scoring or ROI-level temporal normalization after the current vertex-level benchmark remains stable.",
+            "- Expand the eval sets before treating parcel-level scoring as a replacement for the vertex benchmark.",
             "- Build an HTML or interactive temporal visualizer after the artifact format stabilizes.",
             "",
             "## Reproduction Commands",

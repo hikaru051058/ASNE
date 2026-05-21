@@ -112,6 +112,30 @@ Current ROI report paths:
 
 These ROI reports summarize predicted TRIBE response signatures. They are not measured brain activity, diagnosis, or measurement of a person's mental state. In the text/TTS pipeline, temporal movement summaries can be dominated by auditory parcels, so contrast-delta parcels are currently the more useful ROI view for semantic interpretation.
 
+## ASNE v0.2 Parcel-Level Scoring Result
+
+ASNE v0.2 tests whether HCP-MMP parcel vectors can be used directly for scoring instead of only reporting. The experiment compares:
+
+- Vertex benchmark: `feature_space=vertex`, `signature=mean_response`, `aggregation=centroid`, `scoring=centroid_raw`
+- Parcel scoring: `feature_space=parcel`, `signature=mean_response`, `aggregation=centroid`, `scoring=centroid_raw`
+
+Report path:
+
+```text
+outputs/asne_reports/vertex_vs_parcel_scoring_v0.md
+```
+
+Current result on the frozen semantic suite:
+
+| contrast | vertex top1 | parcel top1 |
+|---|---:|---:|
+| `contradiction_vs_consistency_paired` | 0.83 | 0.83 |
+| `expected_vs_unexpected_paired` | 0.83 | 0.83 |
+| `approach_vs_static_paired` | 0.50 | 0.50 |
+| `cause_effect_valid_vs_invalid_paired` | 0.83 | 0.83 |
+
+Conclusion: HCP-MMP parcel-level centroid scoring preserves the current vertex-level benchmark accuracy on the small frozen suite. It is now a viable interpretable scoring option for experiments, but the raw vertex benchmark remains primary until larger evaluation sets confirm stability.
+
 ## Binary Contrast Scoring
 
 Binary contrast experiments use two concrete stimulus categories, such as a baseline category and a contrast category. In this setting, `delta_from_neutral` or `delta_from_baseline` can make the baseline category compete as a zero vector, which is not ideal for a two-way contrast.

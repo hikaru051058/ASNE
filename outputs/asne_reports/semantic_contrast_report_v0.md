@@ -16,10 +16,10 @@ ASNE is a TRIBE-backed in-silico stimulus-response analysis system that compares
 
 | contrast | best/default scoring | top1 accuracy | top2 accuracy | per-category accuracy | summary path |
 |---|---|---:|---:|---|---|
-| `contradiction_vs_consistency_paired` | `mean_response/centroid/centroid_raw` | 0.83 | 1.00 | consistent_information: 2/3; contradictory_information: 3/3 | `outputs/asne_evals/contrasts/contradiction_vs_consistency_paired/20260521T012445Z_summary.json` |
-| `expected_vs_unexpected_paired` | `mean_response/centroid/centroid_raw` | 0.83 | 1.00 | expected_outcome: 2/3; unexpected_outcome: 3/3 | `outputs/asne_evals/contrasts/expected_vs_unexpected_paired/20260521T012803Z_summary.json` |
-| `approach_vs_static_paired` | `mean_response/centroid/centroid_raw` | 0.50 | 1.00 | static_scene: 1/3; approaching_agent: 2/3 | `outputs/asne_evals/contrasts/approach_vs_static_paired/20260521T000101Z_summary.json` |
-| `cause_effect_valid_vs_invalid_paired` | `mean_response/centroid/centroid_raw` | 0.83 | 1.00 | valid_cause_effect: 3/3; invalid_cause_effect: 2/3 | `outputs/asne_evals/contrasts/cause_effect_valid_vs_invalid_paired/20260521T021339Z_summary.json` |
+| `contradiction_vs_consistency_paired` | `mean_response/centroid/centroid_raw` | 0.83 | 1.00 | consistent_information: 2/3; contradictory_information: 3/3 | `outputs/asne_evals/contrasts/contradiction_vs_consistency_paired/20260521T060846Z_summary.json` |
+| `expected_vs_unexpected_paired` | `mean_response/centroid/centroid_raw` | 0.83 | 1.00 | expected_outcome: 2/3; unexpected_outcome: 3/3 | `outputs/asne_evals/contrasts/expected_vs_unexpected_paired/20260521T060946Z_summary.json` |
+| `approach_vs_static_paired` | `mean_response/centroid/centroid_raw` | 0.50 | 1.00 | static_scene: 1/3; approaching_agent: 2/3 | `outputs/asne_evals/contrasts/approach_vs_static_paired/20260521T061043Z_summary.json` |
+| `cause_effect_valid_vs_invalid_paired` | `mean_response/centroid/centroid_raw` | 0.83 | 1.00 | valid_cause_effect: 3/3; invalid_cause_effect: 2/3 | `outputs/asne_evals/contrasts/cause_effect_valid_vs_invalid_paired/20260521T061141Z_summary.json` |
 
 ## Temporal Contrast Results
 
@@ -41,9 +41,22 @@ ROI summaries use HCP-MMP parcel aggregation over TRIBE's `20,484` fsaverage5 ve
 | `approach_vs_static_paired` | `outputs/asne_roi_reports/approach_vs_static_paired/roi_report.md` | 1. `lh_a5` (0.038568)<br>2. `rh_a5` (0.034325)<br>3. `lh_a4` (0.029272)<br>4. `lh_vmv2` (0.027005)<br>5. `lh_v3cd` (0.026829) | 1. `rh_lbelt` (0.419540)<br>2. `rh_pbelt` (0.380894)<br>3. `lh_lbelt` (0.380366)<br>4. `lh_a1` (0.321541)<br>5. `lh_pbelt` (0.309302) |
 | `cause_effect_valid_vs_invalid_paired` | `outputs/asne_roi_reports/cause_effect_valid_vs_invalid_paired/roi_report.md` | 1. `rh_pcv` (0.108673)<br>2. `rh_pos1` (0.091479)<br>3. `rh_7m` (0.090292)<br>4. `rh_pos2` (0.085859)<br>5. `lh_pcv` (0.085271) | 1. `rh_lbelt` (0.397385)<br>2. `lh_lbelt` (0.371433)<br>3. `rh_pbelt` (0.351172)<br>4. `lh_a1` (0.308079)<br>5. `lh_pbelt` (0.301566) |
 
+## Vertex vs Parcel Scoring
+
+ASNE v0.2 adds HCP-MMP parcel-level scoring as an interpretable feature-space option. The frozen semantic suite shows that parcel-level centroid scoring preserves the vertex-level benchmark accuracy on the current four contrasts.
+
+Full comparison report: `outputs/asne_reports/vertex_vs_parcel_scoring_v0.md`
+
+| contrast | vertex_top1 | parcel_top1 | vertex_top2 | parcel_top2 | difference | recommendation |
+|---|---:|---:|---:|---:|---:|---|
+| `contradiction_vs_consistency_paired` | 0.83 | 0.83 | 1.00 | 1.00 | 0.00 | parcel viable for scoring experiment |
+| `expected_vs_unexpected_paired` | 0.83 | 0.83 | 1.00 | 1.00 | 0.00 | parcel viable for scoring experiment |
+| `approach_vs_static_paired` | 0.50 | 0.50 | 1.00 | 1.00 | 0.00 | parcel viable for scoring experiment |
+| `cause_effect_valid_vs_invalid_paired` | 0.83 | 0.83 | 1.00 | 1.00 | 0.00 | parcel viable for scoring experiment |
+
 ## Main Findings
 
-Semantic and logical text contrasts separate better than narrated motion-style contrasts in the current text/TTS ASNE pipeline. `expected_vs_unexpected_paired` showed the strongest temporal result, with final-segment accuracy reaching `1.00`. `approach_vs_static_paired` stayed weak across static and temporal views, suggesting it may require video-native stimuli or a different stimulus design. HCP-MMP ROI reports now summarize which parcels contribute most to predicted contrast deltas; temporal movement parcels should be interpreted cautiously because they can reflect TTS/audio processing dynamics.
+Semantic and logical text contrasts separate better than narrated motion-style contrasts in the current text/TTS ASNE pipeline. `expected_vs_unexpected_paired` showed the strongest temporal result, with final-segment accuracy reaching `1.00`. `approach_vs_static_paired` stayed weak across static and temporal views, suggesting it may require video-native stimuli or a different stimulus design. HCP-MMP ROI reports now summarize which parcels contribute most to predicted contrast deltas; temporal movement parcels should be interpreted cautiously because they can reflect TTS/audio processing dynamics. Parcel-level centroid scoring preserved the current vertex-level benchmark accuracy, making it a viable interpretable scoring option for further experiments.
 
 ## Limitations
 
@@ -59,6 +72,7 @@ Semantic and logical text contrasts separate better than narrated motion-style c
 - Test video-native contrasts separately from narrated text/TTS contrasts.
 - Refine ROI interpretation and separate semantic contrast deltas from TTS/audio-driven temporal movement.
 - Consider ROI-level scoring or ROI-level temporal normalization after the current vertex-level benchmark remains stable.
+- Expand the eval sets before treating parcel-level scoring as a replacement for the vertex benchmark.
 - Build an HTML or interactive temporal visualizer after the artifact format stabilizes.
 
 ## Reproduction Commands

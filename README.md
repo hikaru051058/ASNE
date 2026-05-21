@@ -175,6 +175,19 @@ ASNE v0.1 adds ROI/parcel-level aggregation as an interpretability layer over pr
 
 ROI analysis is intended to answer which parcels shift most for a contrast and which parcels show the strongest temporal movement. It requires a parcellation file mapping each cortical response dimension to a parcel label. Tests currently use a small mock parcellation; a real TRIBE/fsaverage5-compatible parcellation should be added only after verifying output-space compatibility and atlas licensing.
 
+## ASNE v0.2 Direction: Parcel-Level Scoring
+
+ASNE v0.2 adds an experimental HCP-MMP parcel feature space for dictionary evaluation. On the frozen semantic contrast suite, parcel-level centroid scoring preserved the current vertex-level benchmark accuracy:
+
+```text
+contradiction_vs_consistency_paired: vertex 0.83, parcel 0.83
+expected_vs_unexpected_paired:      vertex 0.83, parcel 0.83
+approach_vs_static_paired:          vertex 0.50, parcel 0.50
+cause_effect_valid_vs_invalid:      vertex 0.83, parcel 0.83
+```
+
+This makes parcel-level scoring a viable interpretable experiment path, while the vertex-level benchmark remains the primary reference until larger eval sets confirm stability.
+
 ## TTS Backends
 
 For `.txt` stimuli, ASNE can preserve the upstream TRIBE v2 `gTTS` text path or pre-render text to cached audio with local macOS `say`, local Higgs Audio, or OpenAI TTS before calling TRIBE v2 audio mode. This makes it possible to compare preprocessing sensitivity across text-to-audio systems.
