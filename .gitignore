@@ -48,3 +48,6 @@ data/**/*.webm
 asne-showcase/node_modules/
 asne-showcase/.git/
 asne-showcase/dist/
+
+# Separate ASNE showcase repo/app
+asne-showcase/
