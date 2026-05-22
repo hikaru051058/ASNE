@@ -1,8 +1,8 @@
-# ASNE - Activation-Steered Neural Encoding
+# ASNE - Artificial Semantic Neural Evaluation
 
-ASNE is an experimental NeuroAI research framework for studying whether controllable steering conditions can systematically alter predicted cortical response patterns in frozen neural encoding models such as TRIBE v2.
+ASNE is an experimental NeuroAI research framework for semantic contrast evaluation over predicted cortical response signatures. The current stack uses TRIBE v2 as a frozen predicted-response model and adds stimulus dictionaries, contrast evaluation, temporal diagnostics, HCP-MMP parcel-level aggregation, and static report generation.
 
-The project treats upstream neural-response foundation models as frozen components. ASNE adds experiment definitions, steering-condition orchestration, baseline-versus-steered comparisons, response delta analysis, and reporting tools around those models.
+The project began as an activation-steered neural encoding scaffold and now focuses on controlled semantic outcome/anomaly testing with interpretable parcel-level scoring. For a concise public overview, see [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md).
 
 ## Research Motivation
 
@@ -38,6 +38,20 @@ ASNE does not perform mind reading, emotion detection, consciousness simulation,
 Steering conditions are experimental controls. They should not be described as real emotions, intentions, or psychological states.
 
 ## High-Level Pipeline
+
+Current semantic contrast pipeline:
+
+```mermaid
+flowchart LR
+    A[Stimulus pair] --> B[TTS/audio + text events]
+    B --> C[TRIBE v2]
+    C --> D[Predicted cortical response<br/>segments x 20484]
+    D --> E[Mean, temporal, and parcel signatures]
+    E --> F[Contrast comparison]
+    F --> G[Report + visualization output]
+```
+
+Original steering scaffold:
 
 ```text
 Stimulus
@@ -146,27 +160,27 @@ See [docs/CONTRAST_EXPERIMENTS.md](docs/CONTRAST_EXPERIMENTS.md) for the contras
 
 ASNE is currently most useful as a controlled semantic contrast testing workflow. It compares TRIBE v2 predicted cortical response signatures for paired text/TTS stimuli and asks whether the predicted response signatures are separable.
 
-Current strongest finding: semantic and logical violation contrasts separate better than narrated motion-style contrasts. Temporal segment analysis can expose late predicted response shifts that whole-stimulus mean response may hide, especially for `expected_vs_unexpected_paired`.
+Current strongest finding: v0.3-lite suggests `expected_vs_unexpected_paired` and `cause_effect_valid_vs_invalid_paired` remain viable under larger evaluation, while `contradiction_vs_consistency_paired` became unstable. `approach_vs_static_paired` remains low priority for text/TTS and likely needs video-native stimuli.
 
-| contrast | static top1 | top2 | temporal late | temporal final | majority | recovered |
-|---|---:|---:|---:|---:|---:|---:|
-| `contradiction_vs_consistency_paired` | 0.83 | 1.00 | 0.83 | 0.83 | 0.83 | 1 |
-| `expected_vs_unexpected_paired` | 0.83 | 1.00 | 0.83 | 1.00 | 0.83 | 1 |
-| `approach_vs_static_paired` | 0.50 | 1.00 | 0.00 | 0.00 | 0.00 | 0 |
-| `cause_effect_valid_vs_invalid_paired` | 0.83 | 1.00 | 0.83 | 0.67 | 0.67 | 1 |
+| contrast | status | vertex top1 | parcel top1 | temporal late | temporal final | temporal majority |
+|---|---|---:|---:|---:|---:|---:|
+| `expected_vs_unexpected_paired` | stable | 0.80 | 0.90 | 0.90 | 0.80 | 0.80 |
+| `cause_effect_valid_vs_invalid_paired` | stable/viable | 0.70 | 0.80 | 0.50 | 0.40 | 0.70 |
+| `contradiction_vs_consistency_paired` | weak/deprioritized | 0.40 | 0.50 | 0.50 | 0.40 | 0.50 |
+| `approach_vs_static_paired` | pending / low priority | n/a | n/a | n/a | n/a | n/a |
 
 Safety framing: ASNE compares predicted TRIBE cortical response signatures. It is not measured brain activity, emotion detection, mental-state measurement, diagnosis, or a stable clinical classifier.
 
-Reproduce or verify the current report without rerunning existing TRIBE outputs:
+Reproduce or verify the current v0.3 report without rerunning existing TRIBE outputs:
 
 ```bash
-python scripts/run_asne_semantic_contrast_suite.py --skip-build
+python scripts/run_asne_v03_benchmark.py --skip-build
 ```
 
 The current report is written to:
 
 ```text
-outputs/asne_reports/semantic_contrast_report_v0.md
+outputs/asne_reports/semantic_contrast_benchmark_v03.md
 ```
 
 Demo report index:
@@ -176,6 +190,14 @@ outputs/asne_reports/index.html
 ```
 
 The demo index now presents v0.3-lite as the current headline benchmark and keeps v0.2 parcel scoring as a historical prototype milestone.
+
+## Current Limitations
+
+- ASNE uses predicted TRIBE cortical responses, not measured fMRI or direct brain recordings.
+- The current v0.3 benchmark uses text/TTS stimuli, not native video stimuli.
+- Eval sets are still small and should be treated as stability checks, not production classifier benchmarks.
+- ASNE is not emotion detection, diagnosis, or measurement of a person's mental state.
+- Regenerating full results requires TRIBE v2 dependencies, model artifacts, and local audio preprocessing.
 
 ## GitHub Pages Export
 
