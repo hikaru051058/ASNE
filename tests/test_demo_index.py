@@ -14,6 +14,8 @@ def test_demo_index_generation_creates_file(tmp_path: Path) -> None:
     roi.mkdir(parents=True)
     temporal.mkdir(parents=True)
     (reports / "semantic_contrast_report_v0.html").write_text("<html></html>", encoding="utf-8")
+    (reports / "semantic_contrast_benchmark_v03.html").write_text("<html></html>", encoding="utf-8")
+    (reports / "semantic_contrast_benchmark_v03.md").write_text("# report", encoding="utf-8")
     (reports / "vertex_vs_parcel_scoring_v0.md").write_text("# report", encoding="utf-8")
     (roi / "roi_report.md").write_text("# roi", encoding="utf-8")
     (temporal / "20260101T000000Z_temporal_report.md").write_text("# temporal", encoding="utf-8")
@@ -30,8 +32,16 @@ def test_demo_index_generation_creates_file(tmp_path: Path) -> None:
     html = path.read_text(encoding="utf-8")
 
     assert path.exists()
+    assert "ASNE v0.3 Demo Report" in html
     assert "ASNE compares predicted TRIBE cortical response signatures" in html
-    assert "HCP-MMP parcel-level scoring preserved vertex-level benchmark accuracy" in html
+    assert "Expected/unexpected remained stable under v0.3 expansion" in html
+    assert "expected_vs_unexpected_paired" in html
+    assert "stable" in html
+    assert "cause_effect_valid_vs_invalid_paired" in html
+    assert "contradiction_vs_consistency_paired" in html
+    assert "weak/deprioritized" in html
+    assert "Previous milestone: v0.2 parcel scoring" in html
+    assert "semantic_contrast_benchmark_v03.html" in html
     assert "semantic_contrast_report_v0.html" in html
     assert "roi_report.md" in html
     assert "temporal_report.md" in html
@@ -53,7 +63,7 @@ def test_demo_index_missing_artifacts_do_not_crash(tmp_path: Path) -> None:
 
     assert path.exists()
     assert "No matching artifacts found." in html
-    assert "ASNE v0.2 Demo Report" in html
+    assert "ASNE v0.3 Demo Report" in html
 
 
 def _load_script():

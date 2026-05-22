@@ -175,6 +175,8 @@ Demo report index:
 outputs/asne_reports/index.html
 ```
 
+The demo index now presents v0.3-lite as the current headline benchmark and keeps v0.2 parcel scoring as a historical prototype milestone.
+
 ## ASNE v0.1 Direction: ROI / Parcel Signatures
 
 ASNE v0.1 adds ROI/parcel-level aggregation as an interpretability layer over predicted cortical response vectors. The raw `20,484`-dimension scoring pipeline remains the benchmark layer for now; parcel aggregation is for analysis and reporting first.

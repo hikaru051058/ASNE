@@ -13,47 +13,67 @@ DISCLAIMER = (
     "emotion detection, diagnosis, or measurement of a person's mental state."
 )
 
-CONTRAST_ROWS = [
+V03_ROWS = [
     {
         "contrast": "contradiction_vs_consistency_paired",
-        "static_top1": "0.83",
-        "top2": "1.00",
-        "temporal_late": "0.83",
-        "temporal_final": "0.83",
-        "parcel_result": "preserved",
+        "status": "weak/deprioritized",
+        "vertex_top1": "0.40",
+        "parcel_top1": "0.50",
+        "temporal_late": "0.50",
+        "temporal_final": "0.40",
+        "read": "Did not survive v0.3 expansion; retained as an unstable contrast case.",
+    },
+    {
+        "contrast": "expected_vs_unexpected_paired",
+        "status": "stable",
+        "vertex_top1": "0.80",
+        "parcel_top1": "0.90",
+        "temporal_late": "0.90",
+        "temporal_final": "0.80",
+        "read": "Strongest current contrast; parcel and late temporal views improve the result.",
+    },
+    {
+        "contrast": "cause_effect_valid_vs_invalid_paired",
+        "status": "stable/viable",
+        "vertex_top1": "0.70",
+        "parcel_top1": "0.80",
+        "temporal_late": "0.50",
+        "temporal_final": "0.40",
+        "majority": "0.70",
+        "read": "Viable semantic contrast; parcel scoring is the strongest static view.",
+    },
+    {
+        "contrast": "approach_vs_static_paired",
+        "status": "pending / low priority",
+        "vertex_top1": "n/a",
+        "parcel_top1": "n/a",
+        "temporal_late": "n/a",
+        "temporal_final": "n/a",
+        "read": "Pending in v0.3; prior smaller runs suggest text/TTS is a weak fit.",
+    },
+]
+
+V02_ROWS = [
+    {
+        "contrast": "contradiction_vs_consistency_paired",
         "vertex_top1": "0.83",
         "parcel_top1": "0.83",
         "parcel_status": "preserved",
     },
     {
         "contrast": "expected_vs_unexpected_paired",
-        "static_top1": "0.83",
-        "top2": "1.00",
-        "temporal_late": "0.83",
-        "temporal_final": "1.00",
-        "parcel_result": "preserved",
         "vertex_top1": "0.83",
         "parcel_top1": "0.83",
         "parcel_status": "preserved",
     },
     {
         "contrast": "approach_vs_static_paired",
-        "static_top1": "0.50",
-        "top2": "1.00",
-        "temporal_late": "0.00",
-        "temporal_final": "0.00",
-        "parcel_result": "preserved weak result",
         "vertex_top1": "0.50",
         "parcel_top1": "0.50",
         "parcel_status": "preserved weak result",
     },
     {
         "contrast": "cause_effect_valid_vs_invalid_paired",
-        "static_top1": "0.83",
-        "top2": "1.00",
-        "temporal_late": "0.83",
-        "temporal_final": "0.67",
-        "parcel_result": "preserved",
         "vertex_top1": "0.83",
         "parcel_top1": "0.83",
         "parcel_status": "preserved",
@@ -73,6 +93,8 @@ def discover_artifacts(
     temporal_root = Path(temporal_root)
     artifacts = {
         "main_reports": [
+            reports_root / "semantic_contrast_benchmark_v03.html",
+            reports_root / "semantic_contrast_benchmark_v03.md",
             reports_root / "semantic_contrast_report_v0.html",
             reports_root / "semantic_contrast_report_v0.md",
             reports_root / "vertex_vs_parcel_scoring_v0.md",
@@ -84,8 +106,23 @@ def discover_artifacts(
     if roi_root.exists():
         artifacts["roi_reports"] = sorted(roi_root.glob("*/roi_report.md"))
     if temporal_root.exists():
-        artifacts["temporal_reports"] = sorted(temporal_root.glob("*/*_temporal_report.md"))
+        artifacts["temporal_reports"] = latest_temporal_reports(temporal_root)
     return artifacts
+
+
+def latest_temporal_reports(temporal_root: str | Path) -> list[Path]:
+    root = Path(temporal_root)
+    latest: list[Path] = []
+    for contrast_dir in sorted(path for path in root.glob("*") if path.is_dir()):
+        reports = sorted(contrast_dir.glob("*_temporal_report.md"), key=lambda path: path.stat().st_mtime)
+        if reports:
+            latest.append(reports[-1])
+    for group_dir in sorted(path for path in root.glob("*") if path.is_dir()):
+        for contrast_dir in sorted(path for path in group_dir.glob("*") if path.is_dir()):
+            reports = sorted(contrast_dir.glob("*_temporal_report.md"), key=lambda path: path.stat().st_mtime)
+            if reports:
+                latest.append(reports[-1])
+    return sorted(set(latest))
 
 
 def generate_index(
@@ -116,28 +153,30 @@ def render_html(artifacts: dict[str, Any], output_path: Path) -> str:
             "<head>",
             '<meta charset="utf-8">',
             '<meta name="viewport" content="width=device-width, initial-scale=1">',
-            "<title>ASNE v0.2 Demo Report</title>",
+            "<title>ASNE v0.3 Demo Report</title>",
             f"<style>{_css()}</style>",
             "</head>",
             "<body>",
             '<main class="page">',
             "<header>",
             "<p class=\"eyebrow\">Static demo report</p>",
-            "<h1>ASNE v0.2 Demo Report</h1>",
+            "<h1>ASNE v0.3 Demo Report</h1>",
             "<p class=\"lede\">ASNE is a TRIBE-backed in-silico semantic contrast analysis system for comparing predicted cortical response signatures across controlled stimuli.</p>",
             f'<p class="disclaimer">{html.escape(DISCLAIMER)}</p>',
+            '<p class="warning">v0.3-lite uses ten held-out examples per contrast. Treat this as a stability check, not a production classifier benchmark.</p>',
             "</header>",
             '<section class="card result-card">',
             "<h2>Main result</h2>",
-            "<p>HCP-MMP parcel-level scoring preserved vertex-level benchmark accuracy on the frozen semantic contrast suite.</p>",
+            "<p>Expected/unexpected remained stable under v0.3 expansion; cause/effect remains viable, especially with parcel scoring; contradiction/consistency became unstable and is now weak/deprioritized.</p>",
             "</section>",
             '<section class="card">',
-            "<h2>Static and temporal contrast results</h2>",
-            _contrast_table(),
+            "<h2>v0.3 semantic contrast benchmark</h2>",
+            _v03_table(),
             "</section>",
             '<section class="card">',
-            "<h2>Vertex vs parcel scoring</h2>",
-            _vertex_parcel_table(),
+            "<h2>Previous milestone: v0.2 parcel scoring</h2>",
+            "<p class=\"muted\">The earlier v0.2 milestone showed that HCP-MMP parcel scoring preserved the small-suite vertex benchmark. v0.3 is now the headline stability benchmark.</p>",
+            _v02_vertex_parcel_table(),
             "</section>",
             '<section class="card">',
             "<h2>Artifacts</h2>",
@@ -145,7 +184,7 @@ def render_html(artifacts: dict[str, Any], output_path: Path) -> str:
             "</section>",
             '<section class="card">',
             "<h2>How to reproduce</h2>",
-            '<pre><code>python scripts/run_asne_semantic_contrast_suite.py --skip-build\npython scripts/generate_asne_contrast_report.py\npython scripts/compare_vertex_vs_parcel_scoring.py</code></pre>',
+            '<pre><code>python scripts/run_asne_v03_benchmark.py --skip-build\npython scripts/generate_asne_demo_index.py</code></pre>',
             "</section>",
             "</main>",
             "</body>",
@@ -154,34 +193,35 @@ def render_html(artifacts: dict[str, Any], output_path: Path) -> str:
     ) + "\n"
 
 
-def _contrast_table() -> str:
+def _v03_table() -> str:
     rows = [
         "<table>",
-        "<thead><tr><th>contrast</th><th>static top1</th><th>top2</th><th>temporal late</th><th>temporal final</th><th>parcel scoring result</th></tr></thead>",
+        "<thead><tr><th>contrast</th><th>status</th><th>vertex top1</th><th>parcel top1</th><th>late accuracy</th><th>final accuracy</th><th>read</th></tr></thead>",
         "<tbody>",
     ]
-    for row in CONTRAST_ROWS:
+    for row in V03_ROWS:
         rows.append(
             "<tr>"
             f"<td><code>{html.escape(row['contrast'])}</code></td>"
-            f"<td>{row['static_top1']}</td>"
-            f"<td>{row['top2']}</td>"
+            f"<td>{html.escape(row['status'])}</td>"
+            f"<td>{row['vertex_top1']}</td>"
+            f"<td>{row['parcel_top1']}</td>"
             f"<td>{row['temporal_late']}</td>"
             f"<td>{row['temporal_final']}</td>"
-            f"<td>{html.escape(row['parcel_result'])}</td>"
+            f"<td>{html.escape(row['read'])}</td>"
             "</tr>"
         )
     rows.extend(["</tbody>", "</table>"])
     return "\n".join(rows)
 
 
-def _vertex_parcel_table() -> str:
+def _v02_vertex_parcel_table() -> str:
     rows = [
         "<table>",
         "<thead><tr><th>contrast</th><th>vertex top1</th><th>parcel top1</th><th>status</th></tr></thead>",
         "<tbody>",
     ]
-    for row in CONTRAST_ROWS:
+    for row in V02_ROWS:
         rows.append(
             "<tr>"
             f"<td><code>{html.escape(row['contrast'])}</code></td>"
