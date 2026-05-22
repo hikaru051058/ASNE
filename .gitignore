@@ -43,3 +43,8 @@ data/**/*.webm
 *.safetensors
 *.pt
 *.pth
+
+# ASNE showcase local app
+asne-showcase/node_modules/
+asne-showcase/.git/
+asne-showcase/dist/
