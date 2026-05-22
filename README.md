@@ -177,6 +177,32 @@ outputs/asne_reports/index.html
 
 The demo index now presents v0.3-lite as the current headline benchmark and keeps v0.2 parcel scoring as a historical prototype milestone.
 
+## GitHub Pages Export
+
+ASNE can export the current static report set into `docs/` for GitHub Pages. This keeps generated report copies separate from private/local outputs while preserving the handwritten documentation already in `docs/`.
+
+Generate or refresh reports, then export:
+
+```bash
+python scripts/run_asne_semantic_contrast_suite.py --skip-build
+python scripts/generate_asne_demo_index.py
+python scripts/export_asne_docs_site.py
+```
+
+For the current v0.3 benchmark report, refresh with:
+
+```bash
+python scripts/run_asne_v03_benchmark.py --skip-build
+python scripts/generate_asne_demo_index.py
+python scripts/export_asne_docs_site.py
+```
+
+Configure GitHub Pages to serve from:
+
+```text
+main /docs
+```
+
 ## ASNE v0.1 Direction: ROI / Parcel Signatures
 
 ASNE v0.1 adds ROI/parcel-level aggregation as an interpretability layer over predicted cortical response vectors. The raw `20,484`-dimension scoring pipeline remains the benchmark layer for now; parcel aggregation is for analysis and reporting first.

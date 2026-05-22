@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASNE v0.3 Demo Report</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #f7f7f5;
+  color: #191919;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+.page { max-width: 1120px; margin: 0 auto; padding: 48px 24px; }
+header { margin-bottom: 24px; }
+.eyebrow { color: #666; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 8px; }
+h1 { font-size: 42px; line-height: 1.1; margin: 0 0 14px; letter-spacing: 0; }
+h2 { font-size: 22px; margin: 0 0 14px; letter-spacing: 0; }
+h3 { font-size: 15px; margin: 20px 0 8px; letter-spacing: 0; }
+.lede { max-width: 780px; font-size: 18px; margin: 0 0 16px; color: #333; }
+.disclaimer { max-width: 880px; border-left: 3px solid #191919; padding-left: 14px; color: #333; }
+.card {
+  background: #fff;
+  border: 1px solid #deded9;
+  border-radius: 8px;
+  padding: 22px;
+  margin: 18px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.result-card { border-color: #191919; }
+.result-card p { font-size: 19px; margin: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { border-bottom: 1px solid #e6e6e1; padding: 10px 8px; text-align: left; vertical-align: top; }
+th { color: #555; font-weight: 600; background: #fafafa; }
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .92em;
+  background: #f1f1ee;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+pre {
+  margin: 0;
+  overflow: auto;
+  background: #f1f1ee;
+  border-radius: 6px;
+  padding: 14px;
+}
+pre code { background: transparent; padding: 0; }
+a { color: #111; text-decoration: underline; text-underline-offset: 2px; }
+ul { margin: 8px 0 0; padding-left: 20px; }
+li { margin: 4px 0; }
+.muted { color: #777; margin: 0; }
+@media (max-width: 760px) {
+  .page { padding: 28px 14px; }
+  h1 { font-size: 32px; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+<header>
+<p class="eyebrow">Static demo report</p>
+<h1>ASNE v0.3 Demo Report</h1>
+<p class="lede">ASNE is a TRIBE-backed in-silico semantic contrast analysis system for comparing predicted cortical response signatures across controlled stimuli.</p>
+<p class="disclaimer">ASNE compares predicted TRIBE cortical response signatures. It is not measured brain activity, emotion detection, diagnosis, or measurement of a person&#x27;s mental state.</p>
+<p class="warning">v0.3-lite uses ten held-out examples per contrast. Treat this as a stability check, not a production classifier benchmark.</p>
+</header>
+<section class="card result-card">
+<h2>Main result</h2>
+<p>Expected/unexpected remained stable under v0.3 expansion; cause/effect remains viable, especially with parcel scoring; contradiction/consistency became unstable and is now weak/deprioritized.</p>
+</section>
+<section class="card">
+<h2>v0.3 semantic contrast benchmark</h2>
+<table>
+<thead><tr><th>contrast</th><th>status</th><th>vertex top1</th><th>parcel top1</th><th>late accuracy</th><th>final accuracy</th><th>read</th></tr></thead>
+<tbody>
+<tr><td><code>contradiction_vs_consistency_paired</code></td><td>weak/deprioritized</td><td>0.40</td><td>0.50</td><td>0.50</td><td>0.40</td><td>Did not survive v0.3 expansion; retained as an unstable contrast case.</td></tr>
+<tr><td><code>expected_vs_unexpected_paired</code></td><td>stable</td><td>0.80</td><td>0.90</td><td>0.90</td><td>0.80</td><td>Strongest current contrast; parcel and late temporal views improve the result.</td></tr>
+<tr><td><code>cause_effect_valid_vs_invalid_paired</code></td><td>stable/viable</td><td>0.70</td><td>0.80</td><td>0.50</td><td>0.40</td><td>Viable semantic contrast; parcel scoring is the strongest static view.</td></tr>
+<tr><td><code>approach_vs_static_paired</code></td><td>pending / low priority</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>Pending in v0.3; prior smaller runs suggest text/TTS is a weak fit.</td></tr>
+</tbody>
+</table>
+</section>
+<section class="card">
+<h2>Previous milestone: v0.2 parcel scoring</h2>
+<p class="muted">The earlier v0.2 milestone showed that HCP-MMP parcel scoring preserved the small-suite vertex benchmark. v0.3 is now the headline stability benchmark.</p>
+<table>
+<thead><tr><th>contrast</th><th>vertex top1</th><th>parcel top1</th><th>status</th></tr></thead>
+<tbody>
+<tr><td><code>contradiction_vs_consistency_paired</code></td><td>0.83</td><td>0.83</td><td>preserved</td></tr>
+<tr><td><code>expected_vs_unexpected_paired</code></td><td>0.83</td><td>0.83</td><td>preserved</td></tr>
+<tr><td><code>approach_vs_static_paired</code></td><td>0.50</td><td>0.50</td><td>preserved weak result</td></tr>
+<tr><td><code>cause_effect_valid_vs_invalid_paired</code></td><td>0.83</td><td>0.83</td><td>preserved</td></tr>
+</tbody>
+</table>
+</section>
+<section class="card">
+<h2>Artifacts</h2>
+<h3>Core reports</h3>
+<ul>
+<li><a href="semantic_contrast_benchmark_v03.html">semantic_contrast_benchmark_v03.html</a></li>
+<li><a href="semantic_contrast_benchmark_v03.md">semantic_contrast_benchmark_v03.md</a></li>
+<li><a href="semantic_contrast_report_v0.html">semantic_contrast_report_v0.html</a></li>
+<li><a href="semantic_contrast_report_v0.md">semantic_contrast_report_v0.md</a></li>
+<li><a href="vertex_vs_parcel_scoring_v0.md">vertex_vs_parcel_scoring_v0.md</a></li>
+</ul>
+<h3>ROI reports</h3>
+<ul>
+<li><a href="roi/approach_vs_static_paired/roi_report.md">roi/approach_vs_static_paired/roi_report.md</a></li>
+<li><a href="roi/cause_effect_valid_vs_invalid_paired/roi_report.md">roi/cause_effect_valid_vs_invalid_paired/roi_report.md</a></li>
+<li><a href="roi/contradiction_vs_consistency_paired/roi_report.md">roi/contradiction_vs_consistency_paired/roi_report.md</a></li>
+<li><a href="roi/expected_vs_unexpected_paired/roi_report.md">roi/expected_vs_unexpected_paired/roi_report.md</a></li>
+</ul>
+<h3>Temporal reports</h3>
+<ul>
+<li><a href="temporal/approach_vs_static_paired/20260521T015158Z_temporal_report.md">temporal/approach_vs_static_paired/20260521T015158Z_temporal_report.md</a></li>
+<li><a href="temporal/cause_effect_valid_vs_invalid_paired/20260521T022151Z_temporal_report.md">temporal/cause_effect_valid_vs_invalid_paired/20260521T022151Z_temporal_report.md</a></li>
+<li><a href="temporal/contradiction_vs_consistency_paired/20260521T203426Z_temporal_report.md">temporal/contradiction_vs_consistency_paired/20260521T203426Z_temporal_report.md</a></li>
+<li><a href="temporal/cause_effect_valid_vs_invalid_paired/20260522T010416Z_temporal_report.md">temporal/contrasts_v03/cause_effect_valid_vs_invalid_paired/20260522T010416Z_temporal_report.md</a></li>
+<li><a href="temporal/expected_vs_unexpected_paired/20260522T002036Z_temporal_report.md">temporal/contrasts_v03/expected_vs_unexpected_paired/20260522T002036Z_temporal_report.md</a></li>
+<li><a href="temporal/expected_vs_unexpected_paired/20260521T015158Z_temporal_report.md">temporal/expected_vs_unexpected_paired/20260521T015158Z_temporal_report.md</a></li>
+</ul>
+<h3>Notebook</h3>
+<ul>
+<li><a href="../../notebooks/asne_contrast_explorer.ipynb">notebooks/asne_contrast_explorer.ipynb</a></li>
+</ul>
+</section>
+<section class="card">
+<h2>How to reproduce</h2>
+<pre><code>python scripts/run_asne_v03_benchmark.py --skip-build
+python scripts/generate_asne_demo_index.py</code></pre>
+</section>
+</main>
+</body>
+</html>
