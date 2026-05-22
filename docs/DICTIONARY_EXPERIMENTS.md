@@ -136,6 +136,72 @@ Current result on the frozen semantic suite:
 
 Conclusion: HCP-MMP parcel-level centroid scoring preserves the current vertex-level benchmark accuracy on the small frozen suite. It is now a viable interpretable scoring option for experiments, but the raw vertex benchmark remains primary until larger evaluation sets confirm stability.
 
+## ASNE v0.3-lite Contradiction Instability
+
+The larger `semantic_contrast_v0_3_lite` contradiction/consistency eval did not preserve the small v0.2 contradiction result. Using the 20-example v0.3 dictionary and 10-example held-out eval:
+
+| feature space | top1 | top2 | mean rank | consistent | contradictory |
+|---|---:|---:|---:|---:|---:|
+| vertex | 4/10 = 0.40 | 1.00 | 1.60 | 3/5 | 1/5 |
+| HCP-MMP parcel | 5/10 = 0.50 | 1.00 | 1.50 | 4/5 | 1/5 |
+
+Temporal segment scoring also did not recover the contrast:
+
+```text
+mean=0.50 early=0.40 late=0.50 final=0.40 majority=0.50
+```
+
+Margin analysis shows the expected category is usually rank 2 with small score gaps, especially for contradictory examples:
+
+```text
+consistent_information: failures=1/5 avg_gap=0.001139
+contradictory_information: failures=4/5 avg_gap=0.005316
+```
+
+A stricter held-out subset with stronger concrete color/count/object differences also did not recover the category:
+
+| feature space | top1 | top2 | consistent | contradictory |
+|---|---:|---:|---:|---:|
+| vertex | 4/10 = 0.40 | 1.00 | 4/5 | 0/5 |
+| HCP-MMP parcel | 4/10 = 0.40 | 1.00 | 4/5 | 0/5 |
+
+The stricter subset temporal result was:
+
+```text
+mean=0.40 early=0.70 late=0.40 final=0.40 majority=0.40
+```
+
+Interpretation: the v0.2 `5/6` contradiction result was prototype-level and should not be treated as stable. The larger eval exposes an unstable binary boundary with a tendency for contradictory examples to flip toward `consistent_information`. Stronger mismatch wording alone did not fix this. Contradiction-style stimuli should be redesigned more deeply or deprioritized in favor of semantic violation contrasts that remain stable on larger evals.
+
+## ASNE v0.3-lite Semantic Contrast Results
+
+The v0.3-lite benchmark is the current stability check for semantic text/TTS contrasts. It uses `10` dictionary pairs and `5` held-out eval pairs per contrast where available.
+
+Report paths:
+
+```text
+outputs/asne_reports/semantic_contrast_benchmark_v03.md
+outputs/asne_reports/semantic_contrast_benchmark_v03.html
+```
+
+Current v0.3-lite static results:
+
+| contrast | classification | v0.2 top1 | vertex top1 | parcel top1 | vertex top2 | parcel top2 | temporal late | temporal final | temporal majority |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `contradiction_vs_consistency_paired` | weak/deprioritized | 0.83 | 0.40 | 0.50 | 1.00 | 1.00 | 0.50 | 0.40 | 0.50 |
+| `expected_vs_unexpected_paired` | stable | 0.83 | 0.80 | 0.90 | 1.00 | 1.00 | 0.90 | 0.80 | 0.80 |
+| `cause_effect_valid_vs_invalid_paired` | stable | 0.83 | 0.70 | 0.80 | 1.00 | 1.00 | 0.50 | 0.40 | 0.70 |
+| `approach_vs_static_paired` | pending | 0.50 | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
+
+Current interpretation:
+
+- `expected_vs_unexpected_paired` is the strongest surviving v0.3 semantic contrast. Parcel scoring improves top-1 from `0.80` to `0.90`, and late temporal scoring reaches `0.90`.
+- `cause_effect_valid_vs_invalid_paired` remains viable. Vertex scoring reaches `0.70`, parcel scoring reaches `0.80`, and majority temporal scoring reaches `0.70`, although late/final segment scoring is weaker.
+- `contradiction_vs_consistency_paired` is retained as a failed/unstable contrast case.
+- `approach_vs_static_paired` remains pending in v0.3 and is not a priority for text/TTS; prior smaller runs suggest motion-style contrasts may require video-native stimuli.
+
+Conclusion: v0.3 shows that not all semantic contrasts survive larger evaluation. Expected/unexpected remains stable, cause/effect is stable/promising with parcel scoring, contradiction is unstable, and approach/static is not yet evaluated in v0.3.
+
 ## Binary Contrast Scoring
 
 Binary contrast experiments use two concrete stimulus categories, such as a baseline category and a contrast category. In this setting, `delta_from_neutral` or `delta_from_baseline` can make the baseline category compete as a zero vector, which is not ideal for a two-way contrast.

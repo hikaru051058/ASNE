@@ -1,0 +1,33 @@
+{
+  "name": "semantic_contrast_v0_3_lite_contradiction_vs_consistency_paired",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "contradiction_vs_consistency_paired",
+  "baseline_category": "consistent_information",
+  "description": "v0.3-lite paired contrast for matching versus non-matching scene information.",
+  "categories": {
+    "consistent_information": [
+      {"id": "v03_consistent_information_01", "pair_id": "pair_01", "text": "A person reads that the meeting is in Room 204. The door label also says Room 204."},
+      {"id": "v03_consistent_information_02", "pair_id": "pair_02", "text": "Someone checks a delivery note for a blue box. The box on the counter is blue."},
+      {"id": "v03_consistent_information_03", "pair_id": "pair_03", "text": "A worker reads that the train leaves from Platform 6. The display above the track says Platform 6."},
+      {"id": "v03_consistent_information_04", "pair_id": "pair_04", "text": "A visitor reads a ticket for Seat 12B. The chair marker also says Seat 12B."},
+      {"id": "v03_consistent_information_05", "pair_id": "pair_05", "text": "Someone opens a recipe calling for two cups of rice. The measuring bowl contains two cups of rice."},
+      {"id": "v03_consistent_information_06", "pair_id": "pair_06", "text": "A person reads that the package weighs five pounds. The scale display shows five pounds."},
+      {"id": "v03_consistent_information_07", "pair_id": "pair_07", "text": "Someone checks a map showing the cafe on Pine Street. The storefront sign says Pine Street."},
+      {"id": "v03_consistent_information_08", "pair_id": "pair_08", "text": "A clerk reads that the folder has a green tab. The folder on the desk has a green tab."},
+      {"id": "v03_consistent_information_09", "pair_id": "pair_09", "text": "A person reads that the concert starts at seven. The posted schedule also says seven."},
+      {"id": "v03_consistent_information_10", "pair_id": "pair_10", "text": "Someone reads that the locker code ends in 42. The written card also ends in 42."}
+    ],
+    "contradictory_information": [
+      {"id": "v03_contradictory_information_01", "pair_id": "pair_01", "text": "A person reads that the meeting is in Room 204. The door label says Room 317."},
+      {"id": "v03_contradictory_information_02", "pair_id": "pair_02", "text": "Someone checks a delivery note for a blue box. The box on the counter is red."},
+      {"id": "v03_contradictory_information_03", "pair_id": "pair_03", "text": "A worker reads that the train leaves from Platform 6. The display above the track says Platform 2."},
+      {"id": "v03_contradictory_information_04", "pair_id": "pair_04", "text": "A visitor reads a ticket for Seat 12B. The chair marker says Seat 9A."},
+      {"id": "v03_contradictory_information_05", "pair_id": "pair_05", "text": "Someone opens a recipe calling for two cups of rice. The measuring bowl contains four cups of rice."},
+      {"id": "v03_contradictory_information_06", "pair_id": "pair_06", "text": "A person reads that the package weighs five pounds. The scale display shows nine pounds."},
+      {"id": "v03_contradictory_information_07", "pair_id": "pair_07", "text": "Someone checks a map showing the cafe on Pine Street. The storefront sign says Cedar Street."},
+      {"id": "v03_contradictory_information_08", "pair_id": "pair_08", "text": "A clerk reads that the folder has a green tab. The folder on the desk has a yellow tab."},
+      {"id": "v03_contradictory_information_09", "pair_id": "pair_09", "text": "A person reads that the concert starts at seven. The posted schedule says nine."},
+      {"id": "v03_contradictory_information_10", "pair_id": "pair_10", "text": "Someone reads that the locker code ends in 42. The written card ends in 17."}
+    ]
+  }
+}

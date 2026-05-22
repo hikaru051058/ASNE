@@ -1,0 +1,19 @@
+{
+  "name": "semantic_contrast_v0_3_lite_cause_effect_valid_vs_invalid_paired_eval",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "cause_effect_valid_vs_invalid_paired",
+  "output_group": "contrasts_v03",
+  "description": "Held-out v0.3-lite paired contrast for ordinary physical outcomes versus nonordinary physical outcomes.",
+  "items": [
+    {"id": "eval_v03_valid_cause_effect_01", "expected_category": "valid_cause_effect", "pair_id": "eval_pair_01", "text": "A person squeezes an orange over a cup. Juice falls into the cup."},
+    {"id": "eval_v03_valid_cause_effect_02", "expected_category": "valid_cause_effect", "pair_id": "eval_pair_02", "text": "Someone tears a sheet of paper in half. Two paper pieces remain on the desk."},
+    {"id": "eval_v03_valid_cause_effect_03", "expected_category": "valid_cause_effect", "pair_id": "eval_pair_03", "text": "A person opens an umbrella in the rain. Water lands on the umbrella fabric."},
+    {"id": "eval_v03_valid_cause_effect_04", "expected_category": "valid_cause_effect", "pair_id": "eval_pair_04", "text": "Someone drops a pebble into a pond. Ripples spread across the water."},
+    {"id": "eval_v03_valid_cause_effect_05", "expected_category": "valid_cause_effect", "pair_id": "eval_pair_05", "text": "A person brushes crumbs from a plate. Crumbs fall onto the napkin."},
+    {"id": "eval_v03_invalid_cause_effect_01", "expected_category": "invalid_cause_effect", "pair_id": "eval_pair_01", "text": "A person squeezes an orange over a cup. The cup fills with dry leaves."},
+    {"id": "eval_v03_invalid_cause_effect_02", "expected_category": "invalid_cause_effect", "pair_id": "eval_pair_02", "text": "Someone tears a sheet of paper in half. The paper becomes a sealed envelope."},
+    {"id": "eval_v03_invalid_cause_effect_03", "expected_category": "invalid_cause_effect", "pair_id": "eval_pair_03", "text": "A person opens an umbrella in the rain. The umbrella fabric becomes covered in dust."},
+    {"id": "eval_v03_invalid_cause_effect_04", "expected_category": "invalid_cause_effect", "pair_id": "eval_pair_04", "text": "Someone drops a pebble into a pond. The water surface turns into dry pavement."},
+    {"id": "eval_v03_invalid_cause_effect_05", "expected_category": "invalid_cause_effect", "pair_id": "eval_pair_05", "text": "A person brushes crumbs from a plate. The plate fills with fresh crumbs."}
+  ]
+}

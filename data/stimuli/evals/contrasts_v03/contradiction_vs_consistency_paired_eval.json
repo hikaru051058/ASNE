@@ -1,0 +1,19 @@
+{
+  "name": "semantic_contrast_v0_3_lite_contradiction_vs_consistency_paired_eval",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "contradiction_vs_consistency_paired",
+  "output_group": "contrasts_v03",
+  "description": "Held-out v0.3-lite paired contrast for matching versus non-matching scene information.",
+  "items": [
+    {"id": "eval_v03_consistent_information_01", "expected_category": "consistent_information", "pair_id": "eval_pair_01", "text": "A person reads that the workshop is in Hall C. The hallway placard also says Hall C."},
+    {"id": "eval_v03_consistent_information_02", "expected_category": "consistent_information", "pair_id": "eval_pair_02", "text": "Someone checks a note for a silver key. The key on the hook is silver."},
+    {"id": "eval_v03_consistent_information_03", "expected_category": "consistent_information", "pair_id": "eval_pair_03", "text": "A traveler reads that the bus leaves from Gate 4. The gate display also says Gate 4."},
+    {"id": "eval_v03_consistent_information_04", "expected_category": "consistent_information", "pair_id": "eval_pair_04", "text": "A person reads that the invoice total is thirty dollars. The payment screen shows thirty dollars."},
+    {"id": "eval_v03_consistent_information_05", "expected_category": "consistent_information", "pair_id": "eval_pair_05", "text": "Someone reads that the file is named Project Maple. The file tab also says Project Maple."},
+    {"id": "eval_v03_contradictory_information_01", "expected_category": "contradictory_information", "pair_id": "eval_pair_01", "text": "A person reads that the workshop is in Hall C. The hallway placard says Hall F."},
+    {"id": "eval_v03_contradictory_information_02", "expected_category": "contradictory_information", "pair_id": "eval_pair_02", "text": "Someone checks a note for a silver key. The key on the hook is brass."},
+    {"id": "eval_v03_contradictory_information_03", "expected_category": "contradictory_information", "pair_id": "eval_pair_03", "text": "A traveler reads that the bus leaves from Gate 4. The gate display says Gate 8."},
+    {"id": "eval_v03_contradictory_information_04", "expected_category": "contradictory_information", "pair_id": "eval_pair_04", "text": "A person reads that the invoice total is thirty dollars. The payment screen shows forty dollars."},
+    {"id": "eval_v03_contradictory_information_05", "expected_category": "contradictory_information", "pair_id": "eval_pair_05", "text": "Someone reads that the file is named Project Maple. The file tab says Project Cedar."}
+  ]
+}

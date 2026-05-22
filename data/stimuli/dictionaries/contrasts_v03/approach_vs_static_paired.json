@@ -1,0 +1,33 @@
+{
+  "name": "semantic_contrast_v0_3_lite_approach_vs_static_paired",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "approach_vs_static_paired",
+  "baseline_category": "static_scene",
+  "description": "v0.3-lite paired contrast for unchanged scene position versus another entity moving into the scene.",
+  "categories": {
+    "static_scene": [
+      {"id": "v03_static_scene_01", "pair_id": "pair_01", "text": "A person stands beside a mailbox on a quiet sidewalk. A parked van remains across the street."},
+      {"id": "v03_static_scene_02", "pair_id": "pair_02", "text": "Someone waits near a fountain in a plaza. A small cart remains beside the fountain."},
+      {"id": "v03_static_scene_03", "pair_id": "pair_03", "text": "A person pauses near a garden gate. A bicycle remains beside the fence."},
+      {"id": "v03_static_scene_04", "pair_id": "pair_04", "text": "Someone stands by a bus stop sign. A taxi remains at the curb."},
+      {"id": "v03_static_scene_05", "pair_id": "pair_05", "text": "A person looks across a warehouse aisle. A pallet remains at the far end."},
+      {"id": "v03_static_scene_06", "pair_id": "pair_06", "text": "Someone stands in a station corridor. A luggage cart remains near the wall."},
+      {"id": "v03_static_scene_07", "pair_id": "pair_07", "text": "A person pauses at the edge of a courtyard. A maintenance cart remains by the planter."},
+      {"id": "v03_static_scene_08", "pair_id": "pair_08", "text": "Someone waits beside a loading dock. A delivery truck remains at the far bay."},
+      {"id": "v03_static_scene_09", "pair_id": "pair_09", "text": "A person stands near a hallway window. A janitor cart remains near the elevator."},
+      {"id": "v03_static_scene_10", "pair_id": "pair_10", "text": "Someone pauses on a gravel path. A wheelbarrow remains beside the shed."}
+    ],
+    "approaching_agent": [
+      {"id": "v03_approaching_agent_01", "pair_id": "pair_01", "text": "A person stands beside a mailbox on a quiet sidewalk. A van rolls toward the curb across the street."},
+      {"id": "v03_approaching_agent_02", "pair_id": "pair_02", "text": "Someone waits near a fountain in a plaza. A small cart rolls toward the fountain."},
+      {"id": "v03_approaching_agent_03", "pair_id": "pair_03", "text": "A person pauses near a garden gate. A bicycle rolls along the fence line."},
+      {"id": "v03_approaching_agent_04", "pair_id": "pair_04", "text": "Someone stands by a bus stop sign. A taxi rolls toward the curb."},
+      {"id": "v03_approaching_agent_05", "pair_id": "pair_05", "text": "A person looks across a warehouse aisle. A pallet jack rolls down the aisle."},
+      {"id": "v03_approaching_agent_06", "pair_id": "pair_06", "text": "Someone stands in a station corridor. A luggage cart rolls along the wall."},
+      {"id": "v03_approaching_agent_07", "pair_id": "pair_07", "text": "A person pauses at the edge of a courtyard. A maintenance cart rolls past the planter."},
+      {"id": "v03_approaching_agent_08", "pair_id": "pair_08", "text": "Someone waits beside a loading dock. A delivery truck rolls into the far bay."},
+      {"id": "v03_approaching_agent_09", "pair_id": "pair_09", "text": "A person stands near a hallway window. A janitor cart rolls out of the elevator area."},
+      {"id": "v03_approaching_agent_10", "pair_id": "pair_10", "text": "Someone pauses on a gravel path. A wheelbarrow rolls away from the shed."}
+    ]
+  }
+}

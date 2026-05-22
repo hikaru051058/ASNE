@@ -1,0 +1,19 @@
+{
+  "name": "semantic_contrast_v0_3_lite_approach_vs_static_paired_eval",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "approach_vs_static_paired",
+  "output_group": "contrasts_v03",
+  "description": "Held-out v0.3-lite paired contrast for unchanged scene position versus another entity moving into the scene.",
+  "items": [
+    {"id": "eval_v03_static_scene_01", "expected_category": "static_scene", "pair_id": "eval_pair_01", "text": "A person stands near a library entrance. A book cart remains beside the doorway."},
+    {"id": "eval_v03_static_scene_02", "expected_category": "static_scene", "pair_id": "eval_pair_02", "text": "Someone waits by a ferry railing. A service cart remains near the bench."},
+    {"id": "eval_v03_static_scene_03", "expected_category": "static_scene", "pair_id": "eval_pair_03", "text": "A person pauses near a hotel desk. A suitcase remains beside the column."},
+    {"id": "eval_v03_static_scene_04", "expected_category": "static_scene", "pair_id": "eval_pair_04", "text": "Someone stands near a market stall. A crate remains beside the awning."},
+    {"id": "eval_v03_static_scene_05", "expected_category": "static_scene", "pair_id": "eval_pair_05", "text": "A person waits near a theater door. A cleaning cart remains beside the wall."},
+    {"id": "eval_v03_approaching_agent_01", "expected_category": "approaching_agent", "pair_id": "eval_pair_01", "text": "A person stands near a library entrance. A book cart rolls toward the doorway."},
+    {"id": "eval_v03_approaching_agent_02", "expected_category": "approaching_agent", "pair_id": "eval_pair_02", "text": "Someone waits by a ferry railing. A service cart rolls along the bench."},
+    {"id": "eval_v03_approaching_agent_03", "expected_category": "approaching_agent", "pair_id": "eval_pair_03", "text": "A person pauses near a hotel desk. A suitcase rolls out from beside the column."},
+    {"id": "eval_v03_approaching_agent_04", "expected_category": "approaching_agent", "pair_id": "eval_pair_04", "text": "Someone stands near a market stall. A crate slides out from beside the awning."},
+    {"id": "eval_v03_approaching_agent_05", "expected_category": "approaching_agent", "pair_id": "eval_pair_05", "text": "A person waits near a theater door. A cleaning cart rolls along the wall."}
+  ]
+}

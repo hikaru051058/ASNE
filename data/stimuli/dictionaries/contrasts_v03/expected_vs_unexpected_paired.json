@@ -1,0 +1,33 @@
+{
+  "name": "semantic_contrast_v0_3_lite_expected_vs_unexpected_paired",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "expected_vs_unexpected_paired",
+  "baseline_category": "expected_outcome",
+  "description": "v0.3-lite paired contrast for routine versus unlikely scene continuations.",
+  "categories": {
+    "expected_outcome": [
+      {"id": "v03_expected_outcome_01", "pair_id": "pair_01", "text": "A person places a glass on a table. A moment later, the glass remains on the table."},
+      {"id": "v03_expected_outcome_02", "pair_id": "pair_02", "text": "Someone hangs a coat on a wall hook. A moment later, the coat remains on the hook."},
+      {"id": "v03_expected_outcome_03", "pair_id": "pair_03", "text": "A person sets a notebook on a desk. A moment later, the notebook remains on the desk."},
+      {"id": "v03_expected_outcome_04", "pair_id": "pair_04", "text": "Someone leaves a spoon beside a bowl. A moment later, the spoon remains beside the bowl."},
+      {"id": "v03_expected_outcome_05", "pair_id": "pair_05", "text": "A person puts a towel on a chair. A moment later, the towel remains on the chair."},
+      {"id": "v03_expected_outcome_06", "pair_id": "pair_06", "text": "Someone parks a bicycle by a fence. A moment later, the bicycle remains by the fence."},
+      {"id": "v03_expected_outcome_07", "pair_id": "pair_07", "text": "A person places an apple in a bowl. A moment later, the apple remains in the bowl."},
+      {"id": "v03_expected_outcome_08", "pair_id": "pair_08", "text": "Someone sets a candle on a shelf. A moment later, the candle remains on the shelf."},
+      {"id": "v03_expected_outcome_09", "pair_id": "pair_09", "text": "A person lays a scarf across a bench. A moment later, the scarf remains across the bench."},
+      {"id": "v03_expected_outcome_10", "pair_id": "pair_10", "text": "Someone places a pen inside a drawer. A moment later, the pen remains inside the drawer."}
+    ],
+    "unexpected_outcome": [
+      {"id": "v03_unexpected_outcome_01", "pair_id": "pair_01", "text": "A person places a glass on a table. A moment later, the glass is inside a closed drawer."},
+      {"id": "v03_unexpected_outcome_02", "pair_id": "pair_02", "text": "Someone hangs a coat on a wall hook. A moment later, the coat is folded inside a basket."},
+      {"id": "v03_unexpected_outcome_03", "pair_id": "pair_03", "text": "A person sets a notebook on a desk. A moment later, the notebook is inside the refrigerator."},
+      {"id": "v03_unexpected_outcome_04", "pair_id": "pair_04", "text": "Someone leaves a spoon beside a bowl. A moment later, the spoon is taped under the table."},
+      {"id": "v03_unexpected_outcome_05", "pair_id": "pair_05", "text": "A person puts a towel on a chair. A moment later, the towel is wrapped around a lamp."},
+      {"id": "v03_unexpected_outcome_06", "pair_id": "pair_06", "text": "Someone parks a bicycle by a fence. A moment later, the bicycle is standing in the kitchen."},
+      {"id": "v03_unexpected_outcome_07", "pair_id": "pair_07", "text": "A person places an apple in a bowl. A moment later, the apple is inside a shoe."},
+      {"id": "v03_unexpected_outcome_08", "pair_id": "pair_08", "text": "Someone sets a candle on a shelf. A moment later, the candle is floating in the sink."},
+      {"id": "v03_unexpected_outcome_09", "pair_id": "pair_09", "text": "A person lays a scarf across a bench. A moment later, the scarf is tied around a ceiling pipe."},
+      {"id": "v03_unexpected_outcome_10", "pair_id": "pair_10", "text": "Someone places a pen inside a drawer. A moment later, the pen is balanced on a window ledge."}
+    ]
+  }
+}

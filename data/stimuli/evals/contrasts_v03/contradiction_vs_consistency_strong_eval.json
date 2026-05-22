@@ -1,0 +1,69 @@
+{
+  "name": "semantic_contrast_v0_3_lite_contradiction_vs_consistency_strong_eval",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "contradiction_vs_consistency_paired",
+  "output_group": "contrasts_v03",
+  "description": "Held-out paired contradiction/consistency examples with stronger concrete semantic differences. These stimuli are for predicted response similarity analysis, not diagnosis or measurement of a person's mental state.",
+  "items": [
+    {
+      "id": "eval_v03b_consistent_information_01",
+      "expected_category": "consistent_information",
+      "pair_id": "strong_eval_pair_01",
+      "text": "A person reads that the box contains blue folders. Inside the box, the folders are blue."
+    },
+    {
+      "id": "eval_v03b_consistent_information_02",
+      "expected_category": "consistent_information",
+      "pair_id": "strong_eval_pair_02",
+      "text": "Someone reads that the shelf holds three glass jars. On the shelf, there are three glass jars."
+    },
+    {
+      "id": "eval_v03b_consistent_information_03",
+      "expected_category": "consistent_information",
+      "pair_id": "strong_eval_pair_03",
+      "text": "A traveler reads that the ticket lists Train 12. The platform display shows Train 12."
+    },
+    {
+      "id": "eval_v03b_consistent_information_04",
+      "expected_category": "consistent_information",
+      "pair_id": "strong_eval_pair_04",
+      "text": "A person reads that the crate contains metal tools. The open crate contains metal tools."
+    },
+    {
+      "id": "eval_v03b_consistent_information_05",
+      "expected_category": "consistent_information",
+      "pair_id": "strong_eval_pair_05",
+      "text": "Someone reads that the card shows a green circle. The card on the table shows a green circle."
+    },
+    {
+      "id": "eval_v03b_contradictory_information_01",
+      "expected_category": "contradictory_information",
+      "pair_id": "strong_eval_pair_01",
+      "text": "A person reads that the box contains blue folders. Inside the box, the folders are red."
+    },
+    {
+      "id": "eval_v03b_contradictory_information_02",
+      "expected_category": "contradictory_information",
+      "pair_id": "strong_eval_pair_02",
+      "text": "Someone reads that the shelf holds three glass jars. On the shelf, there are seven glass jars."
+    },
+    {
+      "id": "eval_v03b_contradictory_information_03",
+      "expected_category": "contradictory_information",
+      "pair_id": "strong_eval_pair_03",
+      "text": "A traveler reads that the ticket lists Train 12. The platform display shows Train 47."
+    },
+    {
+      "id": "eval_v03b_contradictory_information_04",
+      "expected_category": "contradictory_information",
+      "pair_id": "strong_eval_pair_04",
+      "text": "A person reads that the crate contains metal tools. The open crate contains paper cups."
+    },
+    {
+      "id": "eval_v03b_contradictory_information_05",
+      "expected_category": "contradictory_information",
+      "pair_id": "strong_eval_pair_05",
+      "text": "Someone reads that the card shows a green circle. The card on the table shows a purple square."
+    }
+  ]
+}

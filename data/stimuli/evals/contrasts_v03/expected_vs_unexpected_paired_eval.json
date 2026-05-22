@@ -1,0 +1,19 @@
+{
+  "name": "semantic_contrast_v0_3_lite_expected_vs_unexpected_paired_eval",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "expected_vs_unexpected_paired",
+  "output_group": "contrasts_v03",
+  "description": "Held-out v0.3-lite paired contrast for routine versus unlikely scene continuations.",
+  "items": [
+    {"id": "eval_v03_expected_outcome_01", "expected_category": "expected_outcome", "pair_id": "eval_pair_01", "text": "A person puts a folder on a counter. A moment later, the folder remains on the counter."},
+    {"id": "eval_v03_expected_outcome_02", "expected_category": "expected_outcome", "pair_id": "eval_pair_02", "text": "Someone leaves a mug beside the sink. A moment later, the mug remains beside the sink."},
+    {"id": "eval_v03_expected_outcome_03", "expected_category": "expected_outcome", "pair_id": "eval_pair_03", "text": "A person places a wallet in a tray. A moment later, the wallet remains in the tray."},
+    {"id": "eval_v03_expected_outcome_04", "expected_category": "expected_outcome", "pair_id": "eval_pair_04", "text": "Someone sets a broom near the door. A moment later, the broom remains near the door."},
+    {"id": "eval_v03_expected_outcome_05", "expected_category": "expected_outcome", "pair_id": "eval_pair_05", "text": "A person leaves a book on a nightstand. A moment later, the book remains on the nightstand."},
+    {"id": "eval_v03_unexpected_outcome_01", "expected_category": "unexpected_outcome", "pair_id": "eval_pair_01", "text": "A person puts a folder on a counter. A moment later, the folder is inside a flowerpot."},
+    {"id": "eval_v03_unexpected_outcome_02", "expected_category": "unexpected_outcome", "pair_id": "eval_pair_02", "text": "Someone leaves a mug beside the sink. A moment later, the mug is hanging from a curtain rod."},
+    {"id": "eval_v03_unexpected_outcome_03", "expected_category": "unexpected_outcome", "pair_id": "eval_pair_03", "text": "A person places a wallet in a tray. A moment later, the wallet is under a doormat."},
+    {"id": "eval_v03_unexpected_outcome_04", "expected_category": "unexpected_outcome", "pair_id": "eval_pair_04", "text": "Someone sets a broom near the door. A moment later, the broom is lying across the bathtub."},
+    {"id": "eval_v03_unexpected_outcome_05", "expected_category": "unexpected_outcome", "pair_id": "eval_pair_05", "text": "A person leaves a book on a nightstand. A moment later, the book is inside a cooking pot."}
+  ]
+}

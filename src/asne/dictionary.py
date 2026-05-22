@@ -194,6 +194,132 @@ def validate_eval_expansion(
     return warnings
 
 
+def validate_paired_contrast_benchmark(
+    dictionary_payload: dict[str, Any],
+    eval_payload: dict[str, Any] | None = None,
+    *,
+    expected_dictionary_pairs: int = 10,
+    expected_eval_pairs: int = 5,
+    max_pair_length_delta_words: int = 6,
+    banned_terms: set[str] | None = None,
+) -> list[str]:
+    """Validate paired binary contrast dictionaries and optional held-out eval sets."""
+
+    warnings: list[str] = []
+    banned = set(CATEGORY_LEAKAGE_TERMS | PROHIBITED_STIMULUS_TERMS)
+    if banned_terms:
+        banned.update(term.lower() for term in banned_terms)
+
+    validate_stimulus_dictionary(dictionary_payload)
+    warnings.extend(
+        _validate_paired_items(
+            items_by_category=dictionary_payload["categories"],
+            source_name=str(dictionary_payload.get("name") or "dictionary"),
+            expected_pairs=expected_dictionary_pairs,
+            banned_terms=banned,
+            max_pair_length_delta_words=max_pair_length_delta_words,
+        )
+    )
+
+    dictionary_texts = {
+        _normalize_text(str(item["text"]))
+        for stimuli in dictionary_payload["categories"].values()
+        for item in stimuli
+    }
+    if eval_payload is not None:
+        from .evaluation import validate_eval_set
+
+        validate_eval_set(eval_payload)
+        eval_by_category: dict[str, list[dict[str, Any]]] = {}
+        for item in eval_payload["items"]:
+            eval_by_category.setdefault(str(item["expected_category"]), []).append(
+                {
+                    "id": item["id"],
+                    "text": item["text"],
+                    "pair_id": item.get("pair_id"),
+                }
+            )
+            normalized = _normalize_text(str(item["text"]))
+            if normalized in dictionary_texts:
+                warnings.append(f"Eval item {item['id']!r} duplicates a dictionary stimulus.")
+        warnings.extend(
+            _validate_paired_items(
+                items_by_category=eval_by_category,
+                source_name=str(eval_payload.get("name") or "eval"),
+                expected_pairs=expected_eval_pairs,
+                banned_terms=banned,
+                max_pair_length_delta_words=max_pair_length_delta_words,
+            )
+        )
+    return warnings
+
+
+def _validate_paired_items(
+    *,
+    items_by_category: dict[str, list[dict[str, Any]]],
+    source_name: str,
+    expected_pairs: int,
+    banned_terms: set[str],
+    max_pair_length_delta_words: int,
+) -> list[str]:
+    warnings: list[str] = []
+    categories = list(items_by_category)
+    if len(categories) != 2:
+        warnings.append(f"{source_name}: expected exactly 2 categories, found {len(categories)}.")
+        return warnings
+
+    pair_to_items: dict[str, dict[str, dict[str, Any]]] = {}
+    seen_texts: set[str] = set()
+    for category, items in items_by_category.items():
+        if len(items) != expected_pairs:
+            warnings.append(f"{source_name}: category {category!r} has {len(items)} items; expected {expected_pairs}.")
+        for item in items:
+            pair_id = str(item.get("pair_id") or "").strip()
+            if not pair_id:
+                warnings.append(f"{source_name}: item {item.get('id')!r} is missing pair_id.")
+                continue
+            text = str(item.get("text") or "").strip()
+            normalized = _normalize_text(text)
+            if normalized in seen_texts:
+                warnings.append(f"{source_name}: duplicate text found for item {item.get('id')!r}.")
+            seen_texts.add(normalized)
+            for term in sorted(banned_terms | {category.lower()}):
+                if _contains_term(normalized, term):
+                    warnings.append(f"{source_name}: item {item.get('id')!r} contains banned term {term!r}.")
+            pair_to_items.setdefault(pair_id, {})[category] = item
+
+    if len(pair_to_items) != expected_pairs:
+        warnings.append(f"{source_name}: found {len(pair_to_items)} pairs; expected {expected_pairs}.")
+    for pair_id, by_category in sorted(pair_to_items.items()):
+        missing = [category for category in categories if category not in by_category]
+        if missing:
+            warnings.append(f"{source_name}: pair {pair_id!r} is missing categories: {missing}.")
+            continue
+        lengths = [
+            len(str(by_category[category].get("text") or "").split())
+            for category in categories
+        ]
+        if max(lengths) - min(lengths) > max_pair_length_delta_words:
+            warnings.append(
+                f"{source_name}: pair {pair_id!r} has length imbalance {lengths}; "
+                f"max allowed delta is {max_pair_length_delta_words} words."
+            )
+    return warnings
+
+
+def _normalize_text(text: str) -> str:
+    return re.sub(r"\s+", " ", text.strip().lower())
+
+
+def _contains_term(normalized_text: str, term: str) -> bool:
+    normalized_term = re.sub(r"[_-]+", " ", term.lower()).strip()
+    if not normalized_term:
+        return False
+    if " " in normalized_term:
+        return normalized_term in normalized_text
+    return re.search(rf"\b{re.escape(normalized_term)}\b", normalized_text) is not None
+
+
 def iter_dictionary_stimuli(payload: dict[str, Any]) -> list[DictionaryStimulus]:
     validate_stimulus_dictionary(payload)
     dictionary_name = str(payload.get("name") or "asne_dictionary")

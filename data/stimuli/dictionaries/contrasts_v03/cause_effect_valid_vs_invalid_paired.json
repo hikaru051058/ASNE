@@ -1,0 +1,33 @@
+{
+  "name": "semantic_contrast_v0_3_lite_cause_effect_valid_vs_invalid_paired",
+  "benchmark_name": "semantic_contrast_v0_3_lite",
+  "contrast_name": "cause_effect_valid_vs_invalid_paired",
+  "baseline_category": "valid_cause_effect",
+  "description": "v0.3-lite paired contrast for ordinary physical outcomes versus nonordinary physical outcomes.",
+  "categories": {
+    "valid_cause_effect": [
+      {"id": "v03_valid_cause_effect_01", "pair_id": "pair_01", "text": "A person knocks over a cup of water. Water spreads across the table."},
+      {"id": "v03_valid_cause_effect_02", "pair_id": "pair_02", "text": "Someone cuts a lemon with a knife. Lemon slices fall onto the board."},
+      {"id": "v03_valid_cause_effect_03", "pair_id": "pair_03", "text": "A person opens a window during a breeze. The curtain moves across the frame."},
+      {"id": "v03_valid_cause_effect_04", "pair_id": "pair_04", "text": "Someone drops a spoon into a metal sink. A sharp sound comes from the sink."},
+      {"id": "v03_valid_cause_effect_05", "pair_id": "pair_05", "text": "A person lights a small candle. A flame appears at the wick."},
+      {"id": "v03_valid_cause_effect_06", "pair_id": "pair_06", "text": "Someone presses a stamp onto wet ink. An ink mark appears on the paper."},
+      {"id": "v03_valid_cause_effect_07", "pair_id": "pair_07", "text": "A person pours sand through a funnel. Sand collects in the jar below."},
+      {"id": "v03_valid_cause_effect_08", "pair_id": "pair_08", "text": "Someone pushes a rolling cart down a hallway. The cart travels along the hallway."},
+      {"id": "v03_valid_cause_effect_09", "pair_id": "pair_09", "text": "A person wipes dust from a shelf. The wiped area looks clearer."},
+      {"id": "v03_valid_cause_effect_10", "pair_id": "pair_10", "text": "Someone turns a faucet handle. Water runs from the faucet."}
+    ],
+    "invalid_cause_effect": [
+      {"id": "v03_invalid_cause_effect_01", "pair_id": "pair_01", "text": "A person knocks over a cup of water. The table becomes completely dry."},
+      {"id": "v03_invalid_cause_effect_02", "pair_id": "pair_02", "text": "Someone cuts a lemon with a knife. The lemon becomes whole on the board."},
+      {"id": "v03_invalid_cause_effect_03", "pair_id": "pair_03", "text": "A person opens a window during a breeze. The curtain becomes pressed against the wall."},
+      {"id": "v03_invalid_cause_effect_04", "pair_id": "pair_04", "text": "Someone drops a spoon into a metal sink. The sink becomes lined with soft cloth."},
+      {"id": "v03_invalid_cause_effect_05", "pair_id": "pair_05", "text": "A person lights a small candle. The wick becomes covered with frost."},
+      {"id": "v03_invalid_cause_effect_06", "pair_id": "pair_06", "text": "Someone presses a stamp onto wet ink. The paper becomes blank and dry."},
+      {"id": "v03_invalid_cause_effect_07", "pair_id": "pair_07", "text": "A person pours sand through a funnel. The jar below becomes filled with water."},
+      {"id": "v03_invalid_cause_effect_08", "pair_id": "pair_08", "text": "Someone pushes a rolling cart down a hallway. The cart becomes fastened to the ceiling."},
+      {"id": "v03_invalid_cause_effect_09", "pair_id": "pair_09", "text": "A person wipes dust from a shelf. More dust appears in the wiped area."},
+      {"id": "v03_invalid_cause_effect_10", "pair_id": "pair_10", "text": "Someone turns a faucet handle. The faucet fills with dry sand."}
+    ]
+  }
+}
