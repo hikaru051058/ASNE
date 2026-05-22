@@ -169,6 +169,12 @@ The current report is written to:
 outputs/asne_reports/semantic_contrast_report_v0.md
 ```
 
+Demo report index:
+
+```text
+outputs/asne_reports/index.html
+```
+
 ## ASNE v0.1 Direction: ROI / Parcel Signatures
 
 ASNE v0.1 adds ROI/parcel-level aggregation as an interpretability layer over predicted cortical response vectors. The raw `20,484`-dimension scoring pipeline remains the benchmark layer for now; parcel aggregation is for analysis and reporting first.
