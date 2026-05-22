@@ -80,6 +80,25 @@ V02_ROWS = [
     },
 ]
 
+VISUALIZATION_CARDS = [
+    (
+        "Semantic contrast dashboard",
+        "Static, parcel, and temporal benchmark results organized by contrast.",
+    ),
+    (
+        "Predicted response visualizer",
+        "HCP-MMP parcel summaries for brain-region-inspired interpretation.",
+    ),
+    (
+        "Timeline view",
+        "Segment-level response trajectories for temporal inspection.",
+    ),
+    (
+        "Variant comparison view",
+        "Side-by-side comparison across vertex, parcel, and temporal views.",
+    ),
+]
+
 
 def discover_artifacts(
     *,
@@ -153,18 +172,36 @@ def render_html(artifacts: dict[str, Any], output_path: Path) -> str:
             "<head>",
             '<meta charset="utf-8">',
             '<meta name="viewport" content="width=device-width, initial-scale=1">',
-            "<title>ASNE v0.3 Demo Report</title>",
+            "<title>ASNE | Artificial Semantic Neural Evaluation</title>",
             f"<style>{_css()}</style>",
             "</head>",
             "<body>",
             '<main class="page">',
-            "<header>",
-            "<p class=\"eyebrow\">Static demo report</p>",
-            "<h1>ASNE v0.3 Demo Report</h1>",
-            "<p class=\"lede\">ASNE is a TRIBE-backed in-silico semantic contrast analysis system for comparing predicted cortical response signatures across controlled stimuli.</p>",
-            f'<p class="disclaimer">{html.escape(DISCLAIMER)}</p>',
-            '<p class="warning">v0.3-lite uses ten held-out examples per contrast. Treat this as a stability check, not a production classifier benchmark.</p>',
+            '<header class="hero">',
+            '<div class="hero-copy">',
+            "<p class=\"eyebrow\">Artificial Semantic Neural Evaluation</p>",
+            "<h1>ASNE</h1>",
+            "<p class=\"lede\">A benchmark and visualization framework for comparing semantic stimulus responses across LLMs, brain-inspired feature spaces, and contrastive evaluation tasks.</p>",
+            '<div class="button-row">',
+            '<a class="button primary" href="semantic_contrast_benchmark_v03.html">View v0.3 Report</a>',
+            '<a class="button" href="#visualizations">View Visualizations</a>',
+            '<a class="button" href="https://github.com/hikaru051058/ASNE">GitHub</a>',
+            "</div>",
+            "</div>",
+            '<aside class="hero-panel">',
+            '<div class="panel-header"><span>v0.3-lite snapshot</span><span>Exploratory semantic contrast prototype</span></div>',
+            '<div class="metric"><span>Most separable contrast</span><strong>Expected / unexpected</strong></div>',
+            '<div class="metric"><span>Parcel top-1</span><strong>0.90</strong></div>',
+            '<div class="metric"><span>Feature spaces</span><strong>Vertex + HCP-MMP parcel</strong></div>',
+            "</aside>",
             "</header>",
+            '<section class="card">',
+            "<h2>Overview</h2>",
+            "<p>ASNE is a TRIBE-backed in-silico semantic contrast analysis system for comparing predicted cortical response signatures across controlled stimuli. Current version: exploratory v0.3-lite prototype.</p>",
+            f'<p class="disclaimer">{html.escape(DISCLAIMER)}</p>',
+            '<p class="repo-link">Main repository: <a href="https://github.com/hikaru051058/ASNE">github.com/hikaru051058/ASNE</a></p>',
+            '<p class="warning">v0.3-lite uses ten held-out examples per contrast. Treat this as a stability check, not a production classifier benchmark.</p>',
+            "</section>",
             '<section class="card result-card">',
             "<h2>Main result</h2>",
             "<p>Expected/unexpected remained stable under v0.3 expansion; cause/effect remains viable, especially with parcel scoring; contradiction/consistency became unstable and is now weak/deprioritized.</p>",
@@ -178,8 +215,16 @@ def render_html(artifacts: dict[str, Any], output_path: Path) -> str:
             "<p class=\"muted\">The earlier v0.2 milestone showed that HCP-MMP parcel scoring preserved the small-suite vertex benchmark. v0.3 is now the headline stability benchmark.</p>",
             _v02_vertex_parcel_table(),
             "</section>",
+            '<section class="card" id="visualizations">',
+            "<h2>Visualizations</h2>",
+            _visualization_cards(),
+            "</section>",
             '<section class="card">',
-            "<h2>Artifacts</h2>",
+            "<h2>Method</h2>",
+            _method_pipeline(),
+            "</section>",
+            '<section class="card">',
+            "<h2>Demo reports and artifacts</h2>",
             _artifact_links(artifacts, output_path),
             "</section>",
             '<section class="card">',
@@ -191,6 +236,39 @@ def render_html(artifacts: dict[str, Any], output_path: Path) -> str:
             "</html>",
         ]
     ) + "\n"
+
+
+def _visualization_cards() -> str:
+    lines = ['<div class="viz-grid">']
+    for title, description in VISUALIZATION_CARDS:
+        lines.extend(
+            [
+                '<article class="viz-card">',
+                '<div class="viz-placeholder"></div>',
+                f"<h3>{html.escape(title)}</h3>",
+                f"<p>{html.escape(description)}</p>",
+                "</article>",
+            ]
+        )
+    lines.append("</div>")
+    return "\n".join(lines)
+
+
+def _method_pipeline() -> str:
+    steps = [
+        "Stimulus pair",
+        "Text/TTS/audio events",
+        "TRIBE v2 prediction",
+        "Predicted response [segments x 20484]",
+        "Mean, temporal, and parcel signatures",
+        "Contrast comparison",
+        "ASNE reports + demo site",
+    ]
+    lines = ['<div class="pipeline">']
+    for index, step in enumerate(steps, start=1):
+        lines.append(f'<div class="pipeline-step"><span>{index:02d}</span><strong>{html.escape(step)}</strong></div>')
+    lines.append("</div>")
+    return "\n".join(lines)
 
 
 def _v03_table() -> str:
@@ -269,19 +347,75 @@ def _css() -> str:
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: #f7f7f5;
+  background: #fff;
   color: #191919;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
 }
 .page { max-width: 1120px; margin: 0 auto; padding: 48px 24px; }
-header { margin-bottom: 24px; }
+.hero {
+  min-height: 72vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+  gap: 44px;
+  align-items: center;
+  border-bottom: 1px solid #e7e7e7;
+  margin-bottom: 18px;
+  padding-bottom: 42px;
+}
 .eyebrow { color: #666; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 8px; }
-h1 { font-size: 42px; line-height: 1.1; margin: 0 0 14px; letter-spacing: 0; }
+h1 { font-size: clamp(72px, 13vw, 150px); line-height: .88; margin: 0 0 18px; letter-spacing: 0; }
 h2 { font-size: 22px; margin: 0 0 14px; letter-spacing: 0; }
 h3 { font-size: 15px; margin: 20px 0 8px; letter-spacing: 0; }
-.lede { max-width: 780px; font-size: 18px; margin: 0 0 16px; color: #333; }
+.lede { max-width: 780px; font-size: 20px; margin: 0 0 20px; color: #333; }
+.button-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #111;
+  border-radius: 6px;
+  padding: 0 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.button.primary { background: #111; color: #fff; }
+.hero-panel {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 18px;
+  background: #fafafa;
+}
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid #e3e3e3;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  color: #666;
+  font-size: 13px;
+}
+.metric {
+  display: grid;
+  gap: 4px;
+  border: 1px solid #e3e3e3;
+  border-radius: 6px;
+  padding: 13px;
+  margin-top: 10px;
+  background: #fff;
+}
+.metric span { color: #666; font-size: 13px; }
+.metric strong { font-size: 20px; line-height: 1.15; }
 .disclaimer { max-width: 880px; border-left: 3px solid #191919; padding-left: 14px; color: #333; }
+.repo-link { margin: 12px 0; font-weight: 600; }
+.warning {
+  background: #f7f7f5;
+  border: 1px solid #deded9;
+  border-radius: 6px;
+  padding: 12px;
+}
 .card {
   background: #fff;
   border: 1px solid #deded9;
@@ -292,6 +426,46 @@ h3 { font-size: 15px; margin: 20px 0 8px; letter-spacing: 0; }
 }
 .result-card { border-color: #191919; }
 .result-card p { font-size: 19px; margin: 0; }
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.viz-card {
+  border: 1px solid #deded9;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fafafa;
+}
+.viz-card h3 { margin-top: 12px; }
+.viz-card p { color: #444; margin: 0; }
+.viz-placeholder {
+  aspect-ratio: 16 / 10;
+  border: 1px solid #d6d6d6;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, transparent 0 44%, #111 45% 47%, transparent 48%),
+    repeating-linear-gradient(90deg, #f7f7f7, #f7f7f7 18px, #ededed 19px, #ededed 20px);
+}
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.pipeline-step {
+  display: grid;
+  align-content: space-between;
+  min-height: 118px;
+  border: 1px solid #deded9;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fafafa;
+}
+.pipeline-step span {
+  color: #666;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th, td { border-bottom: 1px solid #e6e6e1; padding: 10px 8px; text-align: left; vertical-align: top; }
 th { color: #555; font-weight: 600; background: #fafafa; }
@@ -317,6 +491,8 @@ li { margin: 4px 0; }
 @media (max-width: 760px) {
   .page { padding: 28px 14px; }
   h1 { font-size: 32px; }
+  .hero, .viz-grid, .pipeline { grid-template-columns: 1fr; }
+  .button { width: 100%; }
   table { display: block; overflow-x: auto; white-space: nowrap; }
 }
 """

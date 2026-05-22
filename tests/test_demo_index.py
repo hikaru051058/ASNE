@@ -32,14 +32,19 @@ def test_demo_index_generation_creates_file(tmp_path: Path) -> None:
     html = path.read_text(encoding="utf-8")
 
     assert path.exists()
-    assert "ASNE v0.3 Demo Report" in html
+    assert "ASNE | Artificial Semantic Neural Evaluation" in html
+    assert "<h1>ASNE</h1>" in html
+    assert "A benchmark and visualization framework" in html
     assert "ASNE compares predicted TRIBE cortical response signatures" in html
+    assert "https://github.com/hikaru051058/ASNE" in html
     assert "Expected/unexpected remained stable under v0.3 expansion" in html
     assert "expected_vs_unexpected_paired" in html
     assert "stable" in html
     assert "cause_effect_valid_vs_invalid_paired" in html
     assert "contradiction_vs_consistency_paired" in html
     assert "weak/deprioritized" in html
+    assert "Demo reports and artifacts" in html
+    assert "View v0.3 Report" in html
     assert "Previous milestone: v0.2 parcel scoring" in html
     assert "semantic_contrast_benchmark_v03.html" in html
     assert "semantic_contrast_report_v0.html" in html
@@ -63,7 +68,7 @@ def test_demo_index_missing_artifacts_do_not_crash(tmp_path: Path) -> None:
 
     assert path.exists()
     assert "No matching artifacts found." in html
-    assert "ASNE v0.3 Demo Report" in html
+    assert "<h1>ASNE</h1>" in html
 
 
 def _load_script():
