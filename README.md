@@ -191,6 +191,14 @@ outputs/asne_reports/index.html
 
 The demo index now presents v0.3-lite as the current headline benchmark and keeps v0.2 parcel scoring as a historical prototype milestone.
 
+Public GitHub Pages deck:
+
+```text
+https://hikaru051058.github.io/ASNE/asne_semantic_neuroai_presentation.html
+```
+
+The deck is bilingual English/Japanese and summarizes the ASNE hypothesis, workflow, current results, limitations, and references.
+
 ## Current Limitations
 
 - ASNE uses predicted TRIBE cortical responses, not measured fMRI or direct brain recordings.
@@ -198,6 +206,19 @@ The demo index now presents v0.3-lite as the current headline benchmark and keep
 - Eval sets are still small and should be treated as stability checks, not production classifier benchmarks.
 - ASNE is not emotion detection, diagnosis, or measurement of a person's mental state.
 - Regenerating full results requires TRIBE v2 dependencies, model artifacts, and local audio preprocessing.
+
+## Research References and Grounding
+
+ASNE should be read as a research workflow around upstream predicted-response models, not as an empirically validated neuroscience result by itself. The core upstream model and framing references are:
+
+- [TRIBE v2 official repository](https://github.com/facebookresearch/tribev2): upstream code for the multimodal brain encoding model used as ASNE's predicted-response backend.
+- [Meta AI TRIBE v2 announcement](https://ai.meta.com/blog/tribe-v2-brain-predictive-foundation-model/): public overview of TRIBE v2 as a predictive foundation model for in-silico brain-response experiments.
+- [TRIBE v2 paper](https://arxiv.org/pdf/2605.04326): paper describing a foundation model of vision, audition, and language for in-silico brain experiments.
+- [ASNE research overview](docs/RESEARCH_OVERVIEW.md): project hypothesis, motivation, novelty claim, and interpretation boundaries.
+- [ASNE limitations and ethics](docs/LIMITATIONS_AND_ETHICS.md): explicit limits on interpretation and inappropriate uses.
+- [ASNE v0.3-lite benchmark](docs/semantic_contrast_benchmark_v03.md): current semantic contrast benchmark snapshot.
+
+Use these references when describing ASNE externally. Claims should stay limited to predicted TRIBE response signatures under the tested ASNE protocol unless independent empirical validation is added.
 
 ## GitHub Pages Export
 

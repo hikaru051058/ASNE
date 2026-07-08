@@ -277,6 +277,168 @@
         padding-left: 14px;
       }
 
+      a {
+        color: var(--accent);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .visual {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 20px;
+      }
+
+      .signal-strip {
+        display: grid;
+        gap: 8px;
+      }
+
+      .signal-row {
+        align-items: center;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 120px 1fr 58px;
+      }
+
+      .signal-label,
+      .signal-value {
+        color: var(--muted);
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
+      .heatline {
+        display: grid;
+        gap: 3px;
+        grid-template-columns: repeat(20, 1fr);
+        min-height: 28px;
+      }
+
+      .heatline span {
+        border-radius: 3px;
+      }
+
+      .heatline span:nth-child(4n + 1) {
+        background: #d0e4e3;
+      }
+
+      .heatline span:nth-child(4n + 2) {
+        background: #93bfbd;
+      }
+
+      .heatline span:nth-child(4n + 3) {
+        background: #d98f7e;
+      }
+
+      .heatline span:nth-child(4n) {
+        background: #ead39a;
+      }
+
+      .diagram {
+        display: grid;
+        gap: 16px;
+      }
+
+      .diagram-row {
+        align-items: center;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr auto 1fr;
+      }
+
+      .node {
+        background: #f8fafb;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        text-align: center;
+      }
+
+      .node strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .arrow {
+        color: var(--accent);
+        font-size: 1.4rem;
+        font-weight: 800;
+      }
+
+      .similarity-map {
+        display: grid;
+        gap: 14px;
+      }
+
+      .score-track {
+        background: #eef1f3;
+        border-radius: 999px;
+        min-height: 18px;
+        overflow: hidden;
+      }
+
+      .score-fill {
+        background: var(--accent);
+        border-radius: inherit;
+        min-height: inherit;
+      }
+
+      .score-fill.warn {
+        background: var(--accent-2);
+      }
+
+      .score-fill.mid {
+        background: var(--accent-3);
+      }
+
+      .bar-chart {
+        display: grid;
+        gap: 14px;
+      }
+
+      .bar-row {
+        align-items: center;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 220px 1fr 48px;
+      }
+
+      .bar {
+        background: #eef1f3;
+        border-radius: 6px;
+        height: 28px;
+        overflow: hidden;
+      }
+
+      .bar span {
+        background: var(--accent);
+        display: block;
+        height: 100%;
+      }
+
+      .bar.warn span {
+        background: var(--accent-2);
+      }
+
+      .reference-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .reference-list li {
+        margin: 0.2rem 0;
+      }
+
+      .wide {
+        grid-column: 1 / -1;
+      }
+
       @media (max-width: 900px) {
         .slide {
           padding: 48px 24px 72px;
@@ -284,7 +446,10 @@
 
         .two,
         .three,
-        .pipeline {
+        .pipeline,
+        .diagram-row,
+        .bar-row,
+        .signal-row {
           grid-template-columns: 1fr;
         }
 
@@ -350,8 +515,30 @@
             ASNE compares TRIBE-predicted cortical response signatures across controlled semantic
             stimuli, then reports which contrasts are separable and interpretable.
           </div>
+          <div class="visual signal-strip" aria-label="Stylized predicted response signatures">
+            <div class="signal-row">
+              <span class="signal-label">expected</span>
+              <div class="heatline" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="signal-value">0.90</span>
+            </div>
+            <div class="signal-row">
+              <span class="signal-label">cause-effect</span>
+              <div class="heatline" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="signal-value">0.80</span>
+            </div>
+          </div>
         </div>
-        <div class="footer"><span>Use arrow keys or buttons to navigate</span><span>1 / 11</span></div>
+        <div class="footer"><span>Use arrow keys or buttons to navigate</span><span>1 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -366,14 +553,21 @@
             then carefully controlled semantic contrasts should produce distinguishable predicted
             response patterns.
           </div>
-          <div class="panel">
-            <strong>Operational test</strong>
-            Build paired stimulus dictionaries, run each item through TRIBE v2, compare the
-            predicted response signatures, and ask whether held-out examples land on the expected
-            side of the contrast.
+          <div class="visual diagram">
+            <div class="diagram-row">
+              <div class="node"><strong>Stimulus A</strong>fits context</div>
+              <span class="arrow">→</span>
+              <div class="node"><strong>Signature A</strong>predicted response</div>
+            </div>
+            <div class="diagram-row">
+              <div class="node"><strong>Stimulus B</strong>violates context</div>
+              <span class="arrow">→</span>
+              <div class="node"><strong>Signature B</strong>predicted response</div>
+            </div>
+            <p class="small">The test asks whether A and B become separable in predicted response space.</p>
           </div>
         </div>
-        <div class="footer"><span>Important: this is model-predicted response space, not measured fMRI.</span><span>2 / 11</span></div>
+        <div class="footer"><span>Important: this is model-predicted response space, not measured fMRI.</span><span>2 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -398,7 +592,7 @@
             infrastructure around a research idea.
           </div>
         </div>
-        <div class="footer"><span>Framing: hypothesis generation and model analysis.</span><span>3 / 11</span></div>
+        <div class="footer"><span>Framing: hypothesis generation and model analysis.</span><span>3 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -420,7 +614,7 @@
             parcellation, temporal-analysis, and reporting layer around the model.
           </p>
         </div>
-        <div class="footer"><span>Core repository modules: dictionary, evaluation, roi, temporal, reporting, adapter.</span><span>4 / 11</span></div>
+        <div class="footer"><span>Core repository modules: dictionary, evaluation, roi, temporal, reporting, adapter.</span><span>4 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -440,8 +634,23 @@
             stimulus dictionary. A held-out example is then scored by similarity to each category
             signature. Correct top-1 means the expected category ranked first.
           </div>
+          <div class="visual similarity-map wide">
+            <strong>Held-out example similarity</strong>
+            <div>
+              <div class="small">expected category</div>
+              <div class="score-track"><div class="score-fill" style="width: 90%"></div></div>
+            </div>
+            <div>
+              <div class="small">near alternative</div>
+              <div class="score-track"><div class="score-fill mid" style="width: 64%"></div></div>
+            </div>
+            <div>
+              <div class="small">weak alternative</div>
+              <div class="score-track"><div class="score-fill warn" style="width: 38%"></div></div>
+            </div>
+          </div>
         </div>
-        <div class="footer"><span>The current strongest path is semantic contrast evaluation, not psychological state detection.</span><span>5 / 11</span></div>
+        <div class="footer"><span>The current strongest path is semantic contrast evaluation, not psychological state detection.</span><span>5 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -467,7 +676,7 @@
             parcel-level scoring, and temporal segment diagnostics.
           </div>
         </div>
-        <div class="footer"><span>Mid-level code explanation: data in, adapter call, signatures out, scoring/reporting.</span><span>6 / 11</span></div>
+        <div class="footer"><span>Mid-level code explanation: data in, adapter call, signatures out, scoring/reporting.</span><span>6 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -508,7 +717,7 @@
             </tbody>
           </table>
         </div>
-        <div class="footer"><span>The useful contrasts are semantic outcome/anomaly contrasts.</span><span>7 / 11</span></div>
+        <div class="footer"><span>The useful contrasts are semantic outcome/anomaly contrasts.</span><span>7 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -532,8 +741,25 @@
             <b>0.50</b>
             Parcel top-1 accuracy after expansion, so this was deprioritized.
           </div>
+          <div class="visual bar-chart wide">
+            <div class="bar-row">
+              <span>Expected / unexpected</span>
+              <div class="bar"><span style="width: 90%"></span></div>
+              <strong>0.90</strong>
+            </div>
+            <div class="bar-row">
+              <span>Cause-effect</span>
+              <div class="bar"><span style="width: 80%"></span></div>
+              <strong>0.80</strong>
+            </div>
+            <div class="bar-row">
+              <span>Contradiction</span>
+              <div class="bar warn"><span style="width: 50%"></span></div>
+              <strong>0.50</strong>
+            </div>
+          </div>
         </div>
-        <div class="footer"><span>Small eval sets: useful stability checks, not definitive benchmark claims.</span><span>8 / 11</span></div>
+        <div class="footer"><span>Small eval sets: useful stability checks, not definitive benchmark claims.</span><span>8 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -554,7 +780,7 @@
             especially after parcel aggregation.
           </div>
         </div>
-        <div class="footer"><span>This is a productive narrowing, not a failed result.</span><span>9 / 11</span></div>
+        <div class="footer"><span>This is a productive narrowing, not a failed result.</span><span>9 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -577,7 +803,7 @@
             setting rather than general accuracy claims.
           </div>
         </div>
-        <div class="footer"><span>Empirical neuroscience claims would require validation against measured human data.</span><span>10 / 11</span></div>
+        <div class="footer"><span>Empirical neuroscience claims would require validation against measured human data.</span><span>10 / 12</span></div>
       </section>
 
       <section class="slide">
@@ -606,7 +832,33 @@
             controlled stimuli, model-predicted response signatures, and inspectable errors.”
           </p>
         </div>
-        <div class="footer"><span>ASNE: Artificial Semantic Neural Evaluation</span><span>11 / 11</span></div>
+        <div class="footer"><span>ASNE: Artificial Semantic Neural Evaluation</span><span>11 / 12</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">References</div>
+          <h2>Research grounding and source links</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>Core upstream model</strong>
+            <ul class="reference-list">
+              <li><a href="https://github.com/facebookresearch/tribev2">facebookresearch/tribev2</a>: official TRIBE v2 code repository.</li>
+              <li><a href="https://ai.meta.com/blog/tribe-v2-brain-predictive-foundation-model/">Meta AI TRIBE v2 announcement</a>: public overview of the predictive foundation model.</li>
+              <li><a href="https://arxiv.org/pdf/2605.04326">TRIBE v2 paper</a>: foundation model for vision, audition, and language in-silico brain experiments.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <strong>ASNE project references</strong>
+            <ul class="reference-list">
+              <li><a href="https://hikaru051058.github.io/ASNE/">ASNE GitHub Pages report index</a>.</li>
+              <li><a href="semantic_contrast_benchmark_v03.html">ASNE v0.3-lite semantic contrast benchmark</a>.</li>
+              <li><a href="LIMITATIONS_AND_ETHICS.md">Limitations and ethics framing</a>.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer"><span>References are for model context and research framing, not claims of empirical validation.</span><span>12 / 12</span></div>
       </section>
     </main>
 
@@ -641,8 +893,30 @@
             ASNEは、制御された意味刺激に対してTRIBEが予測した皮質応答シグネチャを比較し、
             どの意味対立が分離可能で解釈しやすいかを報告する仕組みです。
           </div>
+          <div class="visual signal-strip" aria-label="予測応答シグネチャの模式図">
+            <div class="signal-row">
+              <span class="signal-label">期待通り</span>
+              <div class="heatline" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="signal-value">0.90</span>
+            </div>
+            <div class="signal-row">
+              <span class="signal-label">因果関係</span>
+              <div class="heatline" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="signal-value">0.80</span>
+            </div>
+          </div>
         </div>
-        <div class="footer"><span>矢印キーまたはボタンで移動</span><span>1 / 11</span></div>
+        <div class="footer"><span>矢印キーまたはボタンで移動</span><span>1 / 12</span></div>
         `,
         `
         <div>
@@ -655,13 +929,21 @@
             凍結された神経エンコーディングモデルが言語・音声から皮質様の応答を予測できるなら、
             注意深く制御した意味対立は、区別可能な予測応答パターンを生むはずです。
           </div>
-          <div class="panel">
-            <strong>操作的なテスト</strong>
-            ペア化した刺激辞書を作り、各項目をTRIBE v2に通し、予測応答シグネチャを比較して、
-            未学習の評価例が期待される対立カテゴリ側に近づくかを見ます。
+          <div class="visual diagram">
+            <div class="diagram-row">
+              <div class="node"><strong>刺激A</strong>文脈に合う</div>
+              <span class="arrow">→</span>
+              <div class="node"><strong>シグネチャA</strong>予測応答</div>
+            </div>
+            <div class="diagram-row">
+              <div class="node"><strong>刺激B</strong>文脈を破る</div>
+              <span class="arrow">→</span>
+              <div class="node"><strong>シグネチャB</strong>予測応答</div>
+            </div>
+            <p class="small">AとBが予測応答空間で分離するかをテストします。</p>
           </div>
         </div>
-        <div class="footer"><span>重要: これはモデル予測空間であり、実測fMRIではありません。</span><span>2 / 11</span></div>
+        <div class="footer"><span>重要: これはモデル予測空間であり、実測fMRIではありません。</span><span>2 / 12</span></div>
         `,
         `
         <div>
@@ -684,7 +966,7 @@
             研究アイデアの周りに、LLM支援コーディングで再現可能な評価基盤を作った例でもあります。
           </div>
         </div>
-        <div class="footer"><span>位置づけ: 仮説生成とモデル分析。</span><span>3 / 11</span></div>
+        <div class="footer"><span>位置づけ: 仮説生成とモデル分析。</span><span>3 / 12</span></div>
         `,
         `
         <div>
@@ -705,7 +987,7 @@
             パーセレーション、時間解析、レポート生成のレイヤーです。
           </p>
         </div>
-        <div class="footer"><span>主要モジュール: dictionary, evaluation, roi, temporal, reporting, adapter。</span><span>4 / 11</span></div>
+        <div class="footer"><span>主要モジュール: dictionary, evaluation, roi, temporal, reporting, adapter。</span><span>4 / 12</span></div>
         `,
         `
         <div>
@@ -724,8 +1006,23 @@
             未学習の例は各カテゴリシグネチャとの類似度でスコア化され、期待カテゴリが1位なら
             top-1正解です。
           </div>
+          <div class="visual similarity-map wide">
+            <strong>未学習例の類似度</strong>
+            <div>
+              <div class="small">期待カテゴリ</div>
+              <div class="score-track"><div class="score-fill" style="width: 90%"></div></div>
+            </div>
+            <div>
+              <div class="small">近い別カテゴリ</div>
+              <div class="score-track"><div class="score-fill mid" style="width: 64%"></div></div>
+            </div>
+            <div>
+              <div class="small">弱い別カテゴリ</div>
+              <div class="score-track"><div class="score-fill warn" style="width: 38%"></div></div>
+            </div>
+          </div>
         </div>
-        <div class="footer"><span>現時点で最も強い方向は、心理状態検出ではなく意味対立評価です。</span><span>5 / 11</span></div>
+        <div class="footer"><span>現時点で最も強い方向は、心理状態検出ではなく意味対立評価です。</span><span>5 / 12</span></div>
         `,
         `
         <div>
@@ -750,7 +1047,7 @@
             再利用できます。
           </div>
         </div>
-        <div class="footer"><span>中位レベルの説明: データ入力、アダプタ呼び出し、シグネチャ出力、スコアリング/レポート。</span><span>6 / 11</span></div>
+        <div class="footer"><span>中位レベルの説明: データ入力、アダプタ呼び出し、シグネチャ出力、スコアリング/レポート。</span><span>6 / 12</span></div>
         `,
         `
         <div>
@@ -790,7 +1087,7 @@
             </tbody>
           </table>
         </div>
-        <div class="footer"><span>有用だったのは、意味的な結果・異常性に関する対立です。</span><span>7 / 11</span></div>
+        <div class="footer"><span>有用だったのは、意味的な結果・異常性に関する対立です。</span><span>7 / 12</span></div>
         `,
         `
         <div>
@@ -813,8 +1110,25 @@
             <b>0.50</b>
             評価拡大後のパーセルtop-1精度。このため優先度を下げました。
           </div>
+          <div class="visual bar-chart wide">
+            <div class="bar-row">
+              <span>期待通り / 予想外</span>
+              <div class="bar"><span style="width: 90%"></span></div>
+              <strong>0.90</strong>
+            </div>
+            <div class="bar-row">
+              <span>因果関係</span>
+              <div class="bar"><span style="width: 80%"></span></div>
+              <strong>0.80</strong>
+            </div>
+            <div class="bar-row">
+              <span>矛盾</span>
+              <div class="bar warn"><span style="width: 50%"></span></div>
+              <strong>0.50</strong>
+            </div>
+          </div>
         </div>
-        <div class="footer"><span>小規模評価セットなので、確定的ベンチマークではなく安定性チェックとして読むべきです。</span><span>8 / 11</span></div>
+        <div class="footer"><span>小規模評価セットなので、確定的ベンチマークではなく安定性チェックとして読むべきです。</span><span>8 / 12</span></div>
         `,
         `
         <div>
@@ -833,7 +1147,7 @@
             一部の意味的異常・結果に関する対立がTRIBE予測応答空間で分離することを示せます。
           </div>
         </div>
-        <div class="footer"><span>これは失敗ではなく、生産的な焦点化です。</span><span>9 / 11</span></div>
+        <div class="footer"><span>これは失敗ではなく、生産的な焦点化です。</span><span>9 / 12</span></div>
         `,
         `
         <div>
@@ -855,7 +1169,7 @@
             方向づけのための結果です。
           </div>
         </div>
-        <div class="footer"><span>経験的な神経科学の主張には、実測ヒトデータでの検証が必要です。</span><span>10 / 11</span></div>
+        <div class="footer"><span>経験的な神経科学の主張には、実測ヒトデータでの検証が必要です。</span><span>10 / 12</span></div>
         `,
         `
         <div>
@@ -883,7 +1197,32 @@
             ツール媒介のループを作れることです。」
           </p>
         </div>
-        <div class="footer"><span>ASNE: Artificial Semantic Neural Evaluation</span><span>11 / 11</span></div>
+        <div class="footer"><span>ASNE: Artificial Semantic Neural Evaluation</span><span>11 / 12</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">参考リンク</div>
+          <h2>研究上の根拠と参照先</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>上流モデル</strong>
+            <ul class="reference-list">
+              <li><a href="https://github.com/facebookresearch/tribev2">facebookresearch/tribev2</a>: TRIBE v2の公式コードリポジトリ。</li>
+              <li><a href="https://ai.meta.com/blog/tribe-v2-brain-predictive-foundation-model/">Meta AIのTRIBE v2紹介</a>: 予測基盤モデルとしての概要。</li>
+              <li><a href="https://arxiv.org/pdf/2605.04326">TRIBE v2論文</a>: 視覚・聴覚・言語に対応するin-silico脳実験用モデル。</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <strong>ASNEプロジェクト</strong>
+            <ul class="reference-list">
+              <li><a href="https://hikaru051058.github.io/ASNE/">ASNE GitHub Pages レポート一覧</a>。</li>
+              <li><a href="semantic_contrast_benchmark_v03.html">ASNE v0.3-lite 意味対立ベンチマーク</a>。</li>
+              <li><a href="LIMITATIONS_AND_ETHICS.md">限界と倫理的な位置づけ</a>。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer"><span>参照リンクはモデル背景と研究上の位置づけのためであり、実証済み神経科学主張ではありません。</span><span>12 / 12</span></div>
         `,
       ];
       let index = 0;
