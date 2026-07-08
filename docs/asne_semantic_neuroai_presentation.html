@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ASNE presentation for semantic NeuroAI discussion</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f5f1;
+        --ink: #202124;
+        --muted: #626a73;
+        --line: #d7d3ca;
+        --panel: #ffffff;
+        --accent: #0f6b6e;
+        --accent-2: #a6422b;
+        --accent-3: #8a6d1d;
+        --code: #eef1f3;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        line-height: 1.45;
+      }
+
+      main {
+        min-height: 100vh;
+      }
+
+      .deck {
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 100vh;
+      }
+
+      .slide {
+        display: none;
+        min-height: 100vh;
+        padding: 5.5vh 7vw 6.5vh;
+      }
+
+      .slide.active {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 28px;
+      }
+
+      .kicker {
+        color: var(--accent);
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+        line-height: 1.03;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        max-width: 900px;
+        font-size: clamp(2.4rem, 6vw, 5.6rem);
+      }
+
+      h2 {
+        max-width: 980px;
+        font-size: clamp(2rem, 4vw, 4.1rem);
+      }
+
+      h3 {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .lead {
+        max-width: 900px;
+        color: var(--muted);
+        font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+      }
+
+      .body {
+        display: grid;
+        align-content: center;
+        gap: 28px;
+      }
+
+      .two {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .three {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .panel,
+      .step,
+      .metric {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 22px;
+      }
+
+      .panel strong,
+      .step strong,
+      .metric strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.05rem;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.15rem;
+      }
+
+      li {
+        margin: 0.55rem 0;
+      }
+
+      .formula {
+        display: grid;
+        gap: 12px;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: clamp(1rem, 1.6vw, 1.35rem);
+      }
+
+      .formula div,
+      code {
+        background: var(--code);
+        border-radius: 6px;
+        padding: 12px 14px;
+      }
+
+      .pipeline {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(120px, 1fr));
+        gap: 12px;
+      }
+
+      .step {
+        min-height: 132px;
+        position: relative;
+      }
+
+      .step::after {
+        content: "→";
+        position: absolute;
+        right: -15px;
+        top: 46%;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .step:last-child::after {
+        content: "";
+      }
+
+      .metric {
+        min-height: 142px;
+      }
+
+      .metric b {
+        color: var(--accent);
+        display: block;
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
+        line-height: 1;
+        margin: 4px 0 12px;
+      }
+
+      .metric.warning b {
+        color: var(--accent-2);
+      }
+
+      .metric.pending b {
+        color: var(--accent-3);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        font-size: clamp(0.85rem, 1vw, 1rem);
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 12px 14px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #ece8de;
+        font-weight: 700;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .small {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .footer {
+        align-items: center;
+        color: var(--muted);
+        display: flex;
+        font-size: 0.9rem;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .controls {
+        bottom: 18px;
+        display: flex;
+        gap: 8px;
+        position: fixed;
+        right: 18px;
+        z-index: 10;
+      }
+
+      .language-toggle {
+        left: 18px;
+        position: fixed;
+        top: 18px;
+        z-index: 10;
+      }
+
+      button {
+        background: var(--ink);
+        border: 0;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        font: inherit;
+        min-width: 42px;
+        padding: 10px 12px;
+      }
+
+      button:disabled {
+        cursor: default;
+        opacity: 0.35;
+      }
+
+      .notes {
+        border-left: 4px solid var(--accent);
+        color: var(--muted);
+        margin-top: 8px;
+        padding-left: 14px;
+      }
+
+      @media (max-width: 900px) {
+        .slide {
+          padding: 48px 24px 72px;
+        }
+
+        .two,
+        .three,
+        .pipeline {
+          grid-template-columns: 1fr;
+        }
+
+        .step::after {
+          bottom: -22px;
+          right: 18px;
+          top: auto;
+          transform: rotate(90deg);
+        }
+
+        .controls {
+          left: 18px;
+          right: auto;
+        }
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+
+        .controls {
+          display: none;
+        }
+
+        .language-toggle {
+          display: none;
+        }
+
+        .deck {
+          display: block;
+        }
+
+        .slide,
+        .slide.active {
+          break-after: page;
+          display: block;
+          min-height: auto;
+          padding: 36px;
+        }
+
+        .body {
+          display: grid;
+          margin-top: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="deck" aria-live="polite">
+      <section class="slide active">
+        <div>
+          <div class="kicker">ASNE discussion deck</div>
+          <h1>Artificial Semantic Neural Evaluation</h1>
+        </div>
+        <div class="body">
+          <p class="lead">
+            A compact walkthrough of the hypothesis, tool workflow, implementation shape, and
+            current outcome for a semantic NeuroAI / LLM tooling discussion.
+          </p>
+          <div class="panel">
+            <strong>One-line version</strong>
+            ASNE compares TRIBE-predicted cortical response signatures across controlled semantic
+            stimuli, then reports which contrasts are separable and interpretable.
+          </div>
+        </div>
+        <div class="footer"><span>Use arrow keys or buttons to navigate</span><span>1 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">Starting point</div>
+          <h2>The hypothesis</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>Research hypothesis</strong>
+            If a frozen neural encoding model predicts cortical-like responses from language/audio,
+            then carefully controlled semantic contrasts should produce distinguishable predicted
+            response patterns.
+          </div>
+          <div class="panel">
+            <strong>Operational test</strong>
+            Build paired stimulus dictionaries, run each item through TRIBE v2, compare the
+            predicted response signatures, and ask whether held-out examples land on the expected
+            side of the contrast.
+          </div>
+        </div>
+        <div class="footer"><span>Important: this is model-predicted response space, not measured fMRI.</span><span>2 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">Why semantic contrast matters</div>
+          <h2>Semantics as controlled contrast testing</h2>
+        </div>
+        <div class="body three">
+          <div class="panel">
+            <strong>Minimal-pair spirit</strong>
+            Many stimuli are paired so the surface form changes less than the semantic relation:
+            expected vs. unexpected, valid vs. invalid cause-effect, consistent vs. contradictory.
+          </div>
+          <div class="panel">
+            <strong>Distributional + neuroAI bridge</strong>
+            Instead of only asking what an LLM embedding says, ASNE asks what a brain-response
+            prediction model does with the same semantic manipulation.
+          </div>
+          <div class="panel">
+            <strong>Tooling angle</strong>
+            The project is an example of using LLM-assisted coding to build repeatable evaluation
+            infrastructure around a research idea.
+          </div>
+        </div>
+        <div class="footer"><span>Framing: hypothesis generation and model analysis.</span><span>3 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">What it does</div>
+          <h2>ASNE adds the experiment layer around TRIBE</h2>
+        </div>
+        <div class="body">
+          <div class="pipeline">
+            <div class="step"><strong>Stimulus pair</strong>Controlled text examples for each semantic category.</div>
+            <div class="step"><strong>TTS / events</strong>Text can be converted into audio/event inputs.</div>
+            <div class="step"><strong>TRIBE v2</strong>Frozen model predicts cortical response signatures.</div>
+            <div class="step"><strong>Response array</strong>Segments × 20,484 cortical vertices.</div>
+            <div class="step"><strong>Aggregation</strong>Mean, temporal, and HCP-MMP parcel signatures.</div>
+            <div class="step"><strong>Report</strong>Accuracy, margins, failures, and interpretable parcel summaries.</div>
+          </div>
+          <p class="small">
+            ASNE itself is not the brain model. It is the orchestration, dictionary, scoring,
+            parcellation, temporal-analysis, and reporting layer around the model.
+          </p>
+        </div>
+        <div class="footer"><span>Core repository modules: dictionary, evaluation, roi, temporal, reporting, adapter.</span><span>4 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">How it works</div>
+          <h2>The comparison logic</h2>
+        </div>
+        <div class="body two">
+          <div class="formula">
+            <div>traditional encoding: response = f(stimulus)</div>
+            <div>ASNE contrast workflow: response signature → category comparison</div>
+            <div>optional steering idea: response = f(stimulus, steering_state)</div>
+          </div>
+          <div class="panel">
+            <strong>Scoring intuition</strong>
+            For each category, ASNE builds a centroid-like predicted response signature from a
+            stimulus dictionary. A held-out example is then scored by similarity to each category
+            signature. Correct top-1 means the expected category ranked first.
+          </div>
+        </div>
+        <div class="footer"><span>The current strongest path is semantic contrast evaluation, not psychological state detection.</span><span>5 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">Implementation shape</div>
+          <h2>What the code is doing</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>Main components</strong>
+            <ul>
+              <li><code>dictionary.py</code>: validates stimulus dictionaries and leakage terms.</li>
+              <li><code>evaluation.py</code>: computes top-1, top-2, rank, confusion, and failures.</li>
+              <li><code>roi.py</code>: maps 20,484 vertices into HCP-MMP parcels.</li>
+              <li><code>tribe_adapter.py</code>: keeps TRIBE access behind a swappable adapter.</li>
+              <li><code>reporting.py</code> / scripts: produce static summaries and demo reports.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <strong>Why this structure matters</strong>
+            It separates the research question from the model runner. That makes the same
+            experiment design reusable with mock data, TRIBE outputs, vertex-level scoring,
+            parcel-level scoring, and temporal segment diagnostics.
+          </div>
+        </div>
+        <div class="footer"><span>Mid-level code explanation: data in, adapter call, signatures out, scoring/reporting.</span><span>6 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">Current contrast suite</div>
+          <h2>What was tested</h2>
+        </div>
+        <div class="body">
+          <table>
+            <thead>
+              <tr>
+                <th>Contrast</th>
+                <th>Question it asks</th>
+                <th>Current status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>expected_vs_unexpected</code></td>
+                <td>Does the event fit the prior context, or violate it?</td>
+                <td>Stable signal</td>
+              </tr>
+              <tr>
+                <td><code>cause_effect_valid_vs_invalid</code></td>
+                <td>Does the causal relation make sense?</td>
+                <td>Stable / viable</td>
+              </tr>
+              <tr>
+                <td><code>contradiction_vs_consistency</code></td>
+                <td>Does the sentence conflict with earlier information?</td>
+                <td>Weak after larger evaluation</td>
+              </tr>
+              <tr>
+                <td><code>approach_vs_static</code></td>
+                <td>Is a motion/arrival relation present?</td>
+                <td>Low priority for text/TTS; likely needs video-native stimuli</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footer"><span>The useful contrasts are semantic outcome/anomaly contrasts.</span><span>7 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">Outcome</div>
+          <h2>v0.3-lite result snapshot</h2>
+        </div>
+        <div class="body three">
+          <div class="metric">
+            <strong>Expected vs. unexpected</strong>
+            <b>0.90</b>
+            Parcel top-1 accuracy on ten held-out examples. Temporal late accuracy was also 0.90.
+          </div>
+          <div class="metric">
+            <strong>Cause-effect valid vs. invalid</strong>
+            <b>0.80</b>
+            Parcel top-1 accuracy. Majority temporal accuracy was 0.70.
+          </div>
+          <div class="metric warning">
+            <strong>Contradiction vs. consistency</strong>
+            <b>0.50</b>
+            Parcel top-1 accuracy after expansion, so this was deprioritized.
+          </div>
+        </div>
+        <div class="footer"><span>Small eval sets: useful stability checks, not definitive benchmark claims.</span><span>8 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">What changed from prototype to result</div>
+          <h2>The useful finding was narrower than the original ambition</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>Original broad idea</strong>
+            Test whether steering conditions can move predicted cortical response patterns in
+            reproducible, interpretable ways.
+          </div>
+          <div class="panel">
+            <strong>Current strongest result</strong>
+            The project is strongest as a semantic contrast testing workflow. It can show that
+            some semantic anomaly/outcome contrasts separate in predicted TRIBE response space,
+            especially after parcel aggregation.
+          </div>
+        </div>
+        <div class="footer"><span>This is a productive narrowing, not a failed result.</span><span>9 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">Interpretation boundaries</div>
+          <h2>What ASNE does not show</h2>
+        </div>
+        <div class="body three">
+          <div class="panel">
+            <strong>Not measured brain activity</strong>
+            The numbers come from predicted cortical signatures generated by a model.
+          </div>
+          <div class="panel">
+            <strong>Not mind reading or emotion detection</strong>
+            Contrast labels are experimental categories, not claims about a person.
+          </div>
+          <div class="panel">
+            <strong>Not production-ready classification</strong>
+            The current benchmark has ten held-out examples per contrast, so it supports direction
+            setting rather than general accuracy claims.
+          </div>
+        </div>
+        <div class="footer"><span>Empirical neuroscience claims would require validation against measured human data.</span><span>10 / 11</span></div>
+      </section>
+
+      <section class="slide">
+        <div>
+          <div class="kicker">Discussion close</div>
+          <h2>Why this is worth showing</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>Research value</strong>
+            ASNE gives a concrete way to turn semantic contrast design into model-response
+            experiments with reproducible reports, failure cases, and interpretable aggregation.
+          </div>
+          <div class="panel">
+            <strong>Next directions</strong>
+            <ul>
+              <li>Expand the stable semantic anomaly benchmark.</li>
+              <li>Try video-native stimuli for motion and event structure.</li>
+              <li>Compare TRIBE response space with LLM embedding baselines.</li>
+              <li>Return to steering once the semantic evaluation layer is stronger.</li>
+            </ul>
+          </div>
+          <p class="notes">
+            Suggested spoken ending: “The interesting part is not that this proves a brain claim.
+            It is that we can build a tool-mediated loop where semantic hypotheses become
+            controlled stimuli, model-predicted response signatures, and inspectable errors.”
+          </p>
+        </div>
+        <div class="footer"><span>ASNE: Artificial Semantic Neural Evaluation</span><span>11 / 11</span></div>
+      </section>
+    </main>
+
+    <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to Japanese">
+      日本語
+    </button>
+
+    <nav class="controls" aria-label="Slide controls">
+      <button id="prev" type="button" aria-label="Previous slide">←</button>
+      <button id="next" type="button" aria-label="Next slide">→</button>
+    </nav>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      const languageToggle = document.getElementById("language-toggle");
+      const englishSlides = slides.map((slide) => slide.innerHTML);
+      const japaneseSlides = [
+        `
+        <div>
+          <div class="kicker">ASNE ディスカッション用デッキ</div>
+          <h1>Artificial Semantic Neural Evaluation</h1>
+        </div>
+        <div class="body">
+          <p class="lead">
+            セマンティックNeuroAI・LLMツールに関心のある人向けに、仮説、ツールの流れ、実装の形、
+            現時点の結果をコンパクトに説明するための資料です。
+          </p>
+          <div class="panel">
+            <strong>一文でいうと</strong>
+            ASNEは、制御された意味刺激に対してTRIBEが予測した皮質応答シグネチャを比較し、
+            どの意味対立が分離可能で解釈しやすいかを報告する仕組みです。
+          </div>
+        </div>
+        <div class="footer"><span>矢印キーまたはボタンで移動</span><span>1 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">出発点</div>
+          <h2>仮説</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>研究仮説</strong>
+            凍結された神経エンコーディングモデルが言語・音声から皮質様の応答を予測できるなら、
+            注意深く制御した意味対立は、区別可能な予測応答パターンを生むはずです。
+          </div>
+          <div class="panel">
+            <strong>操作的なテスト</strong>
+            ペア化した刺激辞書を作り、各項目をTRIBE v2に通し、予測応答シグネチャを比較して、
+            未学習の評価例が期待される対立カテゴリ側に近づくかを見ます。
+          </div>
+        </div>
+        <div class="footer"><span>重要: これはモデル予測空間であり、実測fMRIではありません。</span><span>2 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">意味対立との接点</div>
+          <h2>意味を制御対立としてテストする</h2>
+        </div>
+        <div class="body three">
+          <div class="panel">
+            <strong>ミニマルペア的な発想</strong>
+            多くの刺激は、表層形式の変化よりも意味関係の違いが中心になるようにペア化します。
+            例: 期待通り vs. 予想外、妥当な因果 vs. 不自然な因果、一貫 vs. 矛盾。
+          </div>
+          <div class="panel">
+            <strong>分布意味論とNeuroAIの橋渡し</strong>
+            LLM埋め込みだけを見るのではなく、同じ意味操作に対して脳応答予測モデルが
+            どう反応するかを調べます。
+          </div>
+          <div class="panel">
+            <strong>ツール構築の観点</strong>
+            研究アイデアの周りに、LLM支援コーディングで再現可能な評価基盤を作った例でもあります。
+          </div>
+        </div>
+        <div class="footer"><span>位置づけ: 仮説生成とモデル分析。</span><span>3 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">何をするか</div>
+          <h2>ASNEはTRIBEの周りに実験レイヤーを足す</h2>
+        </div>
+        <div class="body">
+          <div class="pipeline">
+            <div class="step"><strong>刺激ペア</strong>各意味カテゴリに対応する制御済みテキスト例。</div>
+            <div class="step"><strong>TTS / イベント</strong>テキストを音声・イベント入力に変換可能。</div>
+            <div class="step"><strong>TRIBE v2</strong>凍結モデルが皮質応答シグネチャを予測。</div>
+            <div class="step"><strong>応答配列</strong>セグメント × 20,484皮質頂点。</div>
+            <div class="step"><strong>集約</strong>平均、時間変化、HCP-MMPパーセル単位の特徴。</div>
+            <div class="step"><strong>レポート</strong>精度、マージン、失敗例、解釈可能なパーセル要約。</div>
+          </div>
+          <p class="small">
+            ASNE自体は脳モデルではありません。モデルの周りにある、実験実行、辞書、スコアリング、
+            パーセレーション、時間解析、レポート生成のレイヤーです。
+          </p>
+        </div>
+        <div class="footer"><span>主要モジュール: dictionary, evaluation, roi, temporal, reporting, adapter。</span><span>4 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">仕組み</div>
+          <h2>比較ロジック</h2>
+        </div>
+        <div class="body two">
+          <div class="formula">
+            <div>従来のエンコーディング: response = f(stimulus)</div>
+            <div>ASNEの対立ワークフロー: response signature → category comparison</div>
+            <div>任意のステアリング案: response = f(stimulus, steering_state)</div>
+          </div>
+          <div class="panel">
+            <strong>スコアリングの直感</strong>
+            ASNEは各カテゴリについて、刺激辞書からセントロイドに近い予測応答シグネチャを作ります。
+            未学習の例は各カテゴリシグネチャとの類似度でスコア化され、期待カテゴリが1位なら
+            top-1正解です。
+          </div>
+        </div>
+        <div class="footer"><span>現時点で最も強い方向は、心理状態検出ではなく意味対立評価です。</span><span>5 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">実装の形</div>
+          <h2>コードがしていること</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>主なコンポーネント</strong>
+            <ul>
+              <li><code>dictionary.py</code>: 刺激辞書とカテゴリ語漏れを検証。</li>
+              <li><code>evaluation.py</code>: top-1、top-2、順位、混同行列、失敗例を計算。</li>
+              <li><code>roi.py</code>: 20,484頂点をHCP-MMPパーセルへ対応付け。</li>
+              <li><code>tribe_adapter.py</code>: TRIBE呼び出しを差し替え可能なアダプタに隔離。</li>
+              <li><code>reporting.py</code> / scripts: 静的な要約とデモレポートを生成。</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <strong>この構造が重要な理由</strong>
+            研究上の問いとモデル実行部を分離しています。そのため、同じ実験設計を
+            モックデータ、TRIBE出力、頂点レベルスコア、パーセルスコア、時間セグメント診断に
+            再利用できます。
+          </div>
+        </div>
+        <div class="footer"><span>中位レベルの説明: データ入力、アダプタ呼び出し、シグネチャ出力、スコアリング/レポート。</span><span>6 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">現在の対立セット</div>
+          <h2>何をテストしたか</h2>
+        </div>
+        <div class="body">
+          <table>
+            <thead>
+              <tr>
+                <th>対立</th>
+                <th>問うていること</th>
+                <th>現在の状態</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>expected_vs_unexpected</code></td>
+                <td>出来事が先行文脈に合うか、それとも予想を破るか。</td>
+                <td>安定した信号</td>
+              </tr>
+              <tr>
+                <td><code>cause_effect_valid_vs_invalid</code></td>
+                <td>因果関係が意味的に自然か。</td>
+                <td>安定 / 有望</td>
+              </tr>
+              <tr>
+                <td><code>contradiction_vs_consistency</code></td>
+                <td>文が前の情報と衝突するか。</td>
+                <td>評価拡大後は弱い</td>
+              </tr>
+              <tr>
+                <td><code>approach_vs_static</code></td>
+                <td>移動・接近・到着の関係があるか。</td>
+                <td>テキスト/TTSでは優先度低め。映像入力向きの可能性。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="footer"><span>有用だったのは、意味的な結果・異常性に関する対立です。</span><span>7 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">結果</div>
+          <h2>v0.3-lite 結果スナップショット</h2>
+        </div>
+        <div class="body three">
+          <div class="metric">
+            <strong>Expected vs. unexpected</strong>
+            <b>0.90</b>
+            10件の未学習例に対するパーセルtop-1精度。時間解析のlate精度も0.90。
+          </div>
+          <div class="metric">
+            <strong>Cause-effect valid vs. invalid</strong>
+            <b>0.80</b>
+            パーセルtop-1精度。時間セグメントの多数決精度は0.70。
+          </div>
+          <div class="metric warning">
+            <strong>Contradiction vs. consistency</strong>
+            <b>0.50</b>
+            評価拡大後のパーセルtop-1精度。このため優先度を下げました。
+          </div>
+        </div>
+        <div class="footer"><span>小規模評価セットなので、確定的ベンチマークではなく安定性チェックとして読むべきです。</span><span>8 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">プロトタイプから結果まで</div>
+          <h2>有用な発見は、当初の野心より狭くなった</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>当初の広いアイデア</strong>
+            ステアリング条件によって、予測皮質応答パターンを再現可能かつ解釈可能に動かせるかを
+            テストすること。
+          </div>
+          <div class="panel">
+            <strong>現在の最も強い結果</strong>
+            現時点では、意味対立を評価するワークフローとして最も強いです。特にパーセル集約後、
+            一部の意味的異常・結果に関する対立がTRIBE予測応答空間で分離することを示せます。
+          </div>
+        </div>
+        <div class="footer"><span>これは失敗ではなく、生産的な焦点化です。</span><span>9 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">解釈の境界</div>
+          <h2>ASNEが示していないこと</h2>
+        </div>
+        <div class="body three">
+          <div class="panel">
+            <strong>実測脳活動ではない</strong>
+            数値はモデルが生成した予測皮質シグネチャに基づきます。
+          </div>
+          <div class="panel">
+            <strong>読心や感情検出ではない</strong>
+            対立ラベルは実験カテゴリであり、個人についての主張ではありません。
+          </div>
+          <div class="panel">
+            <strong>本番分類器ではない</strong>
+            現在のベンチマークは各対立10件の未学習例なので、一般的な精度主張ではなく
+            方向づけのための結果です。
+          </div>
+        </div>
+        <div class="footer"><span>経験的な神経科学の主張には、実測ヒトデータでの検証が必要です。</span><span>10 / 11</span></div>
+        `,
+        `
+        <div>
+          <div class="kicker">議論の締め</div>
+          <h2>なぜ見せる価値があるか</h2>
+        </div>
+        <div class="body two">
+          <div class="panel">
+            <strong>研究上の価値</strong>
+            ASNEは、意味的な対立設計を、モデル応答実験、再現可能なレポート、失敗例、
+            解釈可能な集約へ変換する具体的な方法を提供します。
+          </div>
+          <div class="panel">
+            <strong>次の方向</strong>
+            <ul>
+              <li>安定した意味的異常ベンチマークを拡張する。</li>
+              <li>移動やイベント構造には映像ネイティブ刺激を試す。</li>
+              <li>TRIBE応答空間とLLM埋め込みベースラインを比較する。</li>
+              <li>意味評価レイヤーを強くしてからステアリングへ戻る。</li>
+            </ul>
+          </div>
+          <p class="notes">
+            話し方の締め案: 「面白い点は、これが脳についての証明になることではありません。
+            意味的仮説を、制御刺激、モデル予測応答シグネチャ、検査可能な失敗例へ変換する
+            ツール媒介のループを作れることです。」
+          </p>
+        </div>
+        <div class="footer"><span>ASNE: Artificial Semantic Neural Evaluation</span><span>11 / 11</span></div>
+        `,
+      ];
+      let index = 0;
+      let language = "en";
+
+      function showSlide(nextIndex) {
+        index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.toggle("active", slideIndex === index);
+        });
+        prev.disabled = index === 0;
+        next.disabled = index === slides.length - 1;
+        window.location.hash = `slide-${index + 1}`;
+      }
+
+      function setLanguage(nextLanguage) {
+        language = nextLanguage;
+        const localizedSlides = language === "ja" ? japaneseSlides : englishSlides;
+        localizedSlides.forEach((content, slideIndex) => {
+          slides[slideIndex].innerHTML = content;
+        });
+        document.documentElement.lang = language === "ja" ? "ja" : "en";
+        document.title =
+          language === "ja"
+            ? "ASNE セマンティックNeuroAIディスカッション用プレゼンテーション"
+            : "ASNE presentation for semantic NeuroAI discussion";
+        languageToggle.textContent = language === "ja" ? "English" : "日本語";
+        languageToggle.setAttribute(
+          "aria-label",
+          language === "ja" ? "Switch to English" : "Switch to Japanese",
+        );
+        showSlide(index);
+      }
+
+      function fromHash() {
+        const match = window.location.hash.match(/slide-(\d+)/);
+        if (match) showSlide(Number(match[1]) - 1);
+      }
+
+      languageToggle.addEventListener("click", () => {
+        setLanguage(language === "ja" ? "en" : "ja");
+      });
+      prev.addEventListener("click", () => showSlide(index - 1));
+      next.addEventListener("click", () => showSlide(index + 1));
+      window.addEventListener("hashchange", fromHash);
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+          event.preventDefault();
+          showSlide(index + 1);
+        }
+        if (event.key === "ArrowLeft" || event.key === "PageUp") {
+          event.preventDefault();
+          showSlide(index - 1);
+        }
+      });
+
+      fromHash();
+      showSlide(index);
+    </script>
+  </body>
+</html>
